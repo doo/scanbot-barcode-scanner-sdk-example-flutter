@@ -9,7 +9,7 @@ For more details about the Plugin please see this [documentation](https://scanbo
 
 The Scanbot Barcode Scanner SDK brings barcode scanning capabilities to your mobile apps.
 It provides functionality for scanning 1D and 2D barcodes, like EAN, UPC, QR code, Data Matrix, PDF 417, etc.
-For more details visit our website https://scanbot.io/sdk
+For more details visit our website https://scanbot.io
 
 
 ## How to run this app
@@ -59,4 +59,4 @@ After the trial period is over all Barcode SDK functions as well as the UI compo
 stop working. You have to restart the app to get another trial period.
 
 To get an unrestricted "no-strings-attached" 30 day trial license, please submit the 
-[Trial License Form](https://scanbot.io/sdk/trial.html) on our website.
+[Trial License Form](https://scanbot.io/en/sdk/demo/trial) on our website.
