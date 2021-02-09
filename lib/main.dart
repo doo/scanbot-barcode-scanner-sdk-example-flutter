@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -99,6 +100,12 @@ class _MainPageState extends State<MainPageWidget> {
             },
           ),
           MenuItemWidget(
+            "Scan Batch Barcodes",
+            onTap: () {
+              startBatchBarcodeScanner();
+            },
+          ),
+          MenuItemWidget(
             "Pick Image from Gallery",
             onTap: () {
               pickImageAndDetect();
@@ -130,7 +137,55 @@ class _MainPageState extends State<MainPageWidget> {
       ),
     );
   }
+  startBatchBarcodeScanner() async {
+    try {
+      //var config = BarcodeScannerConfiguration(); // testing default configs
+      var config = BatchBarcodeScannerConfiguration(
+          barcodeFormatter: (item) async {
+            Random random = new Random();
+            int randomNumber = random.nextInt(4) + 2;
+            await new Future.delayed(Duration(seconds: randomNumber));
+            return BarcodeFormattedData(title: item.barcodeFormat.toString(),subtitle: item.text + "custom string");
+          },
+          topBarBackgroundColor: Colors.blueAccent,
+          topBarButtonsColor: Colors.white70,
+          cameraOverlayColor: Colors.black26,
+          finderLineColor: Colors.red,
+          finderTextHintColor: Colors.cyanAccent,
+          cancelButtonTitle: "Cancel",
+          enableCameraButtonTitle: "camera enable",
+          enableCameraExplanationText: "explanation text",
+          finderTextHint: "Please align any supported barcode in the frame to scan it.",
+          // clearButtonTitle: "CCCClear",
+          // submitButtonTitle: "Submitt",
+          barcodesCountText: "%d codes",
+          fetchingStateText: "might be not needed",
+          noBarcodesTitle: "nothing to see here",
+          barcodesCountTextColor: Colors.purple,
+          finderAspectRatio: FinderAspectRatio(width: 2, height: 3),
+          topBarButtonsInactiveColor: Colors.orange,
+          detailsActionColor: Colors.yellow,
+          detailsBackgroundColor: Colors.amber,
+          detailsPrimaryColor: Colors.yellowAccent,
+          finderLineWidth: 7,
+          successBeepEnabled: true,
+          // flashEnabled: true,
+          orientationLockMode: CameraOrientationMode.PORTRAIT,
+          barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
+          cancelButtonHidden: false
+      );
 
+      var result = await ScanbotBarcodeSdk.startBatchBarcodeScanner(config);
+      if (result.operationResult == OperationResult.SUCCESS) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) => BarcodesResultPreviewWidget(result)),
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
   startBarcodeScanner({bool shouldSnapImage = false}) async {
     if (!await checkLicenseStatus(context)) { return; }
 
