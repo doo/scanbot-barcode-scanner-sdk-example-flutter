@@ -45,5 +45,6 @@ const barcodeFormatEnumMap = {
   BarcodeFormat.RSS_EXPANDED: 'RSS_EXPANDED',
   BarcodeFormat.UPC_A: 'UPC_A',
   BarcodeFormat.UPC_E: 'UPC_E',
+  BarcodeFormat.MSI_PLESSEY: 'MSI_PLESSEY',
   BarcodeFormat.UNKNOWN: 'UNKNOWN',
 };
