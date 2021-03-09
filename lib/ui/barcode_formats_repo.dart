@@ -5,6 +5,7 @@ class BarcodeFormatsRepository {
   static List<BarcodeFormat> getSelectableTypes() {
     var values = List.of(BarcodeFormat.values);
     values..remove(BarcodeFormat.UNKNOWN);
+    values..remove(BarcodeFormat.MSI_PLESSEY);
     return values;
   }
 }
