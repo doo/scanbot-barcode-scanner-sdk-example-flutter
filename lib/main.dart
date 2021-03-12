@@ -162,7 +162,6 @@ class _MainPageState extends State<MainPageWidget> {
           fetchingStateText: "might be not needed",
           noBarcodesTitle: "nothing to see here",
           barcodesCountTextColor: Colors.purple,
-          finderAspectRatio: FinderAspectRatio(width: 2, height: 3),
           topBarButtonsInactiveColor: Colors.orange,
           detailsActionColor: Colors.yellow,
           detailsBackgroundColor: Colors.amber,
