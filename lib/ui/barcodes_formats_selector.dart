@@ -4,7 +4,7 @@ import 'barcode_format_item.dart';
 import 'barcode_formats_repo.dart';
 
 class BarcodesFormatSelectorWidget extends StatefulWidget {
-  BarcodeFormatsRepository _repository;
+  final BarcodeFormatsRepository _repository;
 
   BarcodesFormatSelectorWidget(this._repository);
 
@@ -49,7 +49,7 @@ class _BarcodesFormatSelectorWidgetState
                       item, _repository.selectedFormats.contains(item),
                       onSelect: (bool) {
                     setState(() {
-                      if (bool) {
+                      if (bool != null && bool) {
                         _repository.selectedFormats.add(item);
                       } else {
                         _repository.selectedFormats.remove(item);

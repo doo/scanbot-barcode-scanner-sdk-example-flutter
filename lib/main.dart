@@ -27,7 +27,7 @@ void main() => runApp(MyApp());
 const BARCODE_SDK_LICENSE_KEY = '';
 
 _initScanbotSdk() async {
-  Directory storageDirectory;
+  Directory? storageDirectory;
   if (Platform.isAndroid) {
     storageDirectory = await getExternalStorageDirectory();
   }
@@ -38,7 +38,7 @@ _initScanbotSdk() async {
   var config = ScanbotSdkConfig(
       licenseKey: BARCODE_SDK_LICENSE_KEY,
       loggingEnabled: true, // Consider disabling logging in production builds for security and performance reasons.
-      storageBaseDirectory: "${storageDirectory.path}/custom-barcode-sdk-storage"
+      storageBaseDirectory: "${storageDirectory?.path}/custom-barcode-sdk-storage"
   );
 
   try {
@@ -218,13 +218,13 @@ class _MainPageState extends State<MainPageWidget> {
 
   pickImageAndDetect() async {
     try {
-      var image = await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 90);
+      var image = await ImagePicker.platform.pickImage(source: ImageSource.gallery, imageQuality: 90);
       if (image == null) { return; }
 
       if (!await checkLicenseStatus(context)) { return; }
 
       var result = await ScanbotBarcodeSdk.detectFromImageFile(
-          image.uri, barcodeFormatsRepository.selectedFormats.toList(), true);
+          Uri.parse(image.path), barcodeFormatsRepository.selectedFormats.toList(), true);
 
       if (result.operationResult == OperationResult.SUCCESS) {
         Navigator.of(context).push(
@@ -266,7 +266,7 @@ class _MainPageState extends State<MainPageWidget> {
 }
 
 Future<void> showAlertDialog(BuildContext context, String textToShow,
-    {String title}) async {
+    {String? title}) async {
   Widget text = SimpleDialogOption(
     child: Padding(
       padding: const EdgeInsets.all(16.0),
