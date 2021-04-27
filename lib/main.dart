@@ -218,7 +218,7 @@ class _MainPageState extends State<MainPageWidget> {
 
   pickImageAndDetect() async {
     try {
-      var image = await ImagePicker.platform.pickImage(source: ImageSource.gallery, imageQuality: 90);
+      var image = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 90);
       if (image == null) { return; }
 
       if (!await checkLicenseStatus(context)) { return; }

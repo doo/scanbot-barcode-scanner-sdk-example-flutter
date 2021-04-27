@@ -35,10 +35,10 @@ class BarcodesResultPreviewWidget extends StatelessWidget {
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, position) {
-                  BarcodeItem? item = preview.barcodeItems?[position];
-                  return BarcodeItemWidget(item ?? BarcodeItem(BarcodeFormat.UNKNOWN, ""));
+                  BarcodeItem? item = preview.barcodeItems[position];
+                  return BarcodeItemWidget(item);
                 },
-                itemCount: preview.barcodeItems?.length ?? 0,
+                itemCount: preview.barcodeItems.length,
               ),
             ),
           ],
