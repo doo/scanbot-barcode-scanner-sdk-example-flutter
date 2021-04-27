@@ -15,7 +15,7 @@ For more details visit our website https://scanbot.io
 ## How to run this app
 
 Install [Flutter](https://flutter.dev) and all required dev tools.
- 
+
 Fetch this repository and navigate to the project directory.
 
 ```
@@ -47,7 +47,7 @@ cd ios/
 pod install --repo-update
 ```
 
-Open the **workspace**(!) `ios/Runner.xcworkspace` in Xcode and adjust the *Signing / Developer Account* settings. 
+Open the **workspace**(!) `ios/Runner.xcworkspace` in Xcode and adjust the *Signing / Developer Account* settings.
 Then build and run the app in Xcode.
 
 
@@ -55,8 +55,8 @@ Then build and run the app in Xcode.
 
 The Scanbot Barcode Scanner SDK will run without a license for one minute per session!
 
-After the trial period is over all Barcode SDK functions as well as the UI components (like Barcode Scanner UI) will 
+After the trial period has expired all Barcode SDK functions as well as the UI components (like Barcode Scanner UI) will
 stop working. You have to restart the app to get another trial period.
 
-To get an unrestricted "no-strings-attached" 30 day trial license, please submit the 
+To get an unrestricted, "no-strings-attached" 30 day trial license, please submit the
 [Trial License Form](https://scanbot.io/en/sdk/demo/trial) on our website.
