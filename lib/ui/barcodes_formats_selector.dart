@@ -36,7 +36,7 @@ class _BarcodesFormatSelectorWidgetState
             },
           ),
           backgroundColor: Colors.white,
-          title: const Text('Scanned barcodes',
+          title: const Text('Accepted barcodes',
               style: TextStyle(inherit: true, color: Colors.black)),
         ),
         body: Column(

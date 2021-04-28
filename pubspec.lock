@@ -11,10 +11,10 @@ packages:
   barcode_scanner:
     dependency: "direct main"
     description:
-      path: "../scanbot-barcode-sdk-flutter"
-      relative: true
-    source: path
-    version: "1.2.0-beta1"
+      name: barcode_scanner
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0-beta3"
   boolean_selector:
     dependency: transitive
     description:
@@ -89,7 +89,7 @@ packages:
       name: flutter_plugin_android_lifecycle
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -120,7 +120,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.3"
+    version: "0.7.4"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -134,7 +134,7 @@ packages:
       name: image_picker_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.1.0"
   js:
     dependency: transitive
     description:
@@ -204,7 +204,7 @@ packages:
       name: path_provider_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   pedantic:
     dependency: transitive
     description:
@@ -300,7 +300,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   xdg_directories:
     dependency: transitive
     description:
