@@ -145,7 +145,8 @@ class _MainPageState extends State<MainPageWidget> {
             Random random = new Random();
             int randomNumber = random.nextInt(4) + 2;
             await new Future.delayed(Duration(seconds: randomNumber));
-            return BarcodeFormattedData(title: item.barcodeFormat.toString(),subtitle: item.text + "custom string");
+            return BarcodeFormattedData(
+                title: item.barcodeFormat.toString(), subtitle: item.text);
           },
           topBarBackgroundColor: Colors.blueAccent,
           topBarButtonsColor: Colors.white70,
