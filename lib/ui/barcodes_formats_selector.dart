@@ -49,7 +49,7 @@ class _BarcodesFormatSelectorWidgetState
                       item, _repository.selectedFormats.contains(item),
                       onSelect: (bool) {
                     setState(() {
-                      if (bool != null && bool) {
+                      if (bool) {
                         _repository.selectedFormats.add(item);
                       } else {
                         _repository.selectedFormats.remove(item);

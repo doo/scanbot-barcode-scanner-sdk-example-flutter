@@ -10,9 +10,7 @@ class BarcodeFormatItemWidget extends StatelessWidget {
 
   BarcodeFormatItemWidget(this.format, this.selected,
       {required this.onSelect}) {
-    _onSelect = (value)=>{
-      onSelect(value!)
-    };
+    _onSelect = (value) => {onSelect(value!)};
   }
 
   @override
@@ -31,7 +29,7 @@ class BarcodeFormatItemWidget extends StatelessWidget {
                   style: TextStyle(inherit: true, color: Colors.black),
                 ),
                 Expanded(child: Container()),
-                Checkbox(value: selected, onChanged: this._onSelect )
+                Checkbox(value: selected, onChanged: this._onSelect)
               ],
             ),
           ),
