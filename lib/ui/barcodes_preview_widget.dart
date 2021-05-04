@@ -7,7 +7,7 @@ import 'package:barcode_scanner/barcode_scanning_data.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcode_item.dart';
 
 class BarcodesResultPreviewWidget extends StatelessWidget {
-  BarcodeScanningResult preview;
+  final BarcodeScanningResult preview;
 
   BarcodesResultPreviewWidget(this.preview);
 
@@ -35,7 +35,8 @@ class BarcodesResultPreviewWidget extends StatelessWidget {
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, position) {
-                  return BarcodeItemWidget(preview.barcodeItems[position]);
+                  BarcodeItem? item = preview.barcodeItems[position];
+                  return BarcodeItemWidget(item);
                 },
                 itemCount: preview.barcodeItems.length,
               ),
@@ -44,12 +45,12 @@ class BarcodesResultPreviewWidget extends StatelessWidget {
         ));
   }
 
-  Widget getImageContainer(Uri imageUri) {
-    if (preview.barcodeImageURI == null) {
+  Widget getImageContainer(Uri? imageUri) {
+    if (preview.barcodeImageURI == null || imageUri == null) {
       return Container();
     }
     var file = File.fromUri(imageUri);
-    if (file?.existsSync() == true) {
+    if (file.existsSync() == true) {
       return Container(
           child: Center(
         child: Image.file(

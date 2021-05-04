@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:barcode_scanner/barcode_scanning_data.dart';
 
 class BarcodeItemWidget extends StatelessWidget {
-  BarcodeItem item;
+  final BarcodeItem item;
 
   BarcodeItemWidget(this.item);
 
@@ -15,7 +15,7 @@ class BarcodeItemWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              barcodeFormatEnumMap[item.barcodeFormat],
+              barcodeFormatEnumMap[item.barcodeFormat] ?? "",
               style: TextStyle(inherit: true, color: Colors.black),
             ),
           ),
