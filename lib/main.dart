@@ -148,8 +148,6 @@ class _MainPageState extends State<MainPageWidget> {
                 context: context,
                 applicationName: 'Scanbot Barcode sdk example',
                 applicationVersion: '1.0',
-                /*applicationIcon: new Image.asset('assets/images/applogo.png',
-                width: 48, height: 48),*/
                 applicationLegalese: 'Copyright (c) 2016 [Scanbot]',
               );
             },
