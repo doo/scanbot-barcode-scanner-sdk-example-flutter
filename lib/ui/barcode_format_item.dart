@@ -4,10 +4,10 @@ import 'package:barcode_scanner/barcode_scanning_data.dart';
 class BarcodeFormatItemWidget extends StatelessWidget {
   BarcodeFormat format;
   bool selected;
-  ValueChanged<bool> onSelect;
+  ValueChanged<bool?> onSelect;
 
   BarcodeFormatItemWidget(this.format, this.selected,
-      {@required this.onSelect});
+      {required this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class BarcodeFormatItemWidget extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Text(
-                  barcodeFormatEnumMap[format],
+                  barcodeFormatEnumMap[format]!,
                   style: TextStyle(inherit: true, color: Colors.black),
                 ),
                 Expanded(child: Container()),

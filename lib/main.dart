@@ -16,6 +16,8 @@ import 'package:scanbot_barcode_sdk_example/ui/barcodes_formats_selector.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcodes_preview_widget.dart';
 import 'package:scanbot_barcode_sdk_example/ui/menu_items.dart';
 
+bool shouldInitWithEncryption = true;
+
 void main() => runApp(MyApp());
 
 // TODO Add the Scanbot Barcode Scanner SDK license key here.
@@ -27,18 +29,23 @@ void main() => runApp(MyApp());
 const BARCODE_SDK_LICENSE_KEY = '';
 
 _initScanbotSdk() async {
-  Directory storageDirectory;
+  Directory? storageDirectory;
   if (Platform.isAndroid) {
     storageDirectory = await getExternalStorageDirectory();
   }
   if (Platform.isIOS) {
     storageDirectory = await getApplicationDocumentsDirectory();
   }
-
+  EncryptionParameters? encryptionParameters;
+  if (shouldInitWithEncryption) {
+    encryptionParameters = EncryptionParameters(
+        password: "password", mode: FileEncryptionMode.AES256);
+  }
   var config = ScanbotSdkConfig(
       licenseKey: BARCODE_SDK_LICENSE_KEY,
+      encryptionParameters: encryptionParameters,
       loggingEnabled: true, // Consider disabling logging in production builds for security and performance reasons.
-      storageBaseDirectory: "${storageDirectory.path}/custom-barcode-sdk-storage"
+      storageBaseDirectory: "${storageDirectory?.path}/custom-barcode-sdk-storage"
   );
 
   try {
@@ -133,19 +140,39 @@ class _MainPageState extends State<MainPageWidget> {
               showLicenseStatus();
             },
           ),
+          MenuItemWidget(
+            "Licenses info",
+            startIcon: Icons.settings,
+            onTap: () {
+              showLicensePage(
+                context: context,
+                applicationName: 'Scanbot Barcode sdk example',
+                applicationVersion: '1.0',
+                /*applicationIcon: new Image.asset('assets/images/applogo.png',
+                width: 48, height: 48),*/
+                applicationLegalese: 'Copyright (c) 2016 [Scanbot]',
+              );
+            },
+          ),
         ],
       ),
     );
   }
   startBatchBarcodeScanner() async {
     try {
+      final additionalParameters = BarcodeAdditionalParameters(
+        enableGS1Decoding: false,
+        minimumTextLength: 10,
+        maximumTextLength: 11,
+        minimum1DBarcodesQuietZone: 10,
+      );
       //var config = BarcodeScannerConfiguration(); // testing default configs
       var config = BatchBarcodeScannerConfiguration(
           barcodeFormatter: (item) async {
             Random random = new Random();
             int randomNumber = random.nextInt(4) + 2;
             await new Future.delayed(Duration(seconds: randomNumber));
-            return BarcodeFormattedData(title: item.barcodeFormat.toString(),subtitle: item.text + "custom string");
+            return BarcodeFormattedData(title: item.barcodeFormat.toString(),subtitle: item.text ?? "" + "custom string");
           },
           topBarBackgroundColor: Colors.blueAccent,
           topBarButtonsColor: Colors.white70,
@@ -171,6 +198,8 @@ class _MainPageState extends State<MainPageWidget> {
           successBeepEnabled: true,
           // flashEnabled: true,
           orientationLockMode: CameraOrientationMode.PORTRAIT,
+          // cameraZoomFactor: 1,
+          // additionalParameters: additionalParameters,
           barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
           cancelButtonHidden: false
       );
@@ -188,7 +217,12 @@ class _MainPageState extends State<MainPageWidget> {
   }
   startBarcodeScanner({bool shouldSnapImage = false}) async {
     if (!await checkLicenseStatus(context)) { return; }
-
+    final additionalParameters = BarcodeAdditionalParameters(
+      enableGS1Decoding: false,
+      minimumTextLength: 10,
+      maximumTextLength: 11,
+      minimum1DBarcodesQuietZone: 10,
+    );
     var config = BarcodeScannerConfiguration(
       barcodeImageGenerationType: shouldSnapImage
           ? BarcodeImageGenerationType.VIDEO_FRAME
@@ -198,6 +232,8 @@ class _MainPageState extends State<MainPageWidget> {
       cancelButtonTitle: "Cancel",
       finderTextHint: "Please align any supported barcode in the frame to scan it.",
       successBeepEnabled: true,
+      // cameraZoomFactor: 1,
+      // additionalParameters: additionalParameters,
       barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       // see further customization configs ...
     );
@@ -218,13 +254,13 @@ class _MainPageState extends State<MainPageWidget> {
 
   pickImageAndDetect() async {
     try {
-      var image = await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 90);
+      var image = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 90);
       if (image == null) { return; }
 
       if (!await checkLicenseStatus(context)) { return; }
 
       var result = await ScanbotBarcodeSdk.detectFromImageFile(
-          image.uri, barcodeFormatsRepository.selectedFormats.toList(), true);
+          Uri.parse(image.path), barcodeFormatsRepository.selectedFormats.toList());
 
       if (result.operationResult == OperationResult.SUCCESS) {
         Navigator.of(context).push(
@@ -266,7 +302,7 @@ class _MainPageState extends State<MainPageWidget> {
 }
 
 Future<void> showAlertDialog(BuildContext context, String textToShow,
-    {String title}) async {
+    {String? title}) async {
   Widget text = SimpleDialogOption(
     child: Padding(
       padding: const EdgeInsets.all(16.0),
@@ -280,7 +316,7 @@ Future<void> showAlertDialog(BuildContext context, String textToShow,
     content: text,
     contentPadding: EdgeInsets.all(0),
     actions: <Widget>[
-      FlatButton(
+      TextButton(
         child: Text('OK'),
         onPressed: () {
           Navigator.of(context).pop();
