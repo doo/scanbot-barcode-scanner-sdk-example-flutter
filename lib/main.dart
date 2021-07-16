@@ -24,7 +24,7 @@ void main() => runApp(MyApp());
 // Please note: The Scanbot Barcode Scanner SDK will run without a license key for one minute per session!
 // After the trial period is over all Barcode SDK functions as well as the UI components will stop working.
 // You can get an unrestricted "no-strings-attached" 30 day trial license key for free.
-// Please submit the trial license form (https://scanbot.io/sdk/trial.html) on our website by using
+// Please submit the trial license form (https://scanbot.io/en/sdk/demo/trial) on our website by using
 // the app identifier "io.scanbot.example.sdk.barcode.flutter" of this example app or of your app.
 const BARCODE_SDK_LICENSE_KEY = '';
 
@@ -148,7 +148,7 @@ class _MainPageState extends State<MainPageWidget> {
                 context: context,
                 applicationName: 'Scanbot Barcode sdk example',
                 applicationVersion: '1.0',
-                applicationLegalese: 'Copyright (c) 2016 [Scanbot]',
+                applicationLegalese: 'Copyright (c) 2016 doo GmbH, https://scanbot.io',
               );
             },
           ),
