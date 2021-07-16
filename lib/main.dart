@@ -16,7 +16,7 @@ import 'package:scanbot_barcode_sdk_example/ui/barcodes_formats_selector.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcodes_preview_widget.dart';
 import 'package:scanbot_barcode_sdk_example/ui/menu_items.dart';
 
-bool shouldInitWithEncryption = true;
+bool shouldInitWithEncryption = false;
 
 void main() => runApp(MyApp());
 
@@ -26,7 +26,7 @@ void main() => runApp(MyApp());
 // You can get an unrestricted "no-strings-attached" 30 day trial license key for free.
 // Please submit the trial license form (https://scanbot.io/en/sdk/demo/trial) on our website by using
 // the app identifier "io.scanbot.example.sdk.barcode.flutter" of this example app or of your app.
-const BARCODE_SDK_LICENSE_KEY = '';
+const BARCODE_SDK_LICENSE_KEY = "";
 
 _initScanbotSdk() async {
   Directory? storageDirectory;
@@ -188,7 +188,7 @@ class _MainPageState extends State<MainPageWidget> {
           fetchingStateText: "might be not needed",
           noBarcodesTitle: "nothing to see here",
           barcodesCountTextColor: Colors.purple,
-          finderAspectRatio: FinderAspectRatio(width: 2, height: 3),
+          finderAspectRatio: FinderAspectRatio(width: 2, height: 1),
           topBarButtonsInactiveColor: Colors.orange,
           detailsActionColor: Colors.yellow,
           detailsBackgroundColor: Colors.amber,
