@@ -157,6 +157,7 @@ class _MainPageState extends State<MainPageWidget> {
     );
   }
   startBatchBarcodeScanner() async {
+    if (!await checkLicenseStatus(context)) { return; }
     try {
       final additionalParameters = BarcodeAdditionalParameters(
         enableGS1Decoding: false,
