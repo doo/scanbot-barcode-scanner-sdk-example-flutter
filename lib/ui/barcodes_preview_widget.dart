@@ -10,7 +10,7 @@ import 'package:scanbot_barcode_sdk_example/ui/barcode_item.dart';
 import '../main.dart';
 
 class BarcodesResultPreviewWidget extends StatelessWidget {
-  BarcodeScanningResult preview;
+  final BarcodeScanningResult preview;
 
   BarcodesResultPreviewWidget(this.preview);
 
@@ -29,9 +29,9 @@ class BarcodesResultPreviewWidget extends StatelessWidget {
     }
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(),
+          iconTheme: const IconThemeData(),
           leading: GestureDetector(
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back,
               color: Colors.black,
             ),
@@ -68,7 +68,7 @@ class EncryptedPageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var imageData = ScanbotEncryptionHandler.getDecryptedDataFromFile(path);
-    return Container(
+    return SizedBox(
         height: 200,
         width: double.infinity,
         child: FutureBuilder(
@@ -102,7 +102,7 @@ class PageWidget extends StatelessWidget {
     //    width: double.infinity,
     // );
     Image image = Image.memory(bytes);
-    return Container(
+    return SizedBox(
       height: 200,
       width: double.infinity,
       child: Center(child: image),
