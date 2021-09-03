@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:barcode_scanner/barcode_scanning_data.dart';
 
 class BarcodeFormatItemWidget extends StatelessWidget {
-  BarcodeFormat format;
-  bool selected;
-  ValueChanged<bool?> onSelect;
+  final BarcodeFormat format;
+  final bool selected;
+  final ValueChanged<bool?> onSelect;
 
   BarcodeFormatItemWidget(this.format, this.selected,
       {required this.onSelect});
@@ -22,7 +22,7 @@ class BarcodeFormatItemWidget extends StatelessWidget {
               children: <Widget>[
                 Text(
                   barcodeFormatEnumMap[format]!,
-                  style: TextStyle(inherit: true, color: Colors.black),
+                  style: const TextStyle(inherit: true, color: Colors.black),
                 ),
                 Expanded(child: Container()),
                 Checkbox(value: selected, onChanged: onSelect)

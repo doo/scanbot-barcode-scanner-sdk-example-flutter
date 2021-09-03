@@ -4,7 +4,7 @@ import 'barcode_format_item.dart';
 import 'barcode_formats_repo.dart';
 
 class BarcodesFormatSelectorWidget extends StatefulWidget {
-  BarcodeFormatsRepository _repository;
+  final BarcodeFormatsRepository _repository;
 
   BarcodesFormatSelectorWidget(this._repository);
 
@@ -15,7 +15,7 @@ class BarcodesFormatSelectorWidget extends StatefulWidget {
 
 class _BarcodesFormatSelectorWidgetState
     extends State<BarcodesFormatSelectorWidget> {
-  BarcodeFormatsRepository _repository;
+  final BarcodeFormatsRepository _repository;
 
   var allBarcodes = BarcodeFormatsRepository.getSelectableTypes();
 
@@ -25,9 +25,9 @@ class _BarcodesFormatSelectorWidgetState
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(),
+          iconTheme: const IconThemeData(),
           leading: GestureDetector(
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back,
               color: Colors.black,
             ),
@@ -47,9 +47,9 @@ class _BarcodesFormatSelectorWidgetState
                   var item = allBarcodes[position];
                   return BarcodeFormatItemWidget(
                       item, _repository.selectedFormats.contains(item),
-                      onSelect: (bool) {
+                      onSelect: (boolean) {
                     setState(() {
-                      if (bool == true) {
+                      if (boolean == true) {
                         _repository.selectedFormats.add(item);
                       } else {
                         _repository.selectedFormats.remove(item);
