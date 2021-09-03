@@ -4,7 +4,7 @@ class BarcodeFormatsRepository {
   Set<BarcodeFormat> selectedFormats = getSelectableTypes().toSet();
   static List<BarcodeFormat> getSelectableTypes() {
     var values = List.of(BarcodeFormat.values);
-    values.remove(BarcodeFormat.UNKNOWN);
+    values..remove(BarcodeFormat.UNKNOWN);
     return values;
   }
 }
