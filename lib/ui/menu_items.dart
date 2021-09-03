@@ -18,16 +18,16 @@ class MenuItemWidget extends StatelessWidget {
       trailing: endIcon != null ? Icon(endIcon) : null,
       title: Text(
         title,
-        style: const TextStyle(inherit: true, fontSize: 16.0, color: Colors.black87),
+        style: TextStyle(inherit: true, fontSize: 16.0, color: Colors.black87),
       ),
-      onTap: onTap,
+      onTap: this.onTap,
     );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         listTile,
-        const Divider(
+        Divider(
           color: Colors.black26,
           height: 0,
           endIndent: 16,
@@ -51,7 +51,7 @@ class TitleItemWidget extends StatelessWidget {
       height: 52,
       child: Text(
         title.toUpperCase(),
-        style: const TextStyle(inherit: true, fontSize: 16.0, color: Colors.black),
+        style: TextStyle(inherit: true, fontSize: 16.0, color: Colors.black),
       ),
     );
   }
