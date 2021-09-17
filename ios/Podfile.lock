@@ -1,13 +1,13 @@
 PODS:
   - barcode_scanner (1.0.0):
     - Flutter
-    - ScanbotBarcodeScannerSDK (= 3.0.0)
+    - ScanbotBarcodeScannerSDK (= 3.0.1)
   - Flutter (1.0.0)
   - image_picker (0.0.1):
     - Flutter
   - path_provider (0.0.1):
     - Flutter
-  - ScanbotBarcodeScannerSDK (3.0.0)
+  - ScanbotBarcodeScannerSDK (3.0.1)
 
 DEPENDENCIES:
   - barcode_scanner (from `.symlinks/plugins/barcode_scanner/ios`)
@@ -30,11 +30,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider/ios"
 
 SPEC CHECKSUMS:
-  barcode_scanner: 3a5f4ab356bf0239df34d0bf17c7965a41102b8c
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  barcode_scanner: 9df7e55a46d622fead993a5049399c878a8b7777
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
-  ScanbotBarcodeScannerSDK: 6ea342d55f608fa29668d2097277e2d2ad0781bb
+  ScanbotBarcodeScannerSDK: b1ad01e77b519519a75f0987f0891912846fe1dc
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 
