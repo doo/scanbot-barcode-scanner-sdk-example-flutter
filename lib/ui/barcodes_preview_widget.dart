@@ -57,7 +57,6 @@ class BarcodesResultPreviewWidget extends StatelessWidget {
           ],
         ));
   }
-
 }
 
 class EncryptedPageWidget extends StatelessWidget {
@@ -109,4 +108,3 @@ class PageWidget extends StatelessWidget {
     );
   }
 }
-
