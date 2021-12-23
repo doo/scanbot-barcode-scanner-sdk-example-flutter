@@ -9,7 +9,8 @@ class MenuItemWidget extends StatelessWidget {
   final IconData? startIcon;
   final IconData? endIcon;
 
-  MenuItemWidget(this.title, {required this.onTap,  this.startIcon,  this.endIcon});
+  MenuItemWidget(this.title,
+      {required this.onTap, this.startIcon, this.endIcon});
 
   @override
   Widget build(BuildContext context) {
