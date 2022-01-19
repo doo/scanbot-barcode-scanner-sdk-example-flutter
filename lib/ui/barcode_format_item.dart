@@ -6,8 +6,7 @@ class BarcodeFormatItemWidget extends StatelessWidget {
   final bool selected;
   final ValueChanged<bool?> onSelect;
 
-  BarcodeFormatItemWidget(this.format, this.selected,
-      {required this.onSelect});
+  BarcodeFormatItemWidget(this.format, this.selected, {required this.onSelect});
 
   @override
   Widget build(BuildContext context) {

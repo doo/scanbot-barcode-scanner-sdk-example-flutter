@@ -9,7 +9,8 @@ class MenuItemWidget extends StatelessWidget {
   final IconData? startIcon;
   final IconData? endIcon;
 
-  MenuItemWidget(this.title, {required this.onTap,  this.startIcon,  this.endIcon});
+  MenuItemWidget(this.title,
+      {required this.onTap, this.startIcon, this.endIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,8 @@ class MenuItemWidget extends StatelessWidget {
       trailing: endIcon != null ? Icon(endIcon) : null,
       title: Text(
         title,
-        style: const TextStyle(inherit: true, fontSize: 16.0, color: Colors.black87),
+        style: const TextStyle(
+            inherit: true, fontSize: 16.0, color: Colors.black87),
       ),
       onTap: onTap,
     );
@@ -51,7 +53,8 @@ class TitleItemWidget extends StatelessWidget {
       height: 52,
       child: Text(
         title.toUpperCase(),
-        style: const TextStyle(inherit: true, fontSize: 16.0, color: Colors.black),
+        style:
+            const TextStyle(inherit: true, fontSize: 16.0, color: Colors.black),
       ),
     );
   }
