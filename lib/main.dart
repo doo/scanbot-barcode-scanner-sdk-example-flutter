@@ -172,12 +172,12 @@ class _MainPageState extends State<MainPageWidget> {
       //var config = BarcodeScannerConfiguration(); // testing default configs
       var config = BatchBarcodeScannerConfiguration(
           barcodeFormatter: (item) async {
-            Random random = new Random();
+            Random random = Random();
             int randomNumber = random.nextInt(4) + 2;
-            await new Future.delayed(Duration(seconds: randomNumber));
+            await Future.delayed(Duration(seconds: randomNumber));
             return BarcodeFormattedData(
                 title: item.barcodeFormat.toString(),
-                subtitle: item.text ?? "" + "custom string");
+                subtitle: item.text ?? "" "custom string");
           },
           topBarBackgroundColor: Colors.blueAccent,
           topBarButtonsColor: Colors.white70,
@@ -332,10 +332,10 @@ Future<void> showAlertDialog(BuildContext context, String textToShow,
   AlertDialog dialog = AlertDialog(
     title: title != null ? Text(title) : null,
     content: text,
-    contentPadding: EdgeInsets.all(0),
+    contentPadding: const EdgeInsets.all(0),
     actions: <Widget>[
       TextButton(
-        child: Text('OK'),
+        child: const Text('OK'),
         onPressed: () {
           Navigator.of(context).pop();
         },
