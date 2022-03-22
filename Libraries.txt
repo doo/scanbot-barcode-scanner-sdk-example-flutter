@@ -1,4 +1,4 @@
-Open Source Libraries used in the Scanbot Barcode Scanner SDK Flutter Plugin version 3.1.0
+Open Source Libraries used in the Scanbot Barcode Scanner SDK Flutter Plugin version 3.1.1
 
 * Name: 'json_annotation',
 * Version: '^4.0.1',
@@ -161,7 +161,7 @@ SOFTWARE.
 
 -------------------------------------------------------------------------------------
 
-Open Source libraries used in the Scanbot Barcode Scanner SDK for Android version 3.1.0
+Open Source libraries used in the Scanbot Barcode Scanner SDK for Android version 3.1.2
 
 CWAC-Camera
 
