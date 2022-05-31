@@ -33,9 +33,9 @@ SPEC CHECKSUMS:
   barcode_scanner: 9f729517d9e34e3341c1613c6cf7f941a81c3b44
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
-  path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
+  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   ScanbotBarcodeScannerSDK: d13b6cdc23a343a0342edf557a422f3bc79d9152
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
