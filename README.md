@@ -23,7 +23,7 @@ cd scanbot-barcode-scanner-sdk-example-flutter/
 ```
 
 Fetch and install the dependencies of this example project via Flutter CLI:
-
+ 
 ```
 flutter pub get
 ```
