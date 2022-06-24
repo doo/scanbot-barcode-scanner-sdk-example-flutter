@@ -14,6 +14,7 @@ import 'package:barcode_scanner/scanbot_sdk_models.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcode_formats_repo.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcodes_formats_selector.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcodes_preview_widget.dart';
+import 'package:scanbot_barcode_sdk_example/ui/classical_components/barcode_custom_ui.dart';
 import 'package:scanbot_barcode_sdk_example/ui/menu_items.dart';
 
 bool shouldInitWithEncryption = false;
@@ -111,6 +112,12 @@ class _MainPageState extends State<MainPageWidget> {
             "Scan Batch Barcodes",
             onTap: () {
               startBatchBarcodeScanner();
+            },
+          ),
+          MenuItemWidget(
+            'Scan Barcode custom ui',
+            onTap: () {
+              _startBarcodeCustomUIScanner();
             },
           ),
           MenuItemWidget(
@@ -285,6 +292,18 @@ class _MainPageState extends State<MainPageWidget> {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> _startBarcodeCustomUIScanner() async {
+    var result = await Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const BarcodeScannerWidget()),
+    );
+    if (result is BarcodeScanningResult) {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidget(result)),
+      );
     }
   }
 
