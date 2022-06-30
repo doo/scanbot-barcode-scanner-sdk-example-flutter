@@ -115,7 +115,7 @@ class _MainPageState extends State<MainPageWidget> {
             },
           ),
           MenuItemWidget(
-            'Scan Barcode custom ui',
+            'Scan Barcode (Custom UI)',
             onTap: () {
               _startBarcodeCustomUIScanner();
             },
