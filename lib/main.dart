@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:barcode_scanner/barcode_scanning_data.dart';
@@ -15,6 +14,7 @@ import 'package:scanbot_barcode_sdk_example/ui/barcode_formats_repo.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcodes_formats_selector.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcodes_preview_widget.dart';
 import 'package:scanbot_barcode_sdk_example/ui/menu_items.dart';
+import 'package:scanbot_image_picker/scanbot_image_picker_flutter.dart';
 
 bool shouldInitWithEncryption = false;
 
@@ -262,9 +262,8 @@ class _MainPageState extends State<MainPageWidget> {
 
   pickImageAndDetect() async {
     try {
-      var image = await ImagePicker()
-          .getImage(source: ImageSource.gallery, imageQuality: 90);
-      if (image == null) {
+      var image = await ScanbotImagePickerFlutter.pickImageAsync();
+      if (image.hasEmptyPath) {
         return;
       }
 
