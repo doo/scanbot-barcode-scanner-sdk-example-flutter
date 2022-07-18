@@ -17,7 +17,7 @@ For more details check out our blog post [Types of barcodes](https://scanbot.io/
 
 Install [Flutter](https://flutter.dev) and all required dev tools.
 
-Fetch this repository and navigate to the project directory.
+Fetch this repository and navigate to the project directory. 
 
 ```
 cd scanbot-barcode-scanner-sdk-example-flutter/
