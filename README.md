@@ -3,7 +3,7 @@
 This example app shows how to integrate the [Scanbot Barcode Scanner SDK Flutter Plugin](https://scanbot.io/developer/flutter-barcode-scanner/) on Android and iOS.
 
 For more details about the Plugin please see this [documentation](https://docs.scanbot.io/barcode-scanner-sdk/flutter/introduction/).
-
+ 
 
 ## What is Scanbot Barcode Scanner SDK?
 
