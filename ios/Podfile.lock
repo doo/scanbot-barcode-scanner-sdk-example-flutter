@@ -1,19 +1,22 @@
 PODS:
   - barcode_scanner (1.0.0):
     - Flutter
-    - ScanbotBarcodeScannerSDK (= 3.1.1)
+    - ScanbotBarcodeScannerSDK (= 3.2.2)
   - Flutter (1.0.0)
   - image_picker (0.0.1):
     - Flutter
   - path_provider_ios (0.0.1):
     - Flutter
-  - ScanbotBarcodeScannerSDK (3.1.1)
+  - permission_handler_apple (9.0.4):
+    - Flutter
+  - ScanbotBarcodeScannerSDK (3.2.2)
 
 DEPENDENCIES:
   - barcode_scanner (from `.symlinks/plugins/barcode_scanner/ios`)
   - Flutter (from `Flutter`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
 
 SPEC REPOS:
   trunk:
@@ -28,14 +31,17 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
 
 SPEC CHECKSUMS:
-  barcode_scanner: 9f729517d9e34e3341c1613c6cf7f941a81c3b44
+  barcode_scanner: 9b44559d708011a7fa927e5dc926d8e07bdd75a1
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
-  ScanbotBarcodeScannerSDK: d13b6cdc23a343a0342edf557a422f3bc79d9152
+  permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
+  ScanbotBarcodeScannerSDK: 48d5e01f89acfd4f8026946a600e85db2eecfda8
 
-PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
+PODFILE CHECKSUM: 08b3263b008e9ac3809ff2bca1b9f415301c8044
 
 COCOAPODS: 1.11.3
