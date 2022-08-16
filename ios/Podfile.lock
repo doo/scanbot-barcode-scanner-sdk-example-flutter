@@ -3,23 +3,29 @@ PODS:
     - Flutter
     - ScanbotBarcodeScannerSDK (= 3.2.2)
   - Flutter (1.0.0)
-  - image_picker (0.0.1):
+  - GMImagePickerWithCloudMediaDownloading (1.0.0)
+  - image_picker_ios (0.0.1):
     - Flutter
   - path_provider_ios (0.0.1):
     - Flutter
   - permission_handler_apple (9.0.4):
     - Flutter
+  - scanbot_image_picker (1.0.0):
+    - Flutter
+    - GMImagePickerWithCloudMediaDownloading
   - ScanbotBarcodeScannerSDK (3.2.2)
 
 DEPENDENCIES:
   - barcode_scanner (from `.symlinks/plugins/barcode_scanner/ios`)
   - Flutter (from `Flutter`)
-  - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - scanbot_image_picker (from `.symlinks/plugins/scanbot_image_picker/ios`)
 
 SPEC REPOS:
   trunk:
+    - GMImagePickerWithCloudMediaDownloading
     - ScanbotBarcodeScannerSDK
 
 EXTERNAL SOURCES:
@@ -27,19 +33,23 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/barcode_scanner/ios"
   Flutter:
     :path: Flutter
-  image_picker:
-    :path: ".symlinks/plugins/image_picker/ios"
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  scanbot_image_picker:
+    :path: ".symlinks/plugins/scanbot_image_picker/ios"
 
 SPEC CHECKSUMS:
   barcode_scanner: 9b44559d708011a7fa927e5dc926d8e07bdd75a1
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
+  GMImagePickerWithCloudMediaDownloading: 47bb09b84bd14e0fcff2c982841b2b6ef3b923c5
+  image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
+  scanbot_image_picker: 2b8d9d7aae8b46d5ae2476a09a9b66bd507de577
   ScanbotBarcodeScannerSDK: 48d5e01f89acfd4f8026946a600e85db2eecfda8
 
 PODFILE CHECKSUM: 08b3263b008e9ac3809ff2bca1b9f415301c8044
