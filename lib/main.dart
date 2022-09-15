@@ -16,6 +16,8 @@ import 'package:scanbot_barcode_sdk_example/ui/barcodes_formats_selector.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcodes_preview_widget.dart';
 import 'package:scanbot_barcode_sdk_example/ui/classical_components/barcode_custom_ui.dart';
 import 'package:scanbot_barcode_sdk_example/ui/menu_items.dart';
+import 'package:scanbot_image_picker/models/image_picker_response.dart';
+import 'package:scanbot_image_picker/scanbot_image_picker_flutter.dart';
 
 bool shouldInitWithEncryption = false;
 
@@ -269,9 +271,11 @@ class _MainPageState extends State<MainPageWidget> {
 
   pickImageAndDetect() async {
     try {
-      var image = await ImagePicker()
-          .getImage(source: ImageSource.gallery, imageQuality: 90);
-      if (image == null) {
+
+      var response = await ScanbotImagePickerFlutter.pickImageAsync();
+      var uriPath = response.uri ?? "";
+      if (uriPath.isEmpty) {
+        ValidateUriError(response);
         return;
       }
 
@@ -280,7 +284,7 @@ class _MainPageState extends State<MainPageWidget> {
       }
 
       var result = await ScanbotBarcodeSdk.detectFromImageFile(
-        Uri.parse(image.path),
+        Uri.parse(uriPath),
         barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       );
 
@@ -335,6 +339,12 @@ class _MainPageState extends State<MainPageWidget> {
         context, 'Scanbot SDK trial period or (trial) license has expired.',
         title: 'Info');
     return false;
+  }
+
+  /// Check for error message and display accordingly.
+  void ValidateUriError(ImagePickerResponse response) {
+    String message = response.message ?? "";
+    showAlertDialog(context, message);
   }
 }
 
