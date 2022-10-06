@@ -178,7 +178,7 @@ class _MainPageState extends State<MainPageWidget> {
         minimumTextLength: 10,
         maximumTextLength: 11,
         minimum1DBarcodesQuietZone: 10,
-        // codeDensity: BarcodeDensity.LOW
+        codeDensity: BarcodeDensity.HIGH
       );
       var config = BatchBarcodeScannerConfiguration(
           barcodeFormatter: (item) async {
@@ -213,7 +213,7 @@ class _MainPageState extends State<MainPageWidget> {
           finderLineWidth: 7,
           successBeepEnabled: true,
           // flashEnabled: true,
-          interfaceOrientation: CameraOrientationMode.PORTRAIT,
+          interfaceOrientation: CameraOrientationMode.ALL,
           // cameraZoomFactor: 1,
           additionalParameters: additionalParameters,
           barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
@@ -239,7 +239,7 @@ class _MainPageState extends State<MainPageWidget> {
       minimumTextLength: 10,
       maximumTextLength: 11,
       minimum1DBarcodesQuietZone: 10,
-      // codeDensity: BarcodeDensity.LOW
+      codeDensity: BarcodeDensity.HIGH
     );
     var config = BarcodeScannerConfiguration(
       barcodeImageGenerationType: shouldSnapImage
@@ -255,7 +255,7 @@ class _MainPageState extends State<MainPageWidget> {
       additionalParameters: additionalParameters,
       barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       // see further customization configs ...
-      interfaceOrientation: CameraOrientationMode.LANDSCAPE,
+      interfaceOrientation: CameraOrientationMode.ALL,
     );
 
     try {
@@ -288,7 +288,7 @@ class _MainPageState extends State<MainPageWidget> {
 
       var result = await ScanbotBarcodeSdk.detectFromImageFile(
         Uri.parse(uriPath),
-        barcodeAdditionalParameters: BarcodeAdditionalParameters(lowPowerMode: true),
+        barcodeAdditionalParameters: BarcodeAdditionalParameters(lowPowerMode: true,  codeDensity: BarcodeDensity.HIGH),
         barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       );
 
