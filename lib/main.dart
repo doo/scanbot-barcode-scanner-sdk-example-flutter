@@ -213,11 +213,12 @@ class _MainPageState extends State<MainPageWidget> {
           finderLineWidth: 7,
           successBeepEnabled: true,
           // flashEnabled: true,
-          interfaceOrientation: CameraOrientationMode.ALL,
+          orientationLockMode: CameraOrientationMode.NONE,
           // cameraZoomFactor: 1,
           additionalParameters: additionalParameters,
           barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
-          cancelButtonHidden: false);
+          cancelButtonHidden: false,
+          useButtonsAllCaps: true);
 
       var result = await ScanbotBarcodeSdk.startBatchBarcodeScanner(config);
       if (result.operationResult == OperationResult.SUCCESS) {
@@ -255,7 +256,8 @@ class _MainPageState extends State<MainPageWidget> {
       additionalParameters: additionalParameters,
       barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       // see further customization configs ...
-      interfaceOrientation: CameraOrientationMode.ALL,
+      orientationLockMode: CameraOrientationMode.NONE,
+        useButtonsAllCaps: true,
     );
 
     try {
