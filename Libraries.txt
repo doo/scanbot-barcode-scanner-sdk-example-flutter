@@ -8,7 +8,7 @@ image: https://docs.scanbot.io/img/hero/hero-image-nobg.png
 # Third-party Libraries | Flutter Barcode Scanner
 
 ```text
-Open Source Libraries used in the Scanbot Barcode Scanner SDK Flutter Plugin version 3.2.2
+Open Source Libraries used in the Scanbot Barcode Scanner SDK Flutter Plugin version 3.2.3
 
 * Name: 'json_annotation',
 * Version: '^4.0.1',
