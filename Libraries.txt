@@ -1,13 +1,3 @@
----
-title: Third-party Libraries | Flutter Barcode Scanner
-sidebar_label: Third-party Libraries
-description: Developer documentation Scanbot Flutter Barcode Scanner SDK. Guides, API references, and code samples to help you start building with Scanbot SDKs. ➜ Get started.
-image: https://docs.scanbot.io/img/hero/hero-image-nobg.png
----
-
-# Third-party Libraries | Flutter Barcode Scanner
-
-```text
 Open Source Libraries used in the Scanbot Barcode Scanner SDK Flutter Plugin version 3.2.3
 
 * Name: 'json_annotation',
