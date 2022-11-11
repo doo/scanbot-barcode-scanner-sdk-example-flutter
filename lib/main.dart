@@ -174,11 +174,10 @@ class _MainPageState extends State<MainPageWidget> {
     }
     try {
       final additionalParameters = BarcodeAdditionalParameters(
-        minimumTextLength: 10,
-        maximumTextLength: 11,
-        minimum1DBarcodesQuietZone: 10,
-        codeDensity: BarcodeDensity.HIGH
-      );
+          minimumTextLength: 10,
+          maximumTextLength: 11,
+          minimum1DBarcodesQuietZone: 10,
+          codeDensity: BarcodeDensity.HIGH);
       var config = BatchBarcodeScannerConfiguration(
           barcodeFormatter: (item) async {
             Random random = Random();
@@ -236,11 +235,10 @@ class _MainPageState extends State<MainPageWidget> {
       return;
     }
     final additionalParameters = BarcodeAdditionalParameters(
-      minimumTextLength: 10,
-      maximumTextLength: 11,
-      minimum1DBarcodesQuietZone: 10,
-      codeDensity: BarcodeDensity.HIGH
-    );
+        minimumTextLength: 10,
+        maximumTextLength: 11,
+        minimum1DBarcodesQuietZone: 10,
+        codeDensity: BarcodeDensity.HIGH);
     var config = BarcodeScannerConfiguration(
       barcodeImageGenerationType: shouldSnapImage
           ? BarcodeImageGenerationType.VIDEO_FRAME
@@ -256,7 +254,7 @@ class _MainPageState extends State<MainPageWidget> {
       barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       // see further customization configs ...
       orientationLockMode: CameraOrientationMode.NONE,
-        useButtonsAllCaps: true,
+      useButtonsAllCaps: true,
     );
 
     try {
@@ -288,7 +286,8 @@ class _MainPageState extends State<MainPageWidget> {
 
       var result = await ScanbotBarcodeSdk.detectFromImageFile(
         Uri.parse(uriPath),
-        barcodeAdditionalParameters: BarcodeAdditionalParameters(lowPowerMode: true,  codeDensity: BarcodeDensity.HIGH),
+        barcodeAdditionalParameters: BarcodeAdditionalParameters(
+            lowPowerMode: true, codeDensity: BarcodeDensity.HIGH),
         barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       );
 
