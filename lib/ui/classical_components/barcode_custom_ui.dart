@@ -123,7 +123,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
                         // Initial configuration for the scanner itself
                         scannerConfiguration:
                             BarcodeClassicScannerConfiguration(
-                          barcodeFormats: allBarcodeTypes, // [BarcodeFormat.QR_CODE] for one barcode type
+                          barcodeFormats:
+                              allBarcodeTypes, // [BarcodeFormat.QR_CODE] for one barcode type
                           engineMode: EngineMode.NextGen,
                           // get the full size image of the document with a successfully scanned barcode
                           // barcodeImageGenerationType: BarcodeImageGenerationType.CAPTURED_IMAGE
@@ -249,11 +250,11 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
                 );
               }),
           showProgressBar
-              ? Center(
-                  child: Container(
+              ? const Center(
+                  child: SizedBox(
                     width: 100,
                     height: 100,
-                    child: const CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                       strokeWidth: 10,
                     ),
                   ),

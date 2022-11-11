@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:barcode_scanner/barcode_scanning_data.dart';
@@ -204,7 +203,7 @@ class _MainPageState extends State<MainPageWidget> {
           fetchingStateText: "might be not needed",
           noBarcodesTitle: "nothing to see here",
           barcodesCountTextColor: Colors.purple,
-          finderAspectRatio: FinderAspectRatio(width: 2, height: 1),
+          finderAspectRatio: const FinderAspectRatio(width: 2, height: 1),
           topBarButtonsInactiveColor: Colors.orange,
           detailsActionColor: Colors.yellow,
           detailsBackgroundColor: Colors.amber,
@@ -271,7 +270,6 @@ class _MainPageState extends State<MainPageWidget> {
 
   pickImageAndDetect() async {
     try {
-
       var response = await ScanbotImagePickerFlutter.pickImageAsync();
       var uriPath = response.uri ?? "";
       if (uriPath.isEmpty) {

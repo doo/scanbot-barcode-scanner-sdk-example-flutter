@@ -1,7 +1,7 @@
 PODS:
   - barcode_scanner (1.0.0):
     - Flutter
-    - ScanbotBarcodeScannerSDK (= 3.2.2)
+    - ScanbotBarcodeScannerSDK (= 3.2.3)
   - Flutter (1.0.0)
   - GMImagePickerWithCloudMediaDownloading (1.0.0)
   - image_picker_ios (0.0.1):
@@ -13,7 +13,7 @@ PODS:
   - scanbot_image_picker (1.0.0):
     - Flutter
     - GMImagePickerWithCloudMediaDownloading
-  - ScanbotBarcodeScannerSDK (3.2.2)
+  - ScanbotBarcodeScannerSDK (3.2.3)
 
 DEPENDENCIES:
   - barcode_scanner (from `.symlinks/plugins/barcode_scanner/ios`)
@@ -43,14 +43,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/scanbot_image_picker/ios"
 
 SPEC CHECKSUMS:
-  barcode_scanner: 9b44559d708011a7fa927e5dc926d8e07bdd75a1
-  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  barcode_scanner: 317289ea35d6d81b9e5fc026f2fe14362b732954
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   GMImagePickerWithCloudMediaDownloading: 47bb09b84bd14e0fcff2c982841b2b6ef3b923c5
   image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   scanbot_image_picker: 2b8d9d7aae8b46d5ae2476a09a9b66bd507de577
-  ScanbotBarcodeScannerSDK: 48d5e01f89acfd4f8026946a600e85db2eecfda8
+  ScanbotBarcodeScannerSDK: 81c3321db77db392537a5190df454a889d165fca
 
 PODFILE CHECKSUM: 08b3263b008e9ac3809ff2bca1b9f415301c8044
 
