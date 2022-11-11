@@ -1,6 +1,6 @@
 # Scanbot Barcode Scanner SDK Flutter Example
 
-This example app shows how to integrate the [Scanbot Barcode Scanner SDK Flutter Plugin](https://pub.dev/packages/barcode_scanner) on Android and iOS.
+This example app shows how to integrate the [Scanbot Barcode Scanner SDK Flutter Plugin](https://scanbot.io/developer/flutter-barcode-scanner/) on Android and iOS.
 
 For more details about the Plugin please see this [documentation](https://docs.scanbot.io/barcode-scanner-sdk/flutter/introduction/).
 
@@ -8,8 +8,9 @@ For more details about the Plugin please see this [documentation](https://docs.s
 ## What is Scanbot Barcode Scanner SDK?
 
 The Scanbot Barcode Scanner SDK brings barcode scanning capabilities to your mobile apps.
-It provides functionality for scanning 1D and 2D barcodes, like EAN, UPC, QR code, Data Matrix, PDF 417, etc.
-For more details visit our website https://scanbot.io
+It provides functionality for scanning [1D](https://scanbot.io/products/barcode-software/1d-barcode-scanner/) and [2D](https://scanbot.io/products/barcode-software/2d-barcode-scanner/) barcodes, like [EAN](https://scanbot-sdk.com/products/barcode-software/1d-barcode-scanner/ean/), [UPC](https://scanbot.io/products/barcode-software/1d-barcode-scanner/upc/), [QR code](https://scanbot.io/products/barcode-software/2d-barcode-scanner/qr-code/), [Data Matrix](https://scanbot.io/products/barcode-software/2d-barcode-scanner/data-matrix/), [PDF-417](https://scanbot.io/products/barcode-software/2d-barcode-scanner/pdf417/), etc.
+
+For more details check out our blog post [Types of barcodes](https://scanbot.io/blog/types-of-barcodes/).
 
 
 ## How to run this app

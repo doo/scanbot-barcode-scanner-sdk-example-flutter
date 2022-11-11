@@ -52,6 +52,7 @@ _initScanbotSdk() async {
           "${storageDirectory?.path}/custom-barcode-sdk-storage");
 
   try {
+    config.useCameraX = true;
     await ScanbotBarcodeSdk.initScanbotSdk(config);
   } catch (e) {
     print(e);
@@ -173,11 +174,10 @@ class _MainPageState extends State<MainPageWidget> {
     }
     try {
       final additionalParameters = BarcodeAdditionalParameters(
-        minimumTextLength: 10,
-        maximumTextLength: 11,
-        minimum1DBarcodesQuietZone: 10,
-      );
-      //var config = BarcodeScannerConfiguration(); // testing default configs
+          minimumTextLength: 10,
+          maximumTextLength: 11,
+          minimum1DBarcodesQuietZone: 10,
+          codeDensity: BarcodeDensity.HIGH);
       var config = BatchBarcodeScannerConfiguration(
           barcodeFormatter: (item) async {
             Random random = Random();
@@ -211,11 +211,12 @@ class _MainPageState extends State<MainPageWidget> {
           finderLineWidth: 7,
           successBeepEnabled: true,
           // flashEnabled: true,
-          orientationLockMode: CameraOrientationMode.PORTRAIT,
+          orientationLockMode: CameraOrientationMode.NONE,
           // cameraZoomFactor: 1,
-          // additionalParameters: additionalParameters,
+          additionalParameters: additionalParameters,
           barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
-          cancelButtonHidden: false);
+          cancelButtonHidden: false,
+          useButtonsAllCaps: true);
 
       var result = await ScanbotBarcodeSdk.startBatchBarcodeScanner(config);
       if (result.operationResult == OperationResult.SUCCESS) {
@@ -234,10 +235,10 @@ class _MainPageState extends State<MainPageWidget> {
       return;
     }
     final additionalParameters = BarcodeAdditionalParameters(
-      minimumTextLength: 10,
-      maximumTextLength: 11,
-      minimum1DBarcodesQuietZone: 10,
-    );
+        minimumTextLength: 10,
+        maximumTextLength: 11,
+        minimum1DBarcodesQuietZone: 10,
+        codeDensity: BarcodeDensity.HIGH);
     var config = BarcodeScannerConfiguration(
       barcodeImageGenerationType: shouldSnapImage
           ? BarcodeImageGenerationType.VIDEO_FRAME
@@ -249,9 +250,11 @@ class _MainPageState extends State<MainPageWidget> {
           "Please align any supported barcode in the frame to scan it.",
       successBeepEnabled: true,
       // cameraZoomFactor: 1,
-      // additionalParameters: additionalParameters,
+      additionalParameters: additionalParameters,
       barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       // see further customization configs ...
+      orientationLockMode: CameraOrientationMode.NONE,
+      useButtonsAllCaps: true,
     );
 
     try {
@@ -283,6 +286,8 @@ class _MainPageState extends State<MainPageWidget> {
 
       var result = await ScanbotBarcodeSdk.detectFromImageFile(
         Uri.parse(uriPath),
+        barcodeAdditionalParameters: BarcodeAdditionalParameters(
+            lowPowerMode: true, codeDensity: BarcodeDensity.HIGH),
         barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       );
 
