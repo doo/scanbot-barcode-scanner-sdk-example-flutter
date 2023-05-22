@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:barcode_scanner/json/common_data.dart';
 import 'package:barcode_scanner/barcode_scanning_data.dart';
 import 'package:barcode_scanner/classical_components/barcode_camera.dart';
 import 'package:barcode_scanner/classical_components/barcode_live_detection.dart';

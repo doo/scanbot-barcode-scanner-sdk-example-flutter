@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:barcode_scanner/barcode_scanning_data.dart';
-import 'package:barcode_scanner/common_data.dart';
+import 'package:barcode_scanner/json/common_data.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:barcode_scanner/scanbot_sdk_models.dart';
 
@@ -211,7 +211,7 @@ class _MainPageState extends State<MainPageWidget> {
           finderLineWidth: 7,
           successBeepEnabled: true,
           // flashEnabled: true,
-          orientationLockMode: CameraOrientationMode.NONE,
+          orientationLockMode: OrientationLockMode.NONE,
           // cameraZoomFactor: 1,
           additionalParameters: additionalParameters,
           barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
@@ -253,7 +253,7 @@ class _MainPageState extends State<MainPageWidget> {
       additionalParameters: additionalParameters,
       barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       // see further customization configs ...
-      orientationLockMode: CameraOrientationMode.NONE,
+      orientationLockMode: OrientationLockMode.NONE,
       useButtonsAllCaps: true,
     );
 
