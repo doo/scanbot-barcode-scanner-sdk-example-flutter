@@ -1,4 +1,4 @@
-import 'package:barcode_scanner/common_data.dart';
+import 'package:barcode_scanner/json/common_data.dart';
 import 'package:flutter/material.dart';
 
 class BarcodeFormatItemWidget extends StatelessWidget {
