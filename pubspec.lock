@@ -15,7 +15,7 @@ packages:
       path: "../scanbot-barcode-sdk-flutter"
       relative: true
     source: path
-    version: "3.2.4"
+    version: "3.6.0"
   boolean_selector:
     dependency: transitive
     description:
