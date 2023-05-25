@@ -127,7 +127,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
                               BarcodeClassicScannerConfiguration(
                             barcodeFormats:
                             PredefinedBarcodes.allBarcodeTypes(), // [BarcodeFormat.QR_CODE] for one barcode type
-                            engineMode: EngineMode.NextGen,
+                            engineMode: EngineMode.NEXT_GEN,
                             additionalParameters: 
                                 BarcodeAdditionalParameters(
                                     msiPlesseyChecksumAlgorithm: 

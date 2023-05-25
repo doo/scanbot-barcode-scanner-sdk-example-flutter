@@ -177,7 +177,7 @@ class _MainPageState extends State<MainPageWidget> {
           minimumTextLength: 10,
           maximumTextLength: 11,
           minimum1DBarcodesQuietZone: 10,
-          codeDensity: BarcodeDensity.HIGH);
+          codeDensity: CodeDensity.HIGH);    
       var config = BatchBarcodeScannerConfiguration(
           barcodeFormatter: (item) async {
             Random random = Random();
@@ -216,7 +216,8 @@ class _MainPageState extends State<MainPageWidget> {
           additionalParameters: additionalParameters,
           barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
           cancelButtonHidden: false,
-          useButtonsAllCaps: true);
+          //useButtonsAllCaps: true
+          );
 
       var result = await ScanbotBarcodeSdk.startBatchBarcodeScanner(config);
       if (result.operationResult == OperationResult.SUCCESS) {
@@ -238,7 +239,8 @@ class _MainPageState extends State<MainPageWidget> {
         minimumTextLength: 10,
         maximumTextLength: 11,
         minimum1DBarcodesQuietZone: 10,
-        codeDensity: BarcodeDensity.HIGH);
+        codeDensity: CodeDensity.HIGH,
+        );
     var config = BarcodeScannerConfiguration(
       barcodeImageGenerationType: shouldSnapImage
           ? BarcodeImageGenerationType.VIDEO_FRAME
@@ -249,12 +251,13 @@ class _MainPageState extends State<MainPageWidget> {
       finderTextHint:
           "Please align any supported barcode in the frame to scan it.",
       successBeepEnabled: true,
+      
       // cameraZoomFactor: 1,
       additionalParameters: additionalParameters,
       barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       // see further customization configs ...
       orientationLockMode: OrientationLockMode.NONE,
-      useButtonsAllCaps: true,
+      //useButtonsAllCaps: true,
     );
 
     try {
@@ -287,7 +290,7 @@ class _MainPageState extends State<MainPageWidget> {
       var result = await ScanbotBarcodeSdk.detectFromImageFile(
         Uri.parse(uriPath),
         barcodeAdditionalParameters: BarcodeAdditionalParameters(
-            lowPowerMode: true, codeDensity: BarcodeDensity.HIGH),
+            lowPowerMode: true, codeDensity: CodeDensity.HIGH),
         barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       );
 
