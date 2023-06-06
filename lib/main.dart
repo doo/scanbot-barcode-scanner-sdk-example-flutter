@@ -214,7 +214,7 @@ class _MainPageState extends State<MainPageWidget> {
         orientationLockMode: OrientationLockMode.NONE,
         // cameraZoomFactor: 1,
         additionalParameters: additionalParameters,
-       // barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
+        barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
         cancelButtonHidden: false,
         overlayConfiguration: SelectionOverlayConfiguration(
           overlayEnabled: true,
