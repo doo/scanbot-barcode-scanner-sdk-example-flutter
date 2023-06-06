@@ -174,8 +174,8 @@ class _MainPageState extends State<MainPageWidget> {
     }
     try {
       final additionalParameters = BarcodeAdditionalParameters(
-          minimumTextLength: 10,
-          maximumTextLength: 11,
+          minimumTextLength: 3,
+          maximumTextLength: 45,
           minimum1DBarcodesQuietZone: 10,
           codeDensity: CodeDensity.HIGH);
       var config = BatchBarcodeScannerConfiguration(
@@ -214,7 +214,7 @@ class _MainPageState extends State<MainPageWidget> {
         orientationLockMode: OrientationLockMode.NONE,
         // cameraZoomFactor: 1,
         additionalParameters: additionalParameters,
-        barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
+       // barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
         cancelButtonHidden: false,
         overlayConfiguration: SelectionOverlayConfiguration(
           overlayEnabled: true,
@@ -240,8 +240,8 @@ class _MainPageState extends State<MainPageWidget> {
       return;
     }
     final additionalParameters = BarcodeAdditionalParameters(
-      minimumTextLength: 10,
-      maximumTextLength: 11,
+      minimumTextLength: 3,
+      maximumTextLength: 45,
       minimum1DBarcodesQuietZone: 10,
       codeDensity: CodeDensity.HIGH,
     );
