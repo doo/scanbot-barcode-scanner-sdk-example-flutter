@@ -348,10 +348,10 @@ packages:
     dependency: "direct main"
     description:
       name: scanbot_image_picker
-      sha256: b2467211db084f8eed8f5be60a5503465be7f07bd264b0d013102cc611a14770
+      sha256: "11e78ea558c5a8f75c2e11c605d0f8ab9d1759bff34f8fd0349320abcc91e0f7"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1-alpha3"
+    version: "1.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
