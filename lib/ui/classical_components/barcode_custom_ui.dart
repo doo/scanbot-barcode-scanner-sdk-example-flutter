@@ -125,8 +125,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
                           // Initial configuration for the scanner itself
                           scannerConfiguration:
                               BarcodeClassicScannerConfiguration(
-                            barcodeFormats:
-                            PredefinedBarcodes.allBarcodeTypes(), // [BarcodeFormat.QR_CODE] for one barcode type
+                            barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(), // [BarcodeFormat.QR_CODE] for one barcode type
                             engineMode: EngineMode.NEXT_GEN,
                             additionalParameters: 
                                 BarcodeAdditionalParameters(

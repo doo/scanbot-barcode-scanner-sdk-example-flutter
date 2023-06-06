@@ -19,6 +19,8 @@ import 'package:scanbot_image_picker/models/image_picker_response.dart';
 import 'package:scanbot_image_picker/scanbot_image_picker_flutter.dart';
 
 bool shouldInitWithEncryption = false;
+BarcodeFormatsRepository barcodeFormatsRepository =
+BarcodeFormatsRepository();
 
 void main() => runApp(MyApp());
 
@@ -46,8 +48,8 @@ _initScanbotSdk() async {
   var config = ScanbotSdkConfig(
       licenseKey: BARCODE_SDK_LICENSE_KEY,
       encryptionParameters: encryptionParameters,
-      loggingEnabled:
-          true, // Consider disabling logging in production builds for security and performance reasons.
+      loggingEnabled: true,
+      // Consider disabling logging in production builds for security and performance reasons.
       storageBaseDirectory:
           "${storageDirectory?.path}/custom-barcode-sdk-storage");
 
@@ -85,8 +87,6 @@ class MainPageWidget extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPageWidget> {
-  BarcodeFormatsRepository barcodeFormatsRepository =
-      BarcodeFormatsRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -177,47 +177,51 @@ class _MainPageState extends State<MainPageWidget> {
           minimumTextLength: 10,
           maximumTextLength: 11,
           minimum1DBarcodesQuietZone: 10,
-          codeDensity: CodeDensity.HIGH);    
+          codeDensity: CodeDensity.HIGH);
       var config = BatchBarcodeScannerConfiguration(
-          barcodeFormatter: (item) async {
-            Random random = Random();
-            int randomNumber = random.nextInt(4) + 2;
-            await Future.delayed(Duration(seconds: randomNumber));
-            return BarcodeFormattedData(
-                title: item.barcodeFormat.toString(),
-                subtitle: item.text ?? "" "custom string");
-          },
-          topBarBackgroundColor: Colors.blueAccent,
-          topBarButtonsColor: Colors.white70,
-          cameraOverlayColor: Colors.black26,
-          finderLineColor: Colors.red,
-          finderTextHintColor: Colors.cyanAccent,
-          cancelButtonTitle: "Cancel",
-          enableCameraButtonTitle: "camera enable",
-          enableCameraExplanationText: "explanation text",
-          finderTextHint:
-              "Please align any supported barcode in the frame to scan it.",
-          // clearButtonTitle: "CCCClear",
-          // submitButtonTitle: "Submitt",
-          barcodesCountText: "%d codes",
-          fetchingStateText: "might be not needed",
-          noBarcodesTitle: "nothing to see here",
-          barcodesCountTextColor: Colors.purple,
-          finderAspectRatio: const FinderAspectRatio(width: 2, height: 1),
-          topBarButtonsInactiveColor: Colors.orange,
-          detailsActionColor: Colors.yellow,
-          detailsBackgroundColor: Colors.amber,
-          detailsPrimaryColor: Colors.yellowAccent,
-          finderLineWidth: 7,
-          successBeepEnabled: true,
-          // flashEnabled: true,
-          orientationLockMode: OrientationLockMode.NONE,
-          // cameraZoomFactor: 1,
-          additionalParameters: additionalParameters,
-          barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
-          cancelButtonHidden: false,
-          //useButtonsAllCaps: true
-          );
+        barcodeFormatter: (item) async {
+          Random random = Random();
+          int randomNumber = random.nextInt(4) + 2;
+          await Future.delayed(Duration(seconds: randomNumber));
+          return BarcodeFormattedData(
+              title: item.barcodeFormat.toString(),
+              subtitle: item.text ?? "" "custom string");
+        },
+        topBarBackgroundColor: Colors.blueAccent,
+        topBarButtonsColor: Colors.white70,
+        cameraOverlayColor: Colors.black26,
+        finderLineColor: Colors.red,
+        finderTextHintColor: Colors.cyanAccent,
+        cancelButtonTitle: "Cancel",
+        enableCameraButtonTitle: "camera enable",
+        enableCameraExplanationText: "explanation text",
+        finderTextHint:
+            "Please align any supported barcode in the frame to scan it.",
+        // clearButtonTitle: "CCCClear",
+        // submitButtonTitle: "Submitt",
+        barcodesCountText: "%d codes",
+        fetchingStateText: "might be not needed",
+        noBarcodesTitle: "nothing to see here",
+        barcodesCountTextColor: Colors.purple,
+        finderAspectRatio: const FinderAspectRatio(width: 2, height: 1),
+        topBarButtonsInactiveColor: Colors.orange,
+        detailsActionColor: Colors.yellow,
+        detailsBackgroundColor: Colors.amber,
+        detailsPrimaryColor: Colors.yellowAccent,
+        finderLineWidth: 7,
+        successBeepEnabled: true,
+        // flashEnabled: true,
+        orientationLockMode: OrientationLockMode.NONE,
+        // cameraZoomFactor: 1,
+        additionalParameters: additionalParameters,
+        barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
+        cancelButtonHidden: false,
+        overlayConfiguration: SelectionOverlayConfiguration(
+          overlayEnabled: true,
+          automaticSelectionEnabled: true
+        ),
+        //useButtonsAllCaps: true
+      );
 
       var result = await ScanbotBarcodeSdk.startBatchBarcodeScanner(config);
       if (result.operationResult == OperationResult.SUCCESS) {
@@ -236,11 +240,11 @@ class _MainPageState extends State<MainPageWidget> {
       return;
     }
     final additionalParameters = BarcodeAdditionalParameters(
-        minimumTextLength: 10,
-        maximumTextLength: 11,
-        minimum1DBarcodesQuietZone: 10,
-        codeDensity: CodeDensity.HIGH,
-        );
+      minimumTextLength: 10,
+      maximumTextLength: 11,
+      minimum1DBarcodesQuietZone: 10,
+      codeDensity: CodeDensity.HIGH,
+    );
     var config = BarcodeScannerConfiguration(
       barcodeImageGenerationType: shouldSnapImage
           ? BarcodeImageGenerationType.VIDEO_FRAME
