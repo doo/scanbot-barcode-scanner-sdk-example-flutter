@@ -1,5 +1,4 @@
-import 'package:barcode_scanner/barcode_scanning_data.dart';
-import 'package:barcode_scanner/json/common_data.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
 
 class BarcodeItemWidget extends StatelessWidget {
@@ -51,5 +50,4 @@ const barcodeFormatEnumMap = {
     BarcodeFormat.IATA_2_OF_5: 'IATA_2_OF_5',
     BarcodeFormat.INDUSTRIAL_2_OF_5: 'INDUSTRIAL_2_OF_5',
     BarcodeFormat.CODE_25: 'CODE_25',
-    BarcodeFormat.UNKNOWN: 'UNKNOWN',
 };

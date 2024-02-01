@@ -5,10 +5,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'package:barcode_scanner/barcode_scanning_data.dart';
-import 'package:barcode_scanner/json/common_data.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
-import 'package:barcode_scanner/scanbot_sdk_models.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart' as scanbot;
 
 import 'package:scanbot_barcode_sdk_example/ui/barcode_formats_repo.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcodes_formats_selector.dart';
@@ -19,8 +17,7 @@ import 'package:scanbot_image_picker/models/image_picker_response.dart';
 import 'package:scanbot_image_picker/scanbot_image_picker_flutter.dart';
 
 bool shouldInitWithEncryption = false;
-BarcodeFormatsRepository barcodeFormatsRepository =
-BarcodeFormatsRepository();
+BarcodeFormatsRepository barcodeFormatsRepository = BarcodeFormatsRepository();
 
 void main() => runApp(MyApp());
 
@@ -87,7 +84,6 @@ class MainPageWidget extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPageWidget> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,7 +199,7 @@ class _MainPageState extends State<MainPageWidget> {
         fetchingStateText: "might be not needed",
         noBarcodesTitle: "nothing to see here",
         barcodesCountTextColor: Colors.purple,
-        finderAspectRatio: const FinderAspectRatio(width: 2, height: 1),
+        finderAspectRatio: scanbot.AspectRatio(width: 2, height: 1),
         topBarButtonsInactiveColor: Colors.orange,
         detailsActionColor: Colors.yellow,
         detailsBackgroundColor: Colors.amber,
@@ -217,9 +213,7 @@ class _MainPageState extends State<MainPageWidget> {
         barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
         cancelButtonHidden: false,
         overlayConfiguration: SelectionOverlayConfiguration(
-          overlayEnabled: true,
-          automaticSelectionEnabled: true
-        ),
+            overlayEnabled: true, automaticSelectionEnabled: true),
         //useButtonsAllCaps: true
       );
 
@@ -255,7 +249,7 @@ class _MainPageState extends State<MainPageWidget> {
       finderTextHint:
           "Please align any supported barcode in the frame to scan it.",
       successBeepEnabled: true,
-      
+
       // cameraZoomFactor: 1,
       additionalParameters: additionalParameters,
       barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
@@ -291,11 +285,11 @@ class _MainPageState extends State<MainPageWidget> {
         return;
       }
 
-      var result = await ScanbotBarcodeSdk.detectFromImageFile(
+      var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
         Uri.parse(uriPath),
-        barcodeAdditionalParameters: BarcodeAdditionalParameters(
-            lowPowerMode: true, codeDensity: CodeDensity.HIGH),
         barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
+        additionalParameters:
+            BarcodeAdditionalParameters(codeDensity: CodeDensity.HIGH),
       );
 
       if (result.operationResult == OperationResult.SUCCESS) {

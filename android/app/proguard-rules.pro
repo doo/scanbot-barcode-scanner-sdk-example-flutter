@@ -33,8 +33,8 @@
 -keeppackagenames io.scanbot.sdk.barcode_scanner.**
 -keep public class io.scanbot.sdk.barcode_scanner.** { *; }
 
--keeppackagenames io.scanbot.barcode.sdk.flutter.**
--keep public class io.scanbot.barcode.sdk.flutter.**{ *; }
+-keeppackagenames io.scanbot.sdk.flutter.**
+-keep public class io.scanbot.sdk.flutter.**{ *; }
 
 -keeppackagenames io.scanbot.sap.**
 -keep public class io.scanbot.sap.** { *; }

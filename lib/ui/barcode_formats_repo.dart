@@ -1,10 +1,9 @@
-import 'package:barcode_scanner/json/common_data.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 class BarcodeFormatsRepository {
   Set<BarcodeFormat> selectedFormats = getSelectableTypes().toSet();
   static List<BarcodeFormat> getSelectableTypes() {
-    var values = List.of(BarcodeFormat.values);
-    values.remove(BarcodeFormat.UNKNOWN);
+    var values = PredefinedBarcodes.allBarcodeTypes();
     return values;
   }
 }
