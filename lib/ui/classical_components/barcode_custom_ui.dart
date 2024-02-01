@@ -1,12 +1,7 @@
 import 'dart:async';
 
-import 'package:barcode_scanner/json/common_data.dart';
-import 'package:barcode_scanner/barcode_scanning_data.dart';
-import 'package:barcode_scanner/classical_components/barcode_camera.dart';
-import 'package:barcode_scanner/classical_components/barcode_live_detection.dart';
-import 'package:barcode_scanner/classical_components/barcode_scanner_configuration.dart';
-import 'package:barcode_scanner/classical_components/camera_configuration.dart';
-import 'package:barcode_scanner/classical_components/classical_camera.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart' as scanbot;
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -130,8 +125,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
                             additionalParameters: 
                                 BarcodeAdditionalParameters(
                                     msiPlesseyChecksumAlgorithm: 
-                                        MSIPlesseyChecksumAlgorithm.Mod11NCR,
-                                    enableGS1Decoding: true),
+                                        MSIPlesseyChecksumAlgorithm.MOD_11_NCR,
+                                    gs1HandlingMode: Gs1HandlingMode.NONE),
                             // get the full size image of the document with a successfully scanned barcode
                             // barcodeImageGenerationType: BarcodeImageGenerationType.CAPTURED_IMAGE
                           ),
@@ -175,7 +170,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
                                       Radius.circular(20))),
                               backgroundColor: Colors.amber.withAlpha(150),
                               finderAspectRatio:
-                                  const FinderAspectRatio(width: 5, height: 2)),
+                                   scanbot.AspectRatio(width: 5, height: 2)),
                         ),
                         onWidgetReady: (controller) {
                           // Once your camera has initialized, you are able to control the camera parameters
