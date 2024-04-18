@@ -50,4 +50,5 @@ const barcodeFormatEnumMap = {
     BarcodeFormat.IATA_2_OF_5: 'IATA_2_OF_5',
     BarcodeFormat.INDUSTRIAL_2_OF_5: 'INDUSTRIAL_2_OF_5',
     BarcodeFormat.CODE_25: 'CODE_25',
+    BarcodeFormat.GS1_COMPOSITE: 'GS1_COMPOSITE'
 };
