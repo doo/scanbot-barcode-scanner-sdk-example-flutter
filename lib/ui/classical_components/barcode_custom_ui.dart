@@ -124,12 +124,19 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     var barcodeCameraConfiguration = BarcodeCameraConfiguration(
       flashEnabled: flashEnabled, // initial flash state
       // Initial configuration for the scanner itself
-      overlayConfiguration:
-          SelectionOverlayScannerConfiguration(overlayEnabled: true),
+      overlayConfiguration: SelectionOverlayScannerConfiguration(
+        overlayEnabled: true,
+        onBarcodeClicked: (barcode) {
+          // this to return result to screen caller
+          barcodeCameraDetector
+              .pauseDetection(); // we can also pause detection immediately after success to prevent it from sending new sucсess results
+          Navigator.pop(context, BarcodeScanningResult([barcode]));
+        },
+      ),
       scannerConfiguration: barcodeClassicScannerConfiguration,
       finder: finderConfiguration,
     );
-    
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(),
