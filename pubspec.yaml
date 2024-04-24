@@ -22,7 +22,7 @@ dependencies:
     sdk: flutter
 
   # Scanbot Barcode Scanner SDK
-  barcode_scanner: ^3.6.2
+  barcode_scanner: ^4.2.0
 
   path_provider: ^2.0.1
   scanbot_image_picker: ^1.0.1
