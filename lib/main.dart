@@ -74,7 +74,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: MainPageWidget());
+    return MaterialApp(
+      home: MainPageWidget(),
+      navigatorObservers: [ScanbotCamera.scanbotSdkRouteObserver],
+    );
   }
 }
 
