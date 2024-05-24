@@ -14,6 +14,7 @@ class ScanbotScannerScreen extends StatefulWidget {
 class _ScanbotScannerScreenState extends State<ScanbotScannerScreen> {
   int _index = 0;
   ValueNotifier<bool> detectBarcodes = ValueNotifier<bool>(false);
+  ValueNotifier<bool> showPolygon = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +22,17 @@ class _ScanbotScannerScreenState extends State<ScanbotScannerScreen> {
       children: [
         ScanbotScanner(
             detectBarcodes: detectBarcodes,
+            showPolygon: showPolygon,
             onScanned: (String barcode) async {
               print('Barcode: $barcode scanned');
               // if the barcode is in our inventory and is a valid product, timeout for mocking network call
               Future<void>.delayed(const Duration(milliseconds: 300));
-              _index = 0;
+
               detectBarcodes.value = false;
-              setState(() {});
+              setState(() {
+                _index =
+                    0; // to change a value inside setState this a more correct approach?
+              });
               return 200;
             },
             onLicenseFailed: () {
@@ -38,11 +43,15 @@ class _ScanbotScannerScreenState extends State<ScanbotScannerScreen> {
           children: [
             GestureDetector(
               onTap: () {
-                _index = 1;
                 detectBarcodes.value = true;
-                setState(() {});
+                setState(() {
+                  _index =
+                      1; // to change a value inside setState this a more correct approach?
+                });
               },
-              child: Container(color: Colors.green, child: const Center(child: Text('Start scanning'))),
+              child: Container(
+                  color: Colors.green,
+                  child: const Center(child: Text('Start scanning'))),
             ),
             Container(color: Colors.transparent)
           ],
@@ -54,9 +63,13 @@ class _ScanbotScannerScreenState extends State<ScanbotScannerScreen> {
 
 class ScanbotScanner extends StatefulWidget {
   const ScanbotScanner(
-      {required this.detectBarcodes, required this.onScanned, required this.onLicenseFailed});
+      {required this.detectBarcodes,
+      required this.showPolygon,
+      required this.onScanned,
+      required this.onLicenseFailed});
 
   final ValueNotifier<bool> detectBarcodes;
+  final ValueNotifier<bool> showPolygon;
   final Future<int> Function(String) onScanned;
   final void Function() onLicenseFailed;
 
@@ -66,67 +79,14 @@ class ScanbotScanner extends StatefulWidget {
 
 class _ScanbotScannerState extends State<ScanbotScanner> {
   bool _validLicense = true;
-  // sdk.ScanbotCameraController? _controller;
-  late sdk.BarcodeCameraLiveDetector _barcodeCameraDetector;
-  final sdk.BarcodeCameraConfiguration _barcodeCameraConfiguration = sdk.BarcodeCameraConfiguration(
-    scannerConfiguration: sdk.BarcodeClassicScannerConfiguration(
-      barcodeFormats: [
-        sdk.BarcodeFormat.EAN_8,
-        sdk.BarcodeFormat.EAN_13,
-        sdk.BarcodeFormat.CODE_128,
-        sdk.BarcodeFormat.DATA_MATRIX,
-        sdk.BarcodeFormat.DATABAR_LIMITED,
-        sdk.BarcodeFormat.RSS_14,
-        sdk.BarcodeFormat.RSS_EXPANDED,
-        sdk.BarcodeFormat.GS1_COMPOSITE,
-        sdk.BarcodeFormat.UPC_A,
-        sdk.BarcodeFormat.UPC_E,
-      ],
-      acceptedDocumentFormats: [],
-      additionalParameters: sdk.BarcodeAdditionalParameters(
-        gs1HandlingMode: sdk.Gs1HandlingMode.DECODE,
-        msiPlesseyChecksumAlgorithm: sdk.MSIPlesseyChecksumAlgorithm.MOD_11_NCR,
-      ),
-    ),
-    finder: sdk.FinderConfiguration(
-        decoration: BoxDecoration(
-            border: Border.all(
-              width: 5,
-              color: Colors.blue,
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(20))),
-        backgroundColor: Colors.grey.withOpacity(0.5),
-        finderInsets: const sdk.Insets(bottom: 100),
-        finderAspectRatio: sdk.AspectRatio(width: 3, height: 2.2)),
-    cameraZoomFactor: 0,
-    // this makes it only possible to scan one barcode or user has to click on the barcode to select it (which is not good ux for our solution)
-
-    overlayConfiguration: sdk.SelectionOverlayScannerConfiguration(
-    overlayEnabled: true,
-      automaticSelectionEnabled: false,
-      textFormat: sdk.BarcodeOverlayTextFormat.NONE,
-      polygonColor: Colors.green,
-      textColor: Colors.black,
-      textContainerColor: Colors.white,
-     ),
-  );
+  bool _detectionEnabled = true;
+  bool _showPolygon = true;
 
   @override
   void initState() {
     super.initState();
     _initScanbotSdk();
-    _barcodeCameraDetector = sdk.BarcodeCameraLiveDetector(
-      barcodeListener: (sdk.BarcodeScanningResult scanningResult) async {
-        await _addBarcodeItem(scanningResult.barcodeItems);
-      },
-      // Will inform if there is problem with the license on opening of the screen // and license expiration on android, ios wil be enabled a bit later
-      errorListener: (error) {
-        widget.onLicenseFailed();
-      },
-    );
-   //_barcodeCameraDetector.pauseDetection(); // this should be remover as native widget itself not yet mounted. So nothing can be called to the native camera,
     widget.detectBarcodes.addListener(_onDetectBarcodeChange);
-
   }
 
   @override
@@ -136,13 +96,16 @@ class _ScanbotScannerState extends State<ScanbotScanner> {
   }
 
   Future<void> _addBarcodeItem(List<sdk.BarcodeItem> barcodeItems) async {
-    sdk.BarcodeItem? barcodeItem = barcodeItems.firstWhereOrNull((sdk.BarcodeItem item) {
+    sdk.BarcodeItem? barcodeItem =
+        barcodeItems.firstWhereOrNull((sdk.BarcodeItem item) {
       String barcode = item.text ?? '';
       return barcode.isNotEmpty &&
           !barcode.startsWith('{') &&
           !barcode.contains('http') &&
           (item.barcodeFormat == sdk.BarcodeFormat.DATA_MATRIX
-              ? barcode.length == 27 && barcode.substring(1, 3) == '01' && barcode.substring(19, 21) == '98'
+              ? barcode.length == 27 &&
+                  barcode.substring(1, 3) == '01' &&
+                  barcode.substring(19, 21) == '98'
               : true);
     });
 
@@ -151,24 +114,27 @@ class _ScanbotScannerState extends State<ScanbotScanner> {
     if (barcode.isEmpty) {
       return;
     } else {
-      _barcodeCameraDetector.pauseDetection();
+      setState(() {
+        _detectionEnabled = false;
+      });
+      ;
       result = await widget.onScanned(barcode);
     }
 
     if (result == 307) {
       await Future<void>.delayed(const Duration(milliseconds: 700));
       if (widget.detectBarcodes.value) {
-        _barcodeCameraDetector.resumeDetection();
+        setState(() {
+          _detectionEnabled = true;
+        });
       }
     }
   }
 
   void _onDetectBarcodeChange() {
-    if (widget.detectBarcodes.value) {
-      _barcodeCameraDetector.resumeDetection();
-    } else {
-      _barcodeCameraDetector.pauseDetection();
-    }
+    setState(() {
+      _detectionEnabled = widget.detectBarcodes.value;
+    });
   }
 
   Future<void> _initScanbotSdk() async {
@@ -176,8 +142,9 @@ class _ScanbotScannerState extends State<ScanbotScanner> {
       // String licenseKey = 'YOUR_SCANBOT_SDK_LICENSE_KEY_HERE';
       // sdk.ScanbotSdkConfig config = sdk.ScanbotSdkConfig(licenseKey: licenseKey, useCameraX: true);
       // await sdk.ScanbotSdk.initScanbotSdk(config);
-      _validLicense = true;
-      setState(() {});
+      setState(() {
+        _validLicense = true;
+      });
     } catch (e) {
       widget.onLicenseFailed();
     }
@@ -185,30 +152,77 @@ class _ScanbotScannerState extends State<ScanbotScanner> {
 
   @override
   Widget build(BuildContext context) {
+    var _barcodeCameraConfiguration = sdk.BarcodeCameraConfiguration(
+      detectionEnabled: _detectionEnabled,
+      scannerConfiguration: sdk.BarcodeClassicScannerConfiguration(
+        barcodeFormats: [
+          sdk.BarcodeFormat.EAN_8,
+          sdk.BarcodeFormat.EAN_13,
+          sdk.BarcodeFormat.CODE_128,
+          sdk.BarcodeFormat.DATA_MATRIX,
+          sdk.BarcodeFormat.DATABAR_LIMITED,
+          sdk.BarcodeFormat.RSS_14,
+          sdk.BarcodeFormat.RSS_EXPANDED,
+          sdk.BarcodeFormat.GS1_COMPOSITE,
+          sdk.BarcodeFormat.UPC_A,
+          sdk.BarcodeFormat.UPC_E,
+        ],
+        acceptedDocumentFormats: [],
+        additionalParameters: sdk.BarcodeAdditionalParameters(
+          gs1HandlingMode: sdk.Gs1HandlingMode.DECODE,
+          msiPlesseyChecksumAlgorithm:
+              sdk.MSIPlesseyChecksumAlgorithm.MOD_11_NCR,
+        ),
+      ),
+      finder: sdk.FinderConfiguration(
+          decoration: BoxDecoration(
+              border: Border.all(
+                width: 5,
+                color: Colors.blue,
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(20))),
+          backgroundColor: Colors.grey.withOpacity(0.5),
+          finderInsets: const sdk.Insets(bottom: 100),
+          finderAspectRatio: sdk.AspectRatio(width: 3, height: 2.2)),
+      cameraZoomFactor: 0,
+      // this makes it only possible to scan one barcode or user has to click on the barcode to select it (which is not good ux for our solution)
+
+      overlayConfiguration: sdk.SelectionOverlayScannerConfiguration(
+        overlayEnabled: _showPolygon,
+        automaticSelectionEnabled: false,
+        textFormat: sdk.BarcodeOverlayTextFormat.NONE,
+        polygonColor: Colors.green,
+        textColor: Colors.black,
+        textContainerColor: Colors.white,
+      ),
+    );
+
     return Container(
       color: Colors.grey,
       child: _validLicense
           ? sdk.BarcodeScannerCamera(
-        cameraDetector: _barcodeCameraDetector,
-        configuration: _barcodeCameraConfiguration,
-        onWidgetReady: (sdk.ScanbotCameraController controller) {
-          // _controller = controller;
-        },
-        onCameraPreviewStarted: () {
-          _barcodeCameraDetector.pauseDetection(); // pause camera detection right after the preview is started
-        },
-        onHeavyOperationProcessing: (bool heavyOperationInProgress) {},
-      )
+              configuration: _barcodeCameraConfiguration,
+              barcodeListener:
+                  (sdk.BarcodeScanningResult scanningResult) async {
+                await _addBarcodeItem(scanningResult.barcodeItems);
+              },
+              // Will inform if there is problem with the license on opening of the screen // and license expiration on android, ios wil be enabled a bit later
+              errorListener: (error) {
+                widget.onLicenseFailed();
+              },
+              onCameraPreviewStarted: (isFlashEnabled) {},
+              onHeavyOperationProcessing: (bool heavyOperationInProgress) {},
+            )
           : Container(
-        color: Colors.black,
-        width: double.infinity,
-        height: double.infinity,
-        alignment: Alignment.center,
-        child: const Text(
-          'Villa við að virkja skanna',
-          style: TextStyle(fontSize: 16),
-        ),
-      ),
+              color: Colors.black,
+              width: double.infinity,
+              height: double.infinity,
+              alignment: Alignment.center,
+              child: const Text(
+                'Villa við að virkja skanna',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
     );
   }
 }
