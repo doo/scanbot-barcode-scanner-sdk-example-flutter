@@ -204,7 +204,7 @@ class _ScanbotScannerState extends State<ScanbotScanner> {
               configuration: _barcodeCameraConfiguration,
               barcodeListener:
                   (sdk.BarcodeScanningResult scanningResult) async {
-                await _addBarcodeItem(scanningResult.barcodeItems);
+                _addBarcodeItem(scanningResult.barcodeItems);
               },
               // Will inform if there is problem with the license on opening of the screen // and license expiration on android, ios wil be enabled a bit later
               errorListener: (error) {
