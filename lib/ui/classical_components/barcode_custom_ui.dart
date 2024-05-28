@@ -9,7 +9,7 @@ import 'package:scanbot_barcode_sdk_example/ui/barcodes_preview_widget.dart';
 
 import '../../main.dart';
 
-// This is an example screen of how to integrate the new classical barcode scanner component
+/// This is an example screen of how to integrate new classical barcode scanner component
 class BarcodeScannerWidget extends StatefulWidget {
   const BarcodeScannerWidget({Key? key}) : super(key: key);
 
@@ -18,44 +18,35 @@ class BarcodeScannerWidget extends StatefulWidget {
 }
 
 class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
-  // this stream is only used if you need to show live scanned results on top of the camera
-  // otherwise we stop scanning and return the first result
+  /// this stream only used if you need to show live scanned results on top of the camera
+  /// otherwise we stop scanning and return first result out of the screen
   final resultStream = StreamController<BarcodeScanningResult>();
-  ScanbotCameraController? controller;
-  late BarcodeCameraLiveDetector barcodeCameraDetector;
   bool permissionGranted = false;
-  bool flashEnabled = true;
+  bool flashEnabled = false;
+  bool showPolygon = true;
   bool flashAvailable = false;
   bool showProgressBar = false;
   bool licenseIsActive = true;
+  bool detectionEnabled = true;
 
-  _BarcodeScannerWidgetState() {
-    barcodeCameraDetector = BarcodeCameraLiveDetector(
-      // Subscribe to the success result of the scanning end error handling
-      barcodeListener: (scanningResult) {
-        // Use update function to show result overlay on top of the camera or
-        //resultStream.add(scanningResult);
+  _BarcodeScannerWidgetState() {}
 
-        // this to return result to screen caller
-        barcodeCameraDetector
-            .pauseDetection(); // we can also pause detection immediately after success to prevent it from sending new sucсess results
-        Navigator.pop(context, scanningResult);
-
-        print(scanningResult.toJson().toString());
-      },
-      // Error listener will inform if there is a problem with the license on opening the screen
-      // and license expiration on Android (will be enabled a bit later on iOS)
-      errorListener: (error) {
-        setState(() {
-          licenseIsActive = false;
-        });
-        Logger.root.severe(error.toString());
-      },
-    );
+  Future<void> showResult(BarcodeScanningResult scanningResult) async {
+    Navigator.of(context)
+        .push(
+      MaterialPageRoute(
+          builder: (context) => BarcodesResultPreviewWidget(scanningResult)),
+    )
+        .then((value) {
+      setState(() {
+        detectionEnabled = true;
+        showPolygon = true;
+      });
+    });
   }
 
   void checkPermission() async {
-    // Don't forget to update the iOS Podfile according to the `permission_handler` official installation guide!! https://pub.dev/packages/permission_handler
+    // Don't forget to update ios Podfile according to the `permission_handler` official installation guide!! https://pub.dev/packages/permission_handler
     final permissionResult = await [Permission.camera].request();
     setState(() {
       permissionGranted =
@@ -75,22 +66,22 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         onFinderRectChange: (left, top, right, bottom) {
           // aligning some text view to the finder dynamically by calculating its position from finder changes
         },
-        // a widget that can be inserted in the region between the finder hole and the top of the camera view
+        // widget that can be inserted in the region between finder hole and top of the camera
         topWidget: const Center(
             child: Text(
-          'Top hint text, centre aligned',
-          style: TextStyle(color: Colors.white),
-        )),
-        // a widget that can be inserted in the region between the finder hole and the bottom of the camera view
+              'Top hint text in centre',
+              style: TextStyle(color: Colors.white),
+            )),
+        // widget that can be inserted in the region between finder hole and bottom of the camera
         bottomWidget: const Align(
             alignment: Alignment.topCenter,
             child: Text(
-              'This is text below the finder, top-center aligned',
+              'This is text in finder bottom TopCenter  part',
               style: TextStyle(color: Colors.white),
             )),
-        // a widget that can be inserted inside the finder window
+        // widget that can be inserted inside finder window
         widget: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(8),
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(
@@ -100,7 +91,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
                 borderRadius: const BorderRadius.all(Radius.circular(20))),
           ),
         ),
-        // The shape by which the background will be clipped and which will be presented as the finder hole
+        // The shape by which background will be clipped and which will be presented as finder hole
         decoration: BoxDecoration(
             border: Border.all(
               width: 5,
@@ -108,33 +99,51 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
             ),
             borderRadius: const BorderRadius.all(Radius.circular(20))),
         backgroundColor: Colors.amber.withAlpha(150),
-        finderAspectRatio: scanbot.AspectRatio(width: 5, height: 2));
+        finderAspectRatio: scanbot.AspectRatio(width: 3, height: 2));
 
     var barcodeClassicScannerConfiguration = BarcodeClassicScannerConfiguration(
-      barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
-      // [BarcodeFormat.QR_CODE] for one barcode type
+      barcodeFormats: PredefinedBarcodes.allBarcodeTypes(),
+      //[BarcodeFormat.QR_CODE] for one barcode type
       engineMode: EngineMode.NEXT_GEN,
       additionalParameters: BarcodeAdditionalParameters(
           msiPlesseyChecksumAlgorithm: MSIPlesseyChecksumAlgorithm.MOD_11_NCR,
           gs1HandlingMode: Gs1HandlingMode.NONE),
+      // get full size image of document with successfully scanned barcode
+      // barcodeImageGenerationType:
+      // BarcodeImageGenerationType.CAPTURED_IMAGE
     );
 
+    var selectionOverlayScannerConfiguration =
+    SelectionOverlayScannerConfiguration(
+      overlayEnabled: showPolygon,
+      automaticSelectionEnabled: true,
+      textFormat: BarcodeOverlayTextFormat.CODE,
+      polygonColor: Colors.green,
+      textColor: Colors.white,
+      textContainerColor: Colors.grey,
+      onBarcodeClicked: (barcode) {
+        // pause detection if you want to show result on other screen
+        /* setState(() {
+          detectionEnabled = false;
+          showPolygon = false;
+        });*/
+
+        showResult(BarcodeScanningResult([barcode]));
+      },
+    );
     var barcodeCameraConfiguration = BarcodeCameraConfiguration(
-      flashEnabled: flashEnabled, // initial flash state
+      // Initial flash state
+      flashEnabled: flashEnabled,
+      detectionEnabled: detectionEnabled,
       // Initial configuration for the scanner itself
-      overlayConfiguration: SelectionOverlayScannerConfiguration(
-        overlayEnabled: true,
-        onBarcodeClicked: (barcode) {
-          // this to return result to screen caller
-          barcodeCameraDetector
-              .pauseDetection(); // we can also pause detection immediately after success to prevent it from sending new sucсess results
-          Navigator.pop(context, BarcodeScanningResult([barcode]));
-        },
-      ),
       scannerConfiguration: barcodeClassicScannerConfiguration,
+      cameraZoomFactor: 0.01,
+      // uncomment this line if you want to show result on top of the camera (AR overlay mode)
+      // (please also see other comments related to this mode above)
+      overlayConfiguration: selectionOverlayScannerConfiguration,
+
       finder: finderConfiguration,
     );
-
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(),
@@ -159,11 +168,9 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
           if (flashAvailable)
             IconButton(
                 onPressed: () {
-                  controller?.setFlashEnabled(!flashEnabled).then((value) => {
-                        setState(() {
-                          flashEnabled = !flashEnabled;
-                        })
-                      });
+                  setState(() {
+                    flashEnabled = !flashEnabled;
+                  });
                 },
                 icon: Icon(flashEnabled ? Icons.flash_on : Icons.flash_off))
         ],
@@ -172,48 +179,71 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         color: Colors.black,
         child: Stack(
           children: <Widget>[
-            // Check permission and show a placeholder if it's not granted, otherwise show the camera
-
+            // Check permission and show some placeholder if its not granted, or show camera otherwise
             licenseIsActive
                 ? permissionGranted
-                    ? BarcodeScannerCamera(
-                        cameraDetector: barcodeCameraDetector,
-                        // Camera on the bottom of the stack, should not be rebuilt on each update of the stateful widget
-                        configuration: barcodeCameraConfiguration,
-                        onWidgetReady: (controller) {
-                          // Once your camera has initialized, you are able to control the camera parameters
-                          this.controller = controller;
-                          // This option checks whether the flash is available and whether a control button is displayed
-                          controller.isFlashAvailable().then((value) => {
-                                setState(() {
-                                  flashAvailable = value;
-                                })
-                              });
-                        },
-                        onHeavyOperationProcessing: (show) {
-                          showProgressBar = show;
-                        },
-                      )
-                    : Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        alignment: Alignment.center,
-                        child: const Text(
-                          'Permissions not granted',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      )
-                : Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    alignment: Alignment.center,
-                    child: const Text(
-                      'License is No more active',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
+                ? BarcodeScannerCamera(
+              // Camera on the bottom of the stack, should not be rebuild on each update of the stateful widget
+              configuration: barcodeCameraConfiguration,
+              barcodeListener: (scanningResult) {
 
-            // result content on the top of the scanner as a stream builder, to optimize rebuilding of the widget on each success
+                // pause whole detection process if you are going to show result on other screen
+                // comment this line if you want to show result on top of the camera (AR overlay mode) if automaticSelectionEnabled == true
+                /*  setState(() {
+                  detectionEnabled = false;
+                  showPolygon = false;
+                });*/
+
+                /// Use update function to show result overlay on top of the camera or
+                //resultStream.add(scanningResult);
+
+                /// for returning scanning result back
+                // Navigator.pop(context, scanningResult);
+
+                // for showing result in next screen in stack
+                // comment this line if you want to show result on top of the camera (AR overlay mode)
+                showResult(scanningResult);
+              },
+              //Error listener, will inform if there is problem with the license on opening of the screen // and license expiration on android, ios wil be enabled a bit later
+              errorListener: (error) {
+                setState(() {
+                  licenseIsActive = false;
+                });
+                Logger.root.severe(error.toString());
+              },
+              onCameraPreviewStarted: (isFlashAvailable) {
+                setState(() {
+                  flashAvailable = isFlashAvailable;
+                });
+              },
+              onHeavyOperationProcessing: (show) {
+                setState(() {
+                  showProgressBar = show;
+                });
+              },
+            )
+                : Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.white,
+              alignment: Alignment.center,
+              child: const Text(
+                'Permissions not granted',
+                style: TextStyle(fontSize: 16),
+              ),
+            )
+                : Container(
+              color: Colors.white,
+              width: double.infinity,
+              height: double.infinity,
+              alignment: Alignment.center,
+              child: const Text(
+                'License is No more active',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+
+            //result content on the top of the scanner as a stream builder, to optimize rebuilding of the widget on each success
             StreamBuilder<BarcodeScanningResult>(
                 stream: resultStream.stream,
                 builder: (context, snapshot) {
@@ -245,29 +275,29 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
                           }),
                       (snapshot.data?.barcodeImageURI != null)
                           ? Container(
-                              width: double.infinity,
-                              height: double.infinity,
-                              alignment: Alignment.bottomRight,
-                              child: SizedBox(
-                                width: 100,
-                                height: 200,
-                                child: pageView,
-                              ),
-                            )
+                        width: double.infinity,
+                        height: double.infinity,
+                        alignment: Alignment.bottomRight,
+                        child: SizedBox(
+                          width: 100,
+                          height: 200,
+                          child: pageView,
+                        ),
+                      )
                           : Container(),
                     ],
                   );
                 }),
             showProgressBar
                 ? const Center(
-                    child: SizedBox(
-                      width: 100,
-                      height: 100,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 10,
-                      ),
-                    ),
-                  )
+              child: SizedBox(
+                width: 100,
+                height: 100,
+                child: CircularProgressIndicator(
+                  strokeWidth: 10,
+                ),
+              ),
+            )
                 : Container()
           ],
         ),

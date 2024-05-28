@@ -15,6 +15,7 @@ import 'package:scanbot_barcode_sdk_example/ui/barcode_formats_repo.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcodes_formats_selector.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcodes_preview_widget.dart';
 import 'package:scanbot_barcode_sdk_example/ui/classical_components/barcode_custom_ui.dart';
+import 'package:scanbot_barcode_sdk_example/ui/classical_components/test_barcode.dart';
 import 'package:scanbot_barcode_sdk_example/ui/menu_items.dart';
 import 'package:scanbot_image_picker/models/image_picker_response.dart';
 import 'package:scanbot_image_picker/scanbot_image_picker_flutter.dart';
@@ -154,6 +155,12 @@ class _MainPageState extends State<MainPageWidget> {
             'Scan Barcode (Custom UI)',
             onTap: () {
               _startBarcodeCustomUIScanner();
+            },
+          ),
+          MenuItemWidget(
+            'Scan Barcode (Client UI)',
+            onTap: () {
+              _startBarcodeClientUIScanner();
             },
           ),
           MenuItemWidget(
@@ -628,6 +635,17 @@ class _MainPageState extends State<MainPageWidget> {
   Future<void> _startBarcodeCustomUIScanner() async {
     var result = await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => const BarcodeScannerWidget()),
+    );
+    if (result is BarcodeScanningResult) {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidget(result)),
+      );
+    }
+  }
+  Future<void> _startBarcodeClientUIScanner() async {
+    var result = await Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const ScanbotScannerScreen()),
     );
     if (result is BarcodeScanningResult) {
       await Navigator.of(context).push(
