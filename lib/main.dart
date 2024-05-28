@@ -2,11 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:barcode_scanner/rtu_ui_v2/barcode/find_and_pick_scanning_mode_use_case.dart';
+import 'package:barcode_scanner/rtu_ui_v2/barcode/multiple_scanning_mode_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart' as scanbot;
+import 'package:barcode_scanner/scanbot_barcode_sdk_v2.dart' as scanbotV2;
 
 import 'package:scanbot_barcode_sdk_example/ui/barcode_formats_repo.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcodes_formats_selector.dart';
@@ -15,6 +18,8 @@ import 'package:scanbot_barcode_sdk_example/ui/classical_components/barcode_cust
 import 'package:scanbot_barcode_sdk_example/ui/menu_items.dart';
 import 'package:scanbot_image_picker/models/image_picker_response.dart';
 import 'package:scanbot_image_picker/scanbot_image_picker_flutter.dart';
+
+import 'ui/V2/barcodes_preview_widget_v2.dart';
 
 bool shouldInitWithEncryption = false;
 BarcodeFormatsRepository barcodeFormatsRepository = BarcodeFormatsRepository();
@@ -97,6 +102,36 @@ class _MainPageState extends State<MainPageWidget> {
       ),
       body: ListView(
         children: <Widget>[
+          MenuItemWidget(
+            "Single Scan with confirmation dialog (V2)",
+            onTap: () {
+              startSingleScanV2();
+            },
+          ),
+          MenuItemWidget(
+            "Multiple Scan (V2)",
+            onTap: () {
+              startMultipleScanV2();
+            },
+          ),
+          MenuItemWidget(
+            "Find and Pick (V2)",
+            onTap: () {
+              startFindAndPickScanV2();
+            },
+          ),
+          MenuItemWidget(
+            "AROverlay (V2)",
+            onTap: () {
+              startAROverlayScanV2();
+            },
+          ),
+          MenuItemWidget(
+            "Info Mapping (V2)",
+            onTap: () {
+              startInfoMappingScanV2();
+            },
+          ),
           MenuItemWidget(
             "Scan Barcode",
             onTap: () {
@@ -227,6 +262,290 @@ class _MainPageState extends State<MainPageWidget> {
               builder: (context) => BarcodesResultPreviewWidget(result)),
         );
       }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  startSingleScanV2() async {
+    if (!await checkLicenseStatus(context)) {
+      return;
+    }
+
+    try {
+      // Create the default configuration object.
+      var configuration = scanbotV2.BarcodeScannerConfiguration();
+
+      // Initialize the single-scan use case.
+      var singleUsecase = scanbotV2.SingleScanningMode();
+
+      // Enable and configure the confirmation sheet.
+      singleUsecase.confirmationSheetEnabled = true;
+      singleUsecase.sheetColor = ScanbotColor("#FFFFFF");
+
+      // Hide/unhide the barcode image.
+      singleUsecase.barcodeImageVisible = true;
+
+      // Configure the barcode title of the confirmation sheet.
+      singleUsecase.barcodeTitle.visible = true;
+      singleUsecase.barcodeTitle.color = ScanbotColor("#000000");
+
+      // Configure the barcode subtitle of the confirmation sheet.
+      singleUsecase.barcodeSubtitle.visible = true;
+      singleUsecase.barcodeSubtitle.color = ScanbotColor("#000000");
+
+      // Configure the cancel button of the confirmation sheet.
+      singleUsecase.cancelButton.text = "Close";
+      singleUsecase.cancelButton.foreground.color = ScanbotColor("#C8193C");
+      singleUsecase.cancelButton.background.fillColor =
+          ScanbotColor("#00000000");
+
+      // Configure the submit button of the confirmation sheet.
+      singleUsecase.submitButton.text = "Submit";
+      singleUsecase.submitButton.foreground.color = ScanbotColor("#FFFFFF");
+      singleUsecase.submitButton.background.fillColor = ScanbotColor("#C8193C");
+
+      // Set the configured use case.
+      configuration.useCase = singleUsecase;
+
+      // Create and set an array of accepted barcode formats.
+      configuration.recognizerConfiguration.barcodeFormats = [
+        scanbotV2.BarcodeFormat.AZTEC,
+        scanbotV2.BarcodeFormat.PDF_417,
+        scanbotV2.BarcodeFormat.QR_CODE,
+        scanbotV2.BarcodeFormat.MICRO_QR_CODE,
+        scanbotV2.BarcodeFormat.MICRO_PDF_417,
+        scanbotV2.BarcodeFormat.ROYAL_MAIL,
+      ];
+
+      var result =
+          await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
+
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidgetV2(result)),
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  startMultipleScanV2() async {
+    if (!await checkLicenseStatus(context)) {
+      return;
+    }
+
+    try {
+      // Create the default configuration object.
+      var configuration = scanbotV2.BarcodeScannerConfiguration();
+
+      // Initialize the single-scan use case.
+      var multiUsecase = scanbotV2.MultipleScanningMode();
+
+      // Set the counting repeat delay.
+      multiUsecase.countingRepeatDelay = 1000;
+
+      // Set the counting mode.
+      multiUsecase.mode = MultipleBarcodesScanningMode.COUNTING;
+
+      // Set the sheet mode of the barcodes preview.
+      multiUsecase.sheet.mode = SheetMode.COLLAPSED_SHEET;
+
+      // Set the height of the collapsed sheet.
+      multiUsecase.sheet.collapsedVisibleHeight = CollapsedVisibleHeight.LARGE;
+
+      // Enable manual count change.
+      multiUsecase.sheetContent.manualCountChangeEnabled = true;
+
+      // Configure the submit button.
+      multiUsecase.sheetContent.submitButton.text = "Submit";
+      multiUsecase.sheetContent.submitButton.foreground.color =
+          ScanbotColor("#000000");
+
+      // Set the configured use case.
+      configuration.useCase = multiUsecase;
+
+      // Create and set an array of accepted barcode formats.
+      configuration.recognizerConfiguration.barcodeFormats = [
+        scanbotV2.BarcodeFormat.AZTEC,
+        scanbotV2.BarcodeFormat.PDF_417,
+        scanbotV2.BarcodeFormat.QR_CODE,
+        scanbotV2.BarcodeFormat.MICRO_QR_CODE,
+        scanbotV2.BarcodeFormat.MICRO_PDF_417,
+        scanbotV2.BarcodeFormat.ROYAL_MAIL,
+      ];
+
+      var result =
+          await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
+
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidgetV2(result)),
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  startFindAndPickScanV2() async {
+    if (!await checkLicenseStatus(context)) {
+      return;
+    }
+
+    try {
+      // Create the default configuration object.
+      var configuration = scanbotV2.BarcodeScannerConfiguration();
+
+      // Initialize the single-scan use case.
+      var usecase = scanbotV2.FindAndPickScanningMode();
+
+      // Set the configured use case.
+      configuration.useCase = usecase;
+
+      // Configure AR Overlay.
+      usecase.arOverlay.visible = true;
+
+      // Enable/Disable the automatic selection.
+      usecase.arOverlay.automaticSelectionEnabled = false;
+
+      // Enable/Disable the swipe to delete.
+      usecase.sheetContent.swipeToDelete.enabled = true;
+
+      // Enable/Disable allow partial scan.
+      usecase.allowPartialScan = true;
+
+      // Set the expected barcodes.
+      usecase.expectedBarcodes = [
+        ExpectedBarcode(
+            barcodeValue: "123456", title: "", image: "Image_URL", count: 4),
+        ExpectedBarcode(
+            barcodeValue: "SCANBOT", title: "", image: "Image_URL", count: 3)
+      ];
+
+      // Set the configured usecase.
+      configuration.useCase = usecase;
+
+      var result =
+          await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
+
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidgetV2(result)),
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  startAROverlayScanV2() async {
+    if (!await checkLicenseStatus(context)) {
+      return;
+    }
+
+    try {
+      // Create the default configuration object.
+      var configuration = scanbotV2.BarcodeScannerConfiguration();
+
+      // Configure the usecase.
+      var usecase = MultipleScanningMode();
+      usecase.mode = MultipleBarcodesScanningMode.UNIQUE;
+      usecase.sheet.mode = SheetMode.COLLAPSED_SHEET;
+      usecase.sheet.collapsedVisibleHeight = CollapsedVisibleHeight.SMALL;
+
+      // Configure AR Overlay.
+      usecase.arOverlay.visible = true;
+      usecase.arOverlay.automaticSelectionEnabled = false;
+
+      // Set the configured usecase.
+      configuration.useCase = usecase;
+
+      // Create and set an array of accepted barcode formats.
+      configuration.recognizerConfiguration.barcodeFormats = [
+        scanbotV2.BarcodeFormat.AZTEC,
+        scanbotV2.BarcodeFormat.PDF_417,
+        scanbotV2.BarcodeFormat.QR_CODE,
+        scanbotV2.BarcodeFormat.MICRO_QR_CODE,
+        scanbotV2.BarcodeFormat.MICRO_PDF_417,
+        scanbotV2.BarcodeFormat.ROYAL_MAIL,
+      ];
+
+      // Set the configured usecase.
+      configuration.useCase = usecase;
+
+      var result =
+          await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
+
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidgetV2(result)),
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  startInfoMappingScanV2() async {
+    if (!await checkLicenseStatus(context)) {
+      return;
+    }
+
+    try {
+      var configuration = scanbotV2.BarcodeScannerConfiguration();
+      var singleScanningMode = scanbotV2.SingleScanningMode();
+
+      // Enable the confirmation sheet.
+      singleScanningMode.confirmationSheetEnabled = true;
+
+      // Set the item mapper.
+      singleScanningMode.barcodeInfoMapping.barcodeItemMapper = (item) async {
+        return scanbotV2.BarcodeMappedData(
+            title: "Title", subtitle: "Subtitle", barcodeImage: "Image_URL");
+      };
+
+      // Retrieve the instance of the error state from the use case object.
+      var errorState = singleScanningMode.barcodeInfoMapping.errorState;
+
+      // Configure the title.
+      errorState.title.text = "Error_Title";
+      errorState.title.color = ScanbotColor("#000000");
+
+      // Configure the subtitle.
+      errorState.subtitle.text = "Error_Subtitle";
+      errorState.subtitle.color = ScanbotColor("#000000");
+
+      // Configure the cancel button.
+      errorState.cancelButton.text = "Cancel";
+      errorState.cancelButton.foreground.color = ScanbotColor("#C8193C");
+
+      // Configure the retry button.
+      errorState.retryButton.text = "Retry";
+      errorState.retryButton.foreground.iconVisible = true;
+      errorState.retryButton.foreground.color = ScanbotColor("#FFFFFF");
+      errorState.retryButton.background.fillColor = ScanbotColor("#C8193C");
+
+      // Set the configured error state.
+      singleScanningMode.barcodeInfoMapping.errorState = errorState;
+
+      // Set the configured use case.
+      configuration.useCase = singleScanningMode;
+
+      // Create and set an array of accepted barcode formats.
+      configuration.recognizerConfiguration.barcodeFormats = [
+        scanbotV2.BarcodeFormat.AZTEC,
+        scanbotV2.BarcodeFormat.PDF_417,
+        scanbotV2.BarcodeFormat.QR_CODE,
+        scanbotV2.BarcodeFormat.MICRO_QR_CODE,
+        scanbotV2.BarcodeFormat.MICRO_PDF_417,
+        scanbotV2.BarcodeFormat.ROYAL_MAIL,
+      ];
+
+      var result =
+          await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
+
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidgetV2(result)),
+      );
     } catch (e) {
       print(e);
     }
