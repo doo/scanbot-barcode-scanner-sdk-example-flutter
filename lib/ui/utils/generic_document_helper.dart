@@ -6,56 +6,55 @@ class GenericDocumentHelper {
   static Widget wrappedGenericDocumentField(GenericDocument? genericDocument) {
     if (genericDocument == null) return Container();
 
-    GenericDocumentWrapper documentWrapper =
-        GenericDocumentWrapper.wrap(genericDocument!);
+    
 
     TextFieldWrapper? wrappedGenericFieldValue;
 
-    switch (documentWrapper.document.type.name) {
+    switch (genericDocument.type.name) {
       case BoardingPass.DOCUMENT_TYPE:
         wrappedGenericFieldValue =
-            (documentWrapper as BoardingPass).ElectronicTicket;
+            BoardingPass(genericDocument).ElectronicTicket;
         break;
       case SwissQR.DOCUMENT_TYPE:
-        wrappedGenericFieldValue = (documentWrapper as SwissQR).IBAN;
+        wrappedGenericFieldValue = SwissQR(genericDocument).IBAN;
         break;
 
       case DEMedicalPlan.DOCUMENT_TYPE:
         wrappedGenericFieldValue =
-            (documentWrapper as DEMedicalPlan).Doctor.IssuerName;
+            DEMedicalPlan(genericDocument).Doctor.IssuerName;
         break;
 
       case IDCardPDF417.DOCUMENT_TYPE:
         wrappedGenericFieldValue =
-            (documentWrapper as IDCardPDF417).DateExpired;
+            IDCardPDF417(genericDocument).DateExpired;
         break;
 
       case GS1.DOCUMENT_TYPE:
         wrappedGenericFieldValue =
-            (documentWrapper as GS1).Elements?.first.ApplicationIdentifier;
+            GS1(genericDocument).Elements?.first.ApplicationIdentifier;
         break;
 
       case SEPA.DOCUMENT_TYPE:
-        (documentWrapper as SEPA).ReceiverIBAN;
+          SEPA(genericDocument).ReceiverIBAN;
         break;
 
       case MedicalCertificate.DOCUMENT_TYPE:
-        (documentWrapper as MedicalCertificate).DoctorNumber;
+         MedicalCertificate(genericDocument).DoctorNumber;
         break;
 
       case VCard.DOCUMENT_TYPE:
-        (documentWrapper as VCard).FirstName;
+          VCard(genericDocument).FirstName;
         break;
 
       case AAMVA.DOCUMENT_TYPE:
-        (documentWrapper as AAMVA).DriverLicense;
+          AAMVA(genericDocument).DriverLicense;
         break;
     }
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-          "Document: ${documentWrapper.document.type.name} \nField: ${wrappedGenericFieldValue?.type.name} \nValue: ${wrappedGenericFieldValue?.value?.text}",
+          "Document: ${genericDocument.type.name} \nField: ${wrappedGenericFieldValue?.type.name} \nValue: ${wrappedGenericFieldValue?.value?.text}",
           style: const TextStyle(inherit: true, color: Colors.black)),
     );
   }

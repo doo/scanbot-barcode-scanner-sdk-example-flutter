@@ -497,9 +497,14 @@ class _MainPageState extends State<MainPageWidget> {
       singleScanningMode.confirmationSheetEnabled = true;
 
       // Set the item mapper.
-      singleScanningMode.barcodeInfoMapping.barcodeItemMapper = (item) async {
-        return scanbotV2.BarcodeMappedData(
-            title: "Title", subtitle: "Subtitle", barcodeImage: "Image_URL");
+      singleScanningMode.barcodeInfoMapping.barcodeItemMapper =
+          (item, onResult, onError) async {
+        //return result
+        onResult(scanbotV2.BarcodeMappedData(
+            title: "Title", subtitle: "Subtitle", barcodeImage: "Image_URL"));
+
+        // if need to show error
+        // onError();
       };
 
       // Retrieve the instance of the error state from the use case object.
