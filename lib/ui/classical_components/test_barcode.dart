@@ -30,8 +30,7 @@ class _ScanbotScannerScreenState extends State<ScanbotScannerScreen> {
 
               detectBarcodes.value = false;
               setState(() {
-                _index =
-                    0; // to change a value inside setState this a more correct approach?
+                _index = 0; // to change a value inside setState this a more correct approach?
               });
               return 200;
             },
@@ -79,7 +78,7 @@ class ScanbotScanner extends StatefulWidget {
 
 class _ScanbotScannerState extends State<ScanbotScanner> {
   bool _validLicense = true;
-  bool _detectionEnabled = true;
+  bool _detectionEnabled = false;
   bool _showPolygon = true;
 
   @override
@@ -99,14 +98,7 @@ class _ScanbotScannerState extends State<ScanbotScanner> {
     sdk.BarcodeItem? barcodeItem =
         barcodeItems.firstWhereOrNull((sdk.BarcodeItem item) {
       String barcode = item.text ?? '';
-      return barcode.isNotEmpty &&
-          !barcode.startsWith('{') &&
-          !barcode.contains('http') &&
-          (item.barcodeFormat == sdk.BarcodeFormat.DATA_MATRIX
-              ? barcode.length == 27 &&
-                  barcode.substring(1, 3) == '01' &&
-                  barcode.substring(19, 21) == '98'
-              : true);
+      return barcode.isNotEmpty;
     });
 
     int result;
@@ -114,10 +106,11 @@ class _ScanbotScannerState extends State<ScanbotScanner> {
     if (barcode.isEmpty) {
       return;
     } else {
-      setState(() {
+      // dont need as its already called in the parent view
+    /*  setState(() {
         _detectionEnabled = false;
-      });
-      ;
+      });*/
+      await Future<void>.delayed(const Duration(milliseconds: 250));
       result = await widget.onScanned(barcode);
     }
 
@@ -134,6 +127,7 @@ class _ScanbotScannerState extends State<ScanbotScanner> {
   void _onDetectBarcodeChange() {
     setState(() {
       _detectionEnabled = widget.detectBarcodes.value;
+      _showPolygon = widget.detectBarcodes.value;
     });
   }
 
@@ -189,7 +183,7 @@ class _ScanbotScannerState extends State<ScanbotScanner> {
 
       overlayConfiguration: sdk.SelectionOverlayScannerConfiguration(
         overlayEnabled: _showPolygon,
-        automaticSelectionEnabled: false,
+        automaticSelectionEnabled: true,
         textFormat: sdk.BarcodeOverlayTextFormat.NONE,
         polygonColor: Colors.green,
         textColor: Colors.black,
@@ -210,7 +204,7 @@ class _ScanbotScannerState extends State<ScanbotScanner> {
               errorListener: (error) {
                 widget.onLicenseFailed();
               },
-              onCameraPreviewStarted: (isFlashEnabled) {},
+              onCameraPreviewStarted: (bool flashAvailable) {},
               onHeavyOperationProcessing: (bool heavyOperationInProgress) {},
             )
           : Container(
