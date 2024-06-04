@@ -9,6 +9,8 @@ import 'package:scanbot_barcode_sdk_example/ui/barcodes_preview_widget.dart';
 
 import '../../main.dart';
 
+
+
 /// This is an example screen of how to integrate new classical barcode scanner component
 class BarcodeScannerWidget extends StatefulWidget {
   const BarcodeScannerWidget({Key? key}) : super(key: key);
@@ -99,7 +101,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
             ),
             borderRadius: const BorderRadius.all(Radius.circular(20))),
         backgroundColor: Colors.amber.withAlpha(150),
-        finderAspectRatio: scanbot.AspectRatio(width: 3, height: 2));
+        finderAspectRatio: scanbot.AspectRatio(width: 3, height: 1));
 
     var barcodeClassicScannerConfiguration = BarcodeClassicScannerConfiguration(
       barcodeFormats: PredefinedBarcodes.allBarcodeTypes(),
@@ -116,19 +118,19 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     var selectionOverlayScannerConfiguration =
     SelectionOverlayScannerConfiguration(
       overlayEnabled: showPolygon,
-      automaticSelectionEnabled: true,
+      automaticSelectionEnabled: false,
       textFormat: BarcodeOverlayTextFormat.CODE,
-      polygonColor: Colors.green,
+      polygonColor: Colors.yellow,
       textColor: Colors.white,
       textContainerColor: Colors.grey,
       onBarcodeClicked: (barcode) {
         // pause detection if you want to show result on other screen
-        /* setState(() {
+         setState(() {
           detectionEnabled = false;
           showPolygon = false;
-        });*/
+        });
 
-        showResult(BarcodeScanningResult([barcode]));
+        //showResult(BarcodeScanningResult([barcode]));
       },
     );
     var barcodeCameraConfiguration = BarcodeCameraConfiguration(
@@ -169,7 +171,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
             IconButton(
                 onPressed: () {
                   setState(() {
-                    flashEnabled = !flashEnabled;
+                    detectionEnabled = true;
+                    showPolygon = true;
                   });
                 },
                 icon: Icon(flashEnabled ? Icons.flash_on : Icons.flash_off))
