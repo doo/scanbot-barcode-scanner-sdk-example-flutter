@@ -29,7 +29,6 @@ void main() => runApp(MyApp());
 // Please submit the trial license form (https://scanbot.io/en/sdk/demo/trial) on our website by using
 // the app identifier "io.scanbot.example.sdk.barcode.flutter" of this example app or of your app.
 const BARCODE_SDK_LICENSE_KEY = "";
-
 _initScanbotSdk() async {
   Directory? storageDirectory;
   if (Platform.isAndroid) {
