@@ -309,22 +309,25 @@ class _MainPageState extends State<MainPageWidget> {
       configuration.useCase = singleUsecase;
 
       // Create and set an array of accepted barcode formats.
-      configuration.recognizerConfiguration.barcodeFormats = [
-        scanbotV2.BarcodeFormat.AZTEC,
-        scanbotV2.BarcodeFormat.PDF_417,
-        scanbotV2.BarcodeFormat.QR_CODE,
-        scanbotV2.BarcodeFormat.MICRO_QR_CODE,
-        scanbotV2.BarcodeFormat.MICRO_PDF_417,
-        scanbotV2.BarcodeFormat.ROYAL_MAIL,
-      ];
+      // configuration.recognizerConfiguration.barcodeFormats = [
+      //   scanbotV2.BarcodeFormat.AZTEC,
+      //   scanbotV2.BarcodeFormat.PDF_417,
+      //   scanbotV2.BarcodeFormat.QR_CODE,
+      //   scanbotV2.BarcodeFormat.MICRO_QR_CODE,
+      //   scanbotV2.BarcodeFormat.MICRO_PDF_417,
+      //   scanbotV2.BarcodeFormat.ROYAL_MAIL,
+      // ];
 
       var result =
           await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
 
-      Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (context) => BarcodesResultPreviewWidgetV2(result)),
-      );
+      if (result.operationResult == OperationResult.SUCCESS) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) =>
+                  BarcodesResultPreviewWidgetV2(result.value!)),
+        );
+      }
     } catch (e) {
       print(e);
     }
@@ -366,22 +369,25 @@ class _MainPageState extends State<MainPageWidget> {
       configuration.useCase = multiUsecase;
 
       // Create and set an array of accepted barcode formats.
-      configuration.recognizerConfiguration.barcodeFormats = [
-        scanbotV2.BarcodeFormat.AZTEC,
-        scanbotV2.BarcodeFormat.PDF_417,
-        scanbotV2.BarcodeFormat.QR_CODE,
-        scanbotV2.BarcodeFormat.MICRO_QR_CODE,
-        scanbotV2.BarcodeFormat.MICRO_PDF_417,
-        scanbotV2.BarcodeFormat.ROYAL_MAIL,
-      ];
+      // configuration.recognizerConfiguration.barcodeFormats = [
+      //   scanbotV2.BarcodeFormat.AZTEC,
+      //   scanbotV2.BarcodeFormat.PDF_417,
+      //   scanbotV2.BarcodeFormat.QR_CODE,
+      //   scanbotV2.BarcodeFormat.MICRO_QR_CODE,
+      //   scanbotV2.BarcodeFormat.MICRO_PDF_417,
+      //   scanbotV2.BarcodeFormat.ROYAL_MAIL,
+      // ];
 
       var result =
           await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
 
-      Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (context) => BarcodesResultPreviewWidgetV2(result)),
-      );
+      if (result.operationResult == OperationResult.SUCCESS) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) =>
+                  BarcodesResultPreviewWidgetV2(result.value!)),
+        );
+      }
     } catch (e) {
       print(e);
     }
@@ -428,10 +434,13 @@ class _MainPageState extends State<MainPageWidget> {
       var result =
           await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
 
-      Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (context) => BarcodesResultPreviewWidgetV2(result)),
-      );
+      if (result.operationResult == OperationResult.SUCCESS) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) =>
+                  BarcodesResultPreviewWidgetV2(result.value!)),
+        );
+      }
     } catch (e) {
       print(e);
     }
@@ -460,14 +469,14 @@ class _MainPageState extends State<MainPageWidget> {
       configuration.useCase = usecase;
 
       // Create and set an array of accepted barcode formats.
-      configuration.recognizerConfiguration.barcodeFormats = [
-        scanbotV2.BarcodeFormat.AZTEC,
-        scanbotV2.BarcodeFormat.PDF_417,
-        scanbotV2.BarcodeFormat.QR_CODE,
-        scanbotV2.BarcodeFormat.MICRO_QR_CODE,
-        scanbotV2.BarcodeFormat.MICRO_PDF_417,
-        scanbotV2.BarcodeFormat.ROYAL_MAIL,
-      ];
+      // configuration.recognizerConfiguration.barcodeFormats = [
+      //   scanbotV2.BarcodeFormat.AZTEC,
+      //   scanbotV2.BarcodeFormat.PDF_417,
+      //   scanbotV2.BarcodeFormat.QR_CODE,
+      //   scanbotV2.BarcodeFormat.MICRO_QR_CODE,
+      //   scanbotV2.BarcodeFormat.MICRO_PDF_417,
+      //   scanbotV2.BarcodeFormat.ROYAL_MAIL,
+      // ];
 
       // Set the configured usecase.
       configuration.useCase = usecase;
@@ -475,10 +484,13 @@ class _MainPageState extends State<MainPageWidget> {
       var result =
           await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
 
-      Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (context) => BarcodesResultPreviewWidgetV2(result)),
-      );
+      if (result.operationResult == OperationResult.SUCCESS) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) =>
+                  BarcodesResultPreviewWidgetV2(result.value!)),
+        );
+      }
     } catch (e) {
       print(e);
     }
@@ -535,22 +547,24 @@ class _MainPageState extends State<MainPageWidget> {
       configuration.useCase = singleScanningMode;
 
       // Create and set an array of accepted barcode formats.
-      configuration.recognizerConfiguration.barcodeFormats = [
-        scanbotV2.BarcodeFormat.AZTEC,
-        scanbotV2.BarcodeFormat.PDF_417,
-        scanbotV2.BarcodeFormat.QR_CODE,
-        scanbotV2.BarcodeFormat.MICRO_QR_CODE,
-        scanbotV2.BarcodeFormat.MICRO_PDF_417,
-        scanbotV2.BarcodeFormat.ROYAL_MAIL,
-      ];
+      // configuration.recognizerConfiguration.barcodeFormats = [
+      //   scanbotV2.BarcodeFormat.AZTEC,
+      //   scanbotV2.BarcodeFormat.PDF_417,
+      //   scanbotV2.BarcodeFormat.QR_CODE,
+      //   scanbotV2.BarcodeFormat.MICRO_QR_CODE,
+      //   scanbotV2.BarcodeFormat.MICRO_PDF_417,
+      //   scanbotV2.BarcodeFormat.ROYAL_MAIL,
+      // ];
 
       var result =
           await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
-
-      Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (context) => BarcodesResultPreviewWidgetV2(result)),
-      );
+      if (result.operationResult == OperationResult.SUCCESS) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) =>
+                  BarcodesResultPreviewWidgetV2(result.value!)),
+        );
+      }
     } catch (e) {
       print(e);
     }
