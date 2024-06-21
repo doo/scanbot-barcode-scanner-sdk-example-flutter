@@ -14,6 +14,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // TODO: configure as needed
 
     var result = await ScanbotBarcodeSdk.startBarcodeScanner(configuration);
+
+    if(result.operationResult == OperationResult.SUCCESS)
+    {
+      // TODO: present barcode result as needed
+    }
   }
 
   @override
@@ -21,7 +26,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: _startBarcodeScanner,
-        tooltip: 'Start Barcode Scanning',
         child: const Icon(Icons.camera),
       ),
     );
