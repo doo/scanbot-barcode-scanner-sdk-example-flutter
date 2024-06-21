@@ -1,9 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:barcode_scanner/rtu_ui_v2/barcode/find_and_pick_scanning_mode_use_case.dart';
-import 'package:barcode_scanner/rtu_ui_v2/barcode/multiple_scanning_mode_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -11,15 +10,15 @@ import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart' as scanbot;
 import 'package:barcode_scanner/scanbot_barcode_sdk_v2.dart' as scanbotV2;
 
-import 'package:scanbot_barcode_sdk_example/ui/barcode_formats_repo.dart';
-import 'package:scanbot_barcode_sdk_example/ui/barcodes_formats_selector.dart';
-import 'package:scanbot_barcode_sdk_example/ui/barcodes_preview_widget.dart';
-import 'package:scanbot_barcode_sdk_example/ui/classical_components/barcode_custom_ui.dart';
+import 'package:scanbot_barcode_sdk_example/ui/barcode_formats/barcode_formats_repo.dart';
+import 'package:scanbot_barcode_sdk_example/ui/barcode_formats/barcodes_formats_selector.dart';
+import 'package:scanbot_barcode_sdk_example/ui/ready_to_use_ui(legacy)/barcodes_preview_widget.dart';
+import 'package:scanbot_barcode_sdk_example/ui/classic_components/barcode_custom_ui.dart';
 import 'package:scanbot_barcode_sdk_example/ui/menu_items.dart';
 import 'package:scanbot_image_picker/models/image_picker_response.dart';
 import 'package:scanbot_image_picker/scanbot_image_picker_flutter.dart';
 
-import 'ui/V2/barcodes_preview_widget_v2.dart';
+import 'ui/ready_to_use_ui/barcodes_preview_widget_v2.dart';
 
 bool shouldInitWithEncryption = false;
 BarcodeFormatsRepository barcodeFormatsRepository = BarcodeFormatsRepository();
@@ -34,7 +33,7 @@ void main() => runApp(MyApp());
 // the app identifier "io.scanbot.example.sdk.barcode.flutter" of this example app or of your app.
 const BARCODE_SDK_LICENSE_KEY = "";
 
-_initScanbotSdk() async {
+Future<void> _initScanbotSdk() async {
   Directory? storageDirectory;
   if (Platform.isAndroid) {
     storageDirectory = await getExternalStorageDirectory();
@@ -42,6 +41,7 @@ _initScanbotSdk() async {
   if (Platform.isIOS) {
     storageDirectory = await getApplicationDocumentsDirectory();
   }
+
   EncryptionParameters? encryptionParameters;
   if (shouldInitWithEncryption) {
     encryptionParameters = EncryptionParameters(
@@ -103,73 +103,73 @@ class _MainPageState extends State<MainPageWidget> {
       body: ListView(
         children: <Widget>[
           MenuItemWidget(
-            "Single Scan with confirmation dialog (V2)",
-            onTap: () {
-              startSingleScanV2();
-            },
-          ),
-          MenuItemWidget(
-            "Multiple Scan (V2)",
-            onTap: () {
-              startMultipleScanV2();
-            },
-          ),
-          MenuItemWidget(
-            "Find and Pick (V2)",
-            onTap: () {
-              startFindAndPickScanV2();
-            },
-          ),
-          MenuItemWidget(
-            "AROverlay (V2)",
-            onTap: () {
-              startAROverlayScanV2();
-            },
-          ),
-          MenuItemWidget(
-            "Info Mapping (V2)",
-            onTap: () {
-              startInfoMappingScanV2();
-            },
-          ),
-          MenuItemWidget(
-            "Scan Barcode",
-            onTap: () {
-              startBarcodeScanner();
-            },
-          ),
-          MenuItemWidget(
-            "Scan Barcode with Image Result",
-            onTap: () {
-              startBarcodeScanner(shouldSnapImage: true);
-            },
-          ),
-          MenuItemWidget(
-            "Scan Batch Barcodes",
-            onTap: () {
-              startBatchBarcodeScanner();
-            },
-          ),
-          MenuItemWidget(
-            'Scan Barcode (Custom UI)',
+            title: 'Scan Barcode (Classic Component)',
             onTap: () {
               _startBarcodeCustomUIScanner();
             },
           ),
           MenuItemWidget(
-            "Pick Image from Gallery",
+            title: "Single Scan with confirmation dialog (RTU v2.0)",
+            onTap: () {
+              startSingleScanV2();
+            },
+          ),
+          MenuItemWidget(
+            title: "Multiple Scan (RTU v2.0)",
+            onTap: () {
+              startMultipleScanV2();
+            },
+          ),
+          MenuItemWidget(
+            title: "Find and Pick (RTU v2.0)",
+            onTap: () {
+              startFindAndPickScanV2();
+            },
+          ),
+          MenuItemWidget(
+            title: "AROverlay (RTU v2.0)",
+            onTap: () {
+              startAROverlayScanV2();
+            },
+          ),
+          MenuItemWidget(
+            title: "Info Mapping (RTU v2.0)",
+            onTap: () {
+              startInfoMappingScanV2();
+            },
+          ),
+          MenuItemWidget(
+            title: "Scan Barcode",
+            onTap: () {
+              startBarcodeScanner();
+            },
+          ),
+          MenuItemWidget(
+            title: "Scan Barcode with Image Result",
+            onTap: () {
+              startBarcodeScanner(shouldSnapImage: true);
+            },
+          ),
+          MenuItemWidget(
+            title: "Scan Batch Barcodes",
+            onTap: () {
+              startBatchBarcodeScanner();
+            },
+          ),
+          MenuItemWidget(
+            title: "Pick Image from Gallery",
             onTap: () {
               pickImageAndDetect();
             },
           ),
           MenuItemWidget(
-            "Cleanup Storage",
+            title: "Cleanup Storage",
             onTap: () {
               cleanupStorage();
             },
           ),
           MenuItemWidget(
-            "Set Accepted Barcodes",
+            title: "Set Accepted Barcodes",
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -179,13 +179,13 @@ class _MainPageState extends State<MainPageWidget> {
             },
           ),
           MenuItemWidget(
-            "Check License Status",
+            title: "Check License Status",
             onTap: () {
               showLicenseStatus();
             },
           ),
           MenuItemWidget(
-            "Licenses info",
+            title: "Licenses info",
             startIcon: Icons.settings,
             onTap: () {
               showLicensePage(
@@ -349,13 +349,14 @@ class _MainPageState extends State<MainPageWidget> {
       multiUsecase.countingRepeatDelay = 1000;
 
       // Set the counting mode.
-      multiUsecase.mode = MultipleBarcodesScanningMode.COUNTING;
+      multiUsecase.mode = scanbotV2.MultipleBarcodesScanningMode.COUNTING;
 
       // Set the sheet mode of the barcodes preview.
-      multiUsecase.sheet.mode = SheetMode.COLLAPSED_SHEET;
+      multiUsecase.sheet.mode = scanbotV2.SheetMode.COLLAPSED_SHEET;
 
       // Set the height of the collapsed sheet.
-      multiUsecase.sheet.collapsedVisibleHeight = CollapsedVisibleHeight.LARGE;
+      multiUsecase.sheet.collapsedVisibleHeight =
+          scanbotV2.CollapsedVisibleHeight.LARGE;
 
       // Enable manual count change.
       multiUsecase.sheetContent.manualCountChangeEnabled = true;
@@ -422,9 +423,9 @@ class _MainPageState extends State<MainPageWidget> {
 
       // Set the expected barcodes.
       usecase.expectedBarcodes = [
-        ExpectedBarcode(
+        scanbotV2.ExpectedBarcode(
             barcodeValue: "123456", title: "", image: "Image_URL", count: 4),
-        ExpectedBarcode(
+        scanbotV2.ExpectedBarcode(
             barcodeValue: "SCANBOT", title: "", image: "Image_URL", count: 3)
       ];
 
@@ -456,10 +457,11 @@ class _MainPageState extends State<MainPageWidget> {
       var configuration = scanbotV2.BarcodeScannerConfiguration();
 
       // Configure the usecase.
-      var usecase = MultipleScanningMode();
-      usecase.mode = MultipleBarcodesScanningMode.UNIQUE;
-      usecase.sheet.mode = SheetMode.COLLAPSED_SHEET;
-      usecase.sheet.collapsedVisibleHeight = CollapsedVisibleHeight.SMALL;
+      var usecase = scanbotV2.MultipleScanningMode();
+      usecase.mode = scanbotV2.MultipleBarcodesScanningMode.UNIQUE;
+      usecase.sheet.mode = scanbotV2.SheetMode.COLLAPSED_SHEET;
+      usecase.sheet.collapsedVisibleHeight =
+          scanbotV2.CollapsedVisibleHeight.SMALL;
 
       // Configure AR Overlay.
       usecase.arOverlay.visible = true;

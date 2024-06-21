@@ -1,7 +1,7 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
 
-import 'utils/generic_document_helper.dart';
+import '../utils/generic_document_helper.dart';
 
 class BarcodeItemWidget extends StatelessWidget {
   final BarcodeItem item;
