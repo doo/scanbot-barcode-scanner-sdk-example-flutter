@@ -3,6 +3,15 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart' as sdk;
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart' as scanbot;
+import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
+
+import 'package:path_provider/path_provider.dart';
+
+import '../../main.dart';
 
 class ScanbotScannerScreen extends StatefulWidget {
   const ScanbotScannerScreen();
@@ -89,9 +98,41 @@ class _ScanbotScannerState extends State<ScanbotScanner> with WidgetsBindingObse
   final bool _showCameraOverlay = true;
   bool _showBarcodeOverlay = true;
 
+  var BARCODE_SDK_LICENSE_KEY = "";
+
+  _initScanbotSdk() async {
+    Directory? storageDirectory;
+    if (Platform.isAndroid) {
+      storageDirectory = await getExternalStorageDirectory();
+    }
+    if (Platform.isIOS) {
+      storageDirectory = await getApplicationDocumentsDirectory();
+    }
+    EncryptionParameters? encryptionParameters;
+    if (shouldInitWithEncryption) {
+      encryptionParameters = EncryptionParameters(
+          password: "password", mode: FileEncryptionMode.AES256);
+    }
+    var config = ScanbotSdkConfig(
+        licenseKey: BARCODE_SDK_LICENSE_KEY,
+        encryptionParameters: encryptionParameters,
+        loggingEnabled: true,
+        // Consider disabling logging in production builds for security and performance reasons.
+        storageBaseDirectory:
+        "${storageDirectory?.path}/custom-barcode-sdk-storage");
+
+    try {
+      config.useCameraX = true;
+      await ScanbotBarcodeSdk.initScanbotSdk(config);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    _initScanbotSdk();
     WidgetsBinding.instance.addObserver(this);
     _shouldScan = widget.detectBarcodes.value;
     widget.detectBarcodes.addListener(_onDetectBarcodeChange);
