@@ -28,12 +28,40 @@ void main() => runApp(MyApp());
 // You can get an unrestricted "no-strings-attached" 30 day trial license key for free.
 // Please submit the trial license form (https://scanbot.io/en/sdk/demo/trial) on our website by using
 // the app identifier "io.scanbot.example.sdk.barcode.flutter" of this example app or of your app.
+const BARCODE_SDK_LICENSE_KEY = "";
 
+_initScanbotSdk() async {
+  Directory? storageDirectory;
+  if (Platform.isAndroid) {
+    storageDirectory = await getExternalStorageDirectory();
+  }
+  if (Platform.isIOS) {
+    storageDirectory = await getApplicationDocumentsDirectory();
+  }
+  EncryptionParameters? encryptionParameters;
+  if (shouldInitWithEncryption) {
+    encryptionParameters = EncryptionParameters(
+        password: "password", mode: FileEncryptionMode.AES256);
+  }
+  var config = ScanbotSdkConfig(
+      licenseKey: BARCODE_SDK_LICENSE_KEY,
+      encryptionParameters: encryptionParameters,
+      loggingEnabled: true,
+      // Consider disabling logging in production builds for security and performance reasons.
+      storageBaseDirectory:
+          "${storageDirectory?.path}/custom-barcode-sdk-storage");
+
+  try {
+    config.useCameraX = true;
+    await ScanbotBarcodeSdk.initScanbotSdk(config);
+  } catch (e) {
+    print(e);
+  }
+}
 
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() {
-    //_initScanbotSdk();
     return _MyAppState();
   }
 }
@@ -296,6 +324,7 @@ class _MainPageState extends State<MainPageWidget> {
     }
   }
   Future<void> _startBarcodeClientUIScanner() async {
+    await _initScanbotSdk();
     var result = await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => const ScanbotScannerScreen()),
     );
