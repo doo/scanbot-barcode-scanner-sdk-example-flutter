@@ -5,7 +5,7 @@ import 'package:barcode_scanner/scanbot_barcode_sdk.dart' as scanbot;
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:scanbot_barcode_sdk_example/ui/ready_to_use_ui(legacy)/barcodes_preview_widget.dart';
+import 'package:scanbot_barcode_sdk_example/ui/ready_to_use_ui_legacy/barcodes_preview_widget.dart';
 
 import '../../main.dart' show shouldInitWithEncryption;
 
@@ -168,39 +168,6 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     );
   }
 
-  AppBar _buildAppBar() {
-    return AppBar(
-      iconTheme: const IconThemeData(),
-      leading: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pop();
-        },
-        child: const Icon(
-          Icons.arrow_back,
-          color: Colors.black,
-        ),
-      ),
-      backgroundColor: Colors.white,
-      title: const Text(
-        'Scan barcodes',
-        style: TextStyle(
-          inherit: true,
-          color: Colors.black,
-        ),
-      ),
-      actions: [
-        if (flashAvailable)
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  flashEnabled = !flashEnabled;
-                });
-              },
-              icon: Icon(flashEnabled ? Icons.flash_on : Icons.flash_off))
-      ],
-    );
-  }
-
   Widget _buildCameraView(BarcodeCameraConfiguration barcodeCameraConfiguration) {
     if (!licenseIsActive) {
       return _buildLicenseInactiveView();
@@ -248,6 +215,39 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
           showProgressBar = show;
         });
       },
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      iconTheme: const IconThemeData(),
+      leading: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+        child: const Icon(
+          Icons.arrow_back,
+          color: Colors.black,
+        ),
+      ),
+      backgroundColor: Colors.white,
+      title: const Text(
+        'Scan barcodes',
+        style: TextStyle(
+          inherit: true,
+          color: Colors.black,
+        ),
+      ),
+      actions: [
+        if (flashAvailable)
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  flashEnabled = !flashEnabled;
+                });
+              },
+              icon: Icon(flashEnabled ? Icons.flash_on : Icons.flash_off))
+      ],
     );
   }
 
