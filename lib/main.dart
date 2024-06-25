@@ -12,7 +12,7 @@ import 'package:barcode_scanner/scanbot_barcode_sdk_v2.dart' as scanbotV2;
 
 import 'package:scanbot_barcode_sdk_example/ui/barcode_formats/barcode_formats_repo.dart';
 import 'package:scanbot_barcode_sdk_example/ui/barcode_formats/barcodes_formats_selector.dart';
-import 'package:scanbot_barcode_sdk_example/ui/ready_to_use_ui(legacy)/barcodes_preview_widget.dart';
+import 'package:scanbot_barcode_sdk_example/ui/ready_to_use_ui_legacy/barcodes_preview_widget.dart';
 import 'package:scanbot_barcode_sdk_example/ui/classic_components/barcode_custom_ui.dart';
 import 'package:scanbot_barcode_sdk_example/ui/menu_items.dart';
 import 'package:scanbot_image_picker/models/image_picker_response.dart';
