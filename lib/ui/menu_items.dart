@@ -6,26 +6,32 @@ class MenuItemWidget extends StatelessWidget {
   final IconData? startIcon;
   final IconData? endIcon;
 
-  MenuItemWidget(this.title,
-      {required this.onTap, this.startIcon, this.endIcon});
+  const MenuItemWidget({
+    required this.title,
+    required this.onTap,
+    this.startIcon,
+    this.endIcon,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var listTile = ListTile(
-      leading: startIcon != null ? Icon(startIcon) : null,
-      trailing: endIcon != null ? Icon(endIcon) : null,
-      title: Text(
-        title,
-        style: const TextStyle(
-            inherit: true, fontSize: 16.0, color: Colors.black87),
-      ),
-      onTap: onTap,
-    );
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        listTile,
+        ListTile(
+          leading: startIcon != null ? Icon(startIcon) : null,
+          trailing: endIcon != null ? Icon(endIcon) : null,
+          title: Text(
+            title,
+            style: const TextStyle(
+              inherit: true,
+              fontSize: 16.0,
+              color: Colors.black87,
+            ),
+          ),
+          onTap: onTap,
+        ),
         const Divider(
           color: Colors.black26,
           height: 0,
@@ -40,7 +46,10 @@ class MenuItemWidget extends StatelessWidget {
 class TitleItemWidget extends StatelessWidget {
   final String title;
 
-  TitleItemWidget(this.title);
+  const TitleItemWidget({
+    required this.title,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +59,11 @@ class TitleItemWidget extends StatelessWidget {
       height: 52,
       child: Text(
         title.toUpperCase(),
-        style:
-            const TextStyle(inherit: true, fontSize: 16.0, color: Colors.black),
+        style: const TextStyle(
+          inherit: true,
+          fontSize: 16.0,
+          color: Colors.black,
+        ),
       ),
     );
   }
