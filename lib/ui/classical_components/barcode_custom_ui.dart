@@ -37,7 +37,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         //resultStream.add(scanningResult);
 
         // this to return result to screen caller
-        barcodeCameraDetector
+         barcodeCameraDetector
             .pauseDetection(); // we can also pause detection immediately after success to prevent it from sending new sucсess results
         Navigator.pop(context, scanningResult);
 
@@ -113,6 +113,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     var barcodeClassicScannerConfiguration = BarcodeClassicScannerConfiguration(
       barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
       // [BarcodeFormat.QR_CODE] for one barcode type
+      shouldReturnCroppedImage: true,
       engineMode: EngineMode.NEXT_GEN,
       additionalParameters: BarcodeAdditionalParameters(
           msiPlesseyChecksumAlgorithm: MSIPlesseyChecksumAlgorithm.MOD_11_NCR,
@@ -122,15 +123,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     var barcodeCameraConfiguration = BarcodeCameraConfiguration(
       flashEnabled: flashEnabled, // initial flash state
       // Initial configuration for the scanner itself
-      overlayConfiguration: SelectionOverlayScannerConfiguration(
-        overlayEnabled: true,
-        onBarcodeClicked: (barcode) {
-          // this to return result to screen caller
-          barcodeCameraDetector
-              .pauseDetection(); // we can also pause detection immediately after success to prevent it from sending new sucсess results
-          Navigator.pop(context, BarcodeScanningResult([barcode]));
-        },
-      ),
+
       scannerConfiguration: barcodeClassicScannerConfiguration,
       finder: finderConfiguration,
     );
