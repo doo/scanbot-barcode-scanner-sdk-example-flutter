@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
-
-import 'package:barcode_scanner/barcode_scanning_data.dart';
-import 'package:barcode_scanner/scanbot_encryption_handler.dart';
 
 import 'package:scanbot_barcode_sdk_example/ui/ready_to_use_ui_legacy/barcode_item.dart';
 import '../../main.dart' show shouldInitWithEncryption;

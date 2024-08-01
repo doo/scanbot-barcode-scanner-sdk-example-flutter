@@ -17,7 +17,7 @@ class BarcodeItemWidgetV2 extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              barcodeFormatEnumMap[item.type]!,
+              barcodeFormatEnumMap[item.type] ?? "",
               style: const TextStyle(inherit: true, color: Colors.black),
             ),
           ),

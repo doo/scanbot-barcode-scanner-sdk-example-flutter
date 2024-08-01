@@ -671,7 +671,7 @@ class _MainPageState extends State<MainPageWidget> {
   showLicenseStatus() async {
     try {
       var result = await ScanbotBarcodeSdk.getLicenseStatus();
-      showAlertDialog(context, jsonEncode(result), title: "License Status");
+      showAlertDialog(context, "${result.status}", title: "License Status");
     } catch (e) {
       print(e);
     }

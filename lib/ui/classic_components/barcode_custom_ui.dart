@@ -61,8 +61,10 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   @override
   Widget build(BuildContext context) {
     var finderConfiguration = _buildFinderConfiguration();
-    var barcodeClassicScannerConfiguration = _buildBarcodeClassicScannerConfiguration();
-    var selectionOverlayScannerConfiguration = _buildSelectionOverlayScannerConfiguration();
+    var barcodeClassicScannerConfiguration =
+        _buildBarcodeClassicScannerConfiguration();
+    var selectionOverlayScannerConfiguration =
+        _buildSelectionOverlayScannerConfiguration();
     var barcodeCameraConfiguration = BarcodeCameraConfiguration(
       // Initial flash state
       flashEnabled: flashEnabled,
@@ -135,7 +137,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     );
   }
 
-  BarcodeClassicScannerConfiguration _buildBarcodeClassicScannerConfiguration() {
+  BarcodeClassicScannerConfiguration
+      _buildBarcodeClassicScannerConfiguration() {
     return BarcodeClassicScannerConfiguration(
       barcodeFormats: PredefinedBarcodes.allBarcodeTypes(),
       // [BarcodeFormat.QR_CODE] for one barcode type
@@ -148,7 +151,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     );
   }
 
-  SelectionOverlayScannerConfiguration _buildSelectionOverlayScannerConfiguration() {
+  SelectionOverlayScannerConfiguration
+      _buildSelectionOverlayScannerConfiguration() {
     return SelectionOverlayScannerConfiguration(
       overlayEnabled: showPolygon,
       automaticSelectionEnabled: true,
@@ -168,7 +172,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     );
   }
 
-  Widget _buildCameraView(BarcodeCameraConfiguration barcodeCameraConfiguration) {
+  Widget _buildCameraView(
+      BarcodeCameraConfiguration barcodeCameraConfiguration) {
     if (!licenseIsActive) {
       return _buildLicenseInactiveView();
     }
@@ -299,8 +304,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
               ListView.builder(
                   itemCount: snapshot.data?.barcodeItems.length ?? 0,
                   itemBuilder: (context, index) {
-                    var barcode =
-                        snapshot.data?.barcodeItems[index].text ?? '';
+                    var barcode = snapshot.data?.barcodeItems[index].text ?? '';
                     return Container(
                         color: Colors.white60, child: Text(barcode));
                   }),
