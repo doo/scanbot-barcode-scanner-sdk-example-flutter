@@ -44,7 +44,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/scanbot_image_picker/ios"
 
 SPEC CHECKSUMS:
-  barcode_scanner: 6aa5120d9d747b3a97943f17f66c3d30b5e95ba3
+  barcode_scanner: 5f8bf4db7e42aa2d2595818699b7fd9b91b0b615
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
