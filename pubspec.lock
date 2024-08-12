@@ -12,10 +12,11 @@ packages:
   barcode_scanner:
     dependency: "direct main"
     description:
-      path: "../flutter/scanbot-sdk-flutter/barcode_sdk"
-      relative: true
-    source: path
-    version: "4.2.1-alpha06"
+      name: barcode_scanner
+      sha256: fc9162311c09beee0632f11bd9b75721c0cd0c416c05d9d0dd0f6e982469d9c8
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.0-alpha01"
   boolean_selector:
     dependency: transitive
     description:
