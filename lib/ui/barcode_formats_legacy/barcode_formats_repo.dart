@@ -1,4 +1,4 @@
-import 'package:barcode_scanner/scanbot_barcode_sdk_v2.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 class BarcodeFormatsRepository {
   Set<BarcodeFormat> selectedFormats = getSelectableTypes().toSet();

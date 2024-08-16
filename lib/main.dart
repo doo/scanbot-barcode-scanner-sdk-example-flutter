@@ -9,8 +9,13 @@ import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart' as scanbot;
 import 'package:barcode_scanner/scanbot_barcode_sdk_v2.dart' as scanbotV2;
 
-import 'package:scanbot_barcode_sdk_example/ui/barcode_formats/barcode_formats_repo.dart';
-import 'package:scanbot_barcode_sdk_example/ui/barcode_formats/barcodes_formats_selector.dart';
+import 'package:scanbot_barcode_sdk_example/ui/barcode_formats_legacy/barcode_formats_repo.dart';
+import 'package:scanbot_barcode_sdk_example/ui/barcode_formats_legacy/barcodes_formats_selector.dart';
+import 'package:scanbot_barcode_sdk_example/ui/barcode_formats/barcode_formats_repo.dart'
+    as scanbotV2;
+import 'package:scanbot_barcode_sdk_example/ui/barcode_formats/barcodes_formats_selector.dart'
+    as scanbotV2;
+
 import 'package:scanbot_barcode_sdk_example/ui/ready_to_use_ui_legacy/barcodes_preview_widget.dart';
 import 'package:scanbot_barcode_sdk_example/ui/classic_components/barcode_custom_ui.dart';
 import 'package:scanbot_barcode_sdk_example/ui/menu_items.dart';
@@ -21,6 +26,8 @@ import 'ui/ready_to_use_ui/barcodes_preview_widget_v2.dart';
 
 bool shouldInitWithEncryption = false;
 BarcodeFormatsRepository barcodeFormatsRepository = BarcodeFormatsRepository();
+scanbotV2.BarcodeFormatsRepository barcodeFormatsRepositoryV2 =
+    scanbotV2.BarcodeFormatsRepository();
 
 void main() => runApp(MyApp());
 
@@ -138,21 +145,21 @@ class _MainPageState extends State<MainPageWidget> {
             },
           ),
           MenuItemWidget(
-            title: "Scan Barcode",
+            title: "Scan Barcode (legacy)",
             onTap: () {
               startBarcodeScanner();
+            },
+          ),
+          MenuItemWidget(
+            title: "Scan Batch Barcodes (legacy)",
+            onTap: () {
+              startBatchBarcodeScanner();
             },
           ),
           MenuItemWidget(
             title: "Scan Barcode with Image Result",
             onTap: () {
               startBarcodeScanner(shouldSnapImage: true);
-            },
-          ),
-          MenuItemWidget(
-            title: "Scan Batch Barcodes",
-            onTap: () {
-              startBatchBarcodeScanner();
             },
           ),
           MenuItemWidget(
@@ -168,12 +175,23 @@ class _MainPageState extends State<MainPageWidget> {
             },
           ),
           MenuItemWidget(
-            title: "Set Accepted Barcodes",
+            title: "Set Accepted Barcodes (legacy)",
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) =>
                         BarcodesFormatSelectorWidget(barcodeFormatsRepository)),
+              );
+            },
+          ),
+          MenuItemWidget(
+            title: "Set Accepted Barcodes (RTU v2.0)",
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) =>
+                        scanbotV2.BarcodesFormatSelectorWidget(
+                            barcodeFormatsRepositoryV2)),
               );
             },
           ),
@@ -303,7 +321,6 @@ class _MainPageState extends State<MainPageWidget> {
       singleUsecase.submitButton.text = "Submit";
       singleUsecase.submitButton.foreground.color = ScanbotColor("#FFFFFF");
       singleUsecase.submitButton.background.fillColor = ScanbotColor("#C8193C");
-
       // Set the configured use case.
       configuration.useCase = singleUsecase;
 
@@ -316,6 +333,8 @@ class _MainPageState extends State<MainPageWidget> {
       //   scanbotV2.BarcodeFormat.MICRO_PDF_417,
       //   scanbotV2.BarcodeFormat.ROYAL_MAIL,
       // ];
+      configuration.recognizerConfiguration.barcodeFormats =
+          barcodeFormatsRepositoryV2.selectedFormats.toList();
 
       var result =
           await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
@@ -378,6 +397,9 @@ class _MainPageState extends State<MainPageWidget> {
       //   scanbotV2.BarcodeFormat.ROYAL_MAIL,
       // ];
 
+      configuration.recognizerConfiguration.barcodeFormats =
+          barcodeFormatsRepositoryV2.selectedFormats.toList();
+
       var result =
           await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
 
@@ -427,6 +449,9 @@ class _MainPageState extends State<MainPageWidget> {
         scanbotV2.ExpectedBarcode(
             barcodeValue: "SCANBOT", title: "", image: "Image_URL", count: 3)
       ];
+
+      configuration.recognizerConfiguration.barcodeFormats =
+          barcodeFormatsRepositoryV2.selectedFormats.toList();
 
       // Set the configured usecase.
       configuration.useCase = usecase;
@@ -478,6 +503,9 @@ class _MainPageState extends State<MainPageWidget> {
       //   scanbotV2.BarcodeFormat.MICRO_PDF_417,
       //   scanbotV2.BarcodeFormat.ROYAL_MAIL,
       // ];
+
+      configuration.recognizerConfiguration.barcodeFormats =
+          barcodeFormatsRepositoryV2.selectedFormats.toList();
 
       // Set the configured usecase.
       configuration.useCase = usecase;
@@ -557,6 +585,9 @@ class _MainPageState extends State<MainPageWidget> {
       //   scanbotV2.BarcodeFormat.ROYAL_MAIL,
       // ];
 
+      configuration.recognizerConfiguration.barcodeFormats =
+          barcodeFormatsRepositoryV2.selectedFormats.toList();
+
       var result =
           await scanbotV2.ScanbotBarcodeSdk.startBarcodeScanner(configuration);
       if (result.operationResult == OperationResult.SUCCESS) {
@@ -617,9 +648,7 @@ class _MainPageState extends State<MainPageWidget> {
   pickImageAndDetect() async {
     try {
       var response = await ScanbotImagePickerFlutter.pickImageAsync();
-      var uriPath = response.uri ?? "";
-      if (uriPath.isEmpty) {
-        ValidateUriError(response);
+      if (response.uri!.isEmpty) {
         return;
       }
 
@@ -628,7 +657,7 @@ class _MainPageState extends State<MainPageWidget> {
       }
 
       var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
-        Uri.parse(uriPath),
+        Uri.parse(response.uri!),
         barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
         additionalParameters:
             BarcodeAdditionalParameters(codeDensity: CodeDensity.HIGH),
