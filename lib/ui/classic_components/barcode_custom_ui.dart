@@ -27,7 +27,6 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   bool flashEnabled = false;
   bool showPolygon = true;
   bool flashAvailable = false;
-  bool showProgressBar = false;
   bool licenseIsActive = true;
   bool detectionEnabled = true;
 
@@ -71,8 +70,6 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
           children: <Widget>[
             _buildCameraView(), // Camera view or permission/licensing messages
             _buildResultStream(), // Overlay for displaying scanned results
-            if (showProgressBar)
-              _buildProgressBar(), // Optional progress bar for long-running operations
           ],
         ),
       ),
@@ -164,8 +161,13 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         overlayConfiguration: _buildSelectionOverlayScannerConfiguration(),
         finder: _buildFinderConfiguration(),
       ),
-      barcodeListener: (scanningResult) =>
-          _showResult(scanningResult), // Handle barcode scanning results.
+      barcodeListener: (scanningResult) => {
+        // Use update function to show result overlay on top of the camera or
+        //resultStream.add(scanningResult),
+
+        // this to return result to preview screen
+        _showResult(scanningResult)
+      }, // Handle barcode scanning results.
       errorListener: (error) {
         setState(() {
           licenseIsActive = false;
@@ -177,11 +179,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
           flashAvailable = isFlashAvailable;
         });
       },
-      onHeavyOperationProcessing: (show) {
-        setState(() {
-          showProgressBar = show;
-        });
-      },
+      onHeavyOperationProcessing: (show) {},
     );
   }
 
