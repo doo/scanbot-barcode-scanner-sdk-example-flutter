@@ -23,9 +23,9 @@ void paletteConfigSnippet() {
   palette.sbColorOutline = ScanbotColor("#EFEFEF");
   palette.sbColorOnSurfaceVariant = ScanbotColor("#707070");
   palette.sbColorOnSurface = ScanbotColor("#000000");
-  palette.sbColorSurfaceLow = ScanbotColor("#26000000");
-  palette.sbColorSurfaceHigh = ScanbotColor("#7A000000");
-  palette.sbColorModalOverlay = ScanbotColor("#A3000000");
+  palette.sbColorSurfaceLow = ScanbotColor("#00000026");
+  palette.sbColorSurfaceHigh = ScanbotColor("#0000007A");
+  palette.sbColorModalOverlay = ScanbotColor("#000000A3");
 
   configuration.palette = palette;
 }

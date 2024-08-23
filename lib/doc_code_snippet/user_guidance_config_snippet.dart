@@ -12,7 +12,7 @@ void userGuidanceConfigSnippet() {
   configuration.userGuidance.title.color = ScanbotColor("#FFFFFF");
 
   // Configure the background.
-  configuration.userGuidance.background.fillColor = ScanbotColor("#7A000000");
+  configuration.userGuidance.background.fillColor = ScanbotColor("#0000007A");
 
   // Configure other parameters as needed.
 }

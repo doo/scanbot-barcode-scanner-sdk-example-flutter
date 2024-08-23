@@ -10,7 +10,7 @@ void actionBarConfigSnippet() {
 
   // Configure the inactive state of the flash button.
   configuration.actionBar.flashButton.backgroundColor =
-      ScanbotColor("#7A000000");
+      ScanbotColor("#0000007A");
   configuration.actionBar.flashButton.foregroundColor = ScanbotColor("#FFFFFF");
 
   // Configure the active state of the flash button.
@@ -24,7 +24,7 @@ void actionBarConfigSnippet() {
 
   // Configure the inactive state of the zoom button.
   configuration.actionBar.zoomButton.backgroundColor =
-      ScanbotColor("#7A000000");
+      ScanbotColor("#0000007A");
   configuration.actionBar.zoomButton.foregroundColor = ScanbotColor("#FFFFFF");
   // Zoom button has no active state - it only switches between zoom levels (for configuring those please refer to camera configuring).
 
@@ -33,7 +33,7 @@ void actionBarConfigSnippet() {
 
   // Configure the inactive state of the flip camera button.
   configuration.actionBar.flipCameraButton.backgroundColor =
-      ScanbotColor("#7A000000");
+      ScanbotColor("#0000007A");
   configuration.actionBar.flipCameraButton.foregroundColor =
       ScanbotColor("#FFFFFF");
   // Flip camera button has no active state - it only switches between front and back camera.
