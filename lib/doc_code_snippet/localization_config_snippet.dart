@@ -3,8 +3,8 @@ import 'package:barcode_scanner/scanbot_barcode_sdk_v2.dart';
 void configurationWithLocalizationSnippet() {
   // Create the default configuration object.
   var configuration = BarcodeScannerConfiguration();
+  
   // Configure localization parameters.
-
   configuration.localization.barcodeInfoMappingErrorStateCancelButton =
       "Custom Cancel title";
   configuration.localization.cameraPermissionCloseButton = "Custom Close title";
