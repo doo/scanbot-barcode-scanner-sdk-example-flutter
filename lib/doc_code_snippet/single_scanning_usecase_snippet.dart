@@ -3,7 +3,6 @@ import 'package:barcode_scanner/scanbot_barcode_sdk_v2.dart';
 void singleScanningUseCaseSnippet() {
   // Create the default configuration object.
   var configuration = BarcodeScannerConfiguration();
-  // Configure parameters (use explicit `this.` receiver for better code completion):
 
   // Initialize the use case for single scanning.
   var scanningMode = SingleScanningMode();
