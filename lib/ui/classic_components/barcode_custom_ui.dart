@@ -19,7 +19,7 @@ class BarcodeScannerWidget extends StatefulWidget {
 
 class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   /// Stream used to show live scanned results on top of the camera.
-  /// Scanning stops and returns the first result off the screen unless this is utilized.
+  /// Scanning stops and returns the first result, unless this is utilized.
   final resultStream = StreamController<BarcodeScanningResult>();
 
   // States to manage various functionalities
