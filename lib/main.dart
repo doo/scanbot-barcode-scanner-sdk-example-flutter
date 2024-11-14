@@ -19,8 +19,6 @@ import 'package:scanbot_barcode_sdk_example/ui/barcode_formats/barcodes_formats_
 import 'package:scanbot_barcode_sdk_example/ui/ready_to_use_ui_legacy/barcodes_preview_widget.dart';
 import 'package:scanbot_barcode_sdk_example/ui/classic_components/barcode_custom_ui.dart';
 import 'package:scanbot_barcode_sdk_example/ui/menu_items.dart';
-import 'package:scanbot_image_picker/models/image_picker_response.dart';
-import 'package:scanbot_image_picker/scanbot_image_picker_flutter.dart';
 
 import 'ui/ready_to_use_ui/barcodes_preview_widget_v2.dart';
 
@@ -227,8 +225,7 @@ class _MainPageState extends State<MainPageWidget> {
       final additionalParameters = BarcodeAdditionalParameters(
           minimumTextLength: 3,
           maximumTextLength: 45,
-          minimum1DBarcodesQuietZone: 10,
-          codeDensity: CodeDensity.HIGH);
+          minimum1DBarcodesQuietZone: 10);
       var config = BatchBarcodeScannerConfiguration(
         barcodeFormatter: (item) async {
           Random random = Random();
@@ -329,7 +326,7 @@ class _MainPageState extends State<MainPageWidget> {
       //   scanbotV2.BarcodeFormat.AZTEC,
       //   scanbotV2.BarcodeFormat.PDF_417,
       //   scanbotV2.BarcodeFormat.QR_CODE,
-      //   scanbotV2.BarcodeFormat.MICRO_QR_CODE,
+      //   scanbotV2.Barcod eFormat.MICRO_QR_CODE,
       //   scanbotV2.BarcodeFormat.MICRO_PDF_417,
       //   scanbotV2.BarcodeFormat.ROYAL_MAIL,
       // ];
@@ -542,7 +539,7 @@ class _MainPageState extends State<MainPageWidget> {
           (item, onResult, onError) async {
         //return result
         onResult(scanbotV2.BarcodeMappedData(
-            title: "Title", subtitle: "Subtitle", barcodeImage: "Image_URL"));
+            title: "Title", subtitle: "Subtitle", barcodeImage: "BARCODE_IMAGE"));
 
         // if need to show error
         // onError();
@@ -609,8 +606,7 @@ class _MainPageState extends State<MainPageWidget> {
     final additionalParameters = BarcodeAdditionalParameters(
       minimumTextLength: 3,
       maximumTextLength: 45,
-      minimum1DBarcodesQuietZone: 10,
-      codeDensity: CodeDensity.HIGH,
+      minimum1DBarcodesQuietZone: 10
     );
     var config = BarcodeScannerConfiguration(
       barcodeImageGenerationType: shouldSnapImage
@@ -646,32 +642,32 @@ class _MainPageState extends State<MainPageWidget> {
   }
 
   pickImageAndDetect() async {
-    try {
-      var response = await ScanbotImagePickerFlutter.pickImageAsync();
-      if (response.uri!.isEmpty) {
-        return;
-      }
-
-      if (!await checkLicenseStatus(context)) {
-        return;
-      }
-
-      var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
-        Uri.parse(response.uri!),
-        barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
-        additionalParameters:
-            BarcodeAdditionalParameters(codeDensity: CodeDensity.HIGH),
-      );
-
-      if (result.operationResult == OperationResult.SUCCESS) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-              builder: (context) => BarcodesResultPreviewWidget(result)),
-        );
-      }
-    } catch (e) {
-      print(e);
-    }
+    // try {
+    //   var response = await ScanbotImagePickerFlutter.pickImageAsync();
+    //   if (response.uri!.isEmpty) {
+    //     return;
+    //   }
+    //
+    //   if (!await checkLicenseStatus(context)) {
+    //     return;
+    //   }
+    //
+    //   var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
+    //     Uri.parse(response.uri!),
+    //     barcodeFormats: barcodeFormatsRepository.selectedFormats.toList(),
+    //     additionalParameters:
+    //         BarcodeAdditionalParameters(codeDensity: CodeDensity.HIGH),
+    //   );
+    //
+    //   if (result.operationResult == OperationResult.SUCCESS) {
+    //     Navigator.of(context).push(
+    //       MaterialPageRoute(
+    //           builder: (context) => BarcodesResultPreviewWidget(result)),
+    //     );
+    //   }
+    // } catch (e) {
+    //   print(e);
+    // }
   }
 
   Future<void> _startBarcodeCustomUIScanner() async {
@@ -698,8 +694,8 @@ class _MainPageState extends State<MainPageWidget> {
 
   showLicenseStatus() async {
     try {
-      var result = await ScanbotBarcodeSdk.getLicenseStatus();
-      showAlertDialog(context, "${result.status}", title: "License Status");
+      // var result = await ScanbotBarcodeSdk.getLicenseStatus();
+      // showAlertDialog(context, "${result.status}", title: "License Status");
     } catch (e) {
       print(e);
     }
@@ -717,10 +713,10 @@ class _MainPageState extends State<MainPageWidget> {
   }
 
   /// Check for error message and display accordingly.
-  void ValidateUriError(ImagePickerResponse response) {
-    String message = response.message ?? "";
-    showAlertDialog(context, message);
-  }
+  // void ValidateUriError(ImagePickerResponse response) {
+  //   String message = response.message ?? "";
+  //   showAlertDialog(context, message);
+  // }
 }
 
 Future<void> showAlertDialog(BuildContext context, String textToShow,
