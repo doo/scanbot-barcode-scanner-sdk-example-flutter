@@ -1,7 +1,7 @@
 PODS:
   - barcode_scanner (1.0.0):
     - Flutter
-    - ScanbotBarcodeScannerSDK (= 5.1.3)
+    - ScanbotBarcodeSDKWrapper (= 6.1.1.2)
   - Flutter (1.0.0)
   - image_picker_ios (0.0.1):
     - Flutter
@@ -10,12 +10,11 @@ PODS:
     - FlutterMacOS
   - permission_handler_apple (9.1.1):
     - Flutter
-  - scanbot_image_picker (1.0.1):
+  - ScanbotBarcodeScannerSDK (6.1.1)
+  - ScanbotBarcodeSDKWrapper (6.1.1.2):
+    - ScanbotBarcodeScannerSDK (= 6.1.1)
+  - url_launcher_ios (0.0.1):
     - Flutter
-    - scanbot_image_picker/Assets (= 1.0.1)
-  - scanbot_image_picker/Assets (1.0.1):
-    - Flutter
-  - ScanbotBarcodeScannerSDK (5.1.3)
 
 DEPENDENCIES:
   - barcode_scanner (from `.symlinks/plugins/barcode_scanner/ios`)
@@ -23,11 +22,12 @@ DEPENDENCIES:
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
-  - scanbot_image_picker (from `.symlinks/plugins/scanbot_image_picker/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
     - ScanbotBarcodeScannerSDK
+    - ScanbotBarcodeSDKWrapper
 
 EXTERNAL SOURCES:
   barcode_scanner:
@@ -40,18 +40,19 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
-  scanbot_image_picker:
-    :path: ".symlinks/plugins/scanbot_image_picker/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  barcode_scanner: 5f8bf4db7e42aa2d2595818699b7fd9b91b0b615
+  barcode_scanner: 1e4ef2fd4990279447fe6215f42eb15100f9b70c
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
-  scanbot_image_picker: 1c256c797d7a1c32a23efbb4acbf37b55d5e3ebc
-  ScanbotBarcodeScannerSDK: c65f2885d64870c2ffba173381107b3515a3a252
+  ScanbotBarcodeScannerSDK: db1f315f9ae7c422986540c619e2a3ed929e0fa7
+  ScanbotBarcodeSDKWrapper: 94c821949a7ed0c6602409e0ee9bd23109205164
+  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
 PODFILE CHECKSUM: 0d0bb4227597b86ca8af077e0d717fea0a00c766
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.16.2

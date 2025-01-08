@@ -7,7 +7,6 @@ plugins {
 
 android {
     namespace = "io.scanbot.scanbot_barcode_sdk_example"
-
     compileSdk = flutter.compileSdkVersion
 
     compileOptions {
