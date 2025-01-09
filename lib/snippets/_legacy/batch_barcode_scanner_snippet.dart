@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart' as scanbot_sdk;
 
-BatchBarcodeScannerConfiguration batchBarcodeConfigurationSnippet(List<BarcodeFormat>? barcodeFormats) {
+BatchBarcodeScannerConfiguration batchBarcodeConfigurationSnippet() {
   return BatchBarcodeScannerConfiguration(
     barcodeFormatter: _barcodeFormatter,
     cancelButtonTitle: 'Cancel',
@@ -22,7 +22,7 @@ BatchBarcodeScannerConfiguration batchBarcodeConfigurationSnippet(List<BarcodeFo
     finderLineWidth: 7,
     successBeepEnabled: true,
     orientationLockMode: OrientationLockMode.PORTRAIT,
-    barcodeFormats: barcodeFormats ?? PredefinedBarcodes.allBarcodeTypes(),
+    barcodeFormats: PredefinedBarcodes.allBarcodeTypes(),
     cancelButtonHidden: false,
       // Uncomment and set zoom factor if needed
     // cameraZoomFactor: 0.5

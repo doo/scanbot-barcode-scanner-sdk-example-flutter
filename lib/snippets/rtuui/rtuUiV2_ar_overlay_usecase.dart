@@ -1,6 +1,6 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
 
-BarcodeScannerConfiguration rtuUiArOverlayUseCase(List<BarcodeFormat>? barcodeFormats) {
+BarcodeScannerConfiguration rtuUiArOverlayUseCase() {
   // Create the default configuration object.
   var configuration = BarcodeScannerConfiguration();
 
@@ -17,9 +17,6 @@ BarcodeScannerConfiguration rtuUiArOverlayUseCase(List<BarcodeFormat>? barcodeFo
   // Configure other parameters, pertaining to use case as needed.
 
   // Configure other parameters as needed.
-  // Set an array of accepted barcode types. If barcodeFormats is null, all barcode types are allowed.
-  if (barcodeFormats != null)
-    configuration.recognizerConfiguration.barcodeFormats = barcodeFormats;
 
   return configuration;
 }

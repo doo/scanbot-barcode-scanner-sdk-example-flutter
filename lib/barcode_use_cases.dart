@@ -79,37 +79,52 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
   }
 
   Future<void> startSingleScanV2(BuildContext context) async {
+    var configuration = rtuUiV2SingleScanningUseCase();
+    configuration.recognizerConfiguration.barcodeFormats = _barcodeFormatsRepository.selectedFormats.toList();
+
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdkUiV2.startBarcodeScanner(rtuUiV2SingleScanningUseCase(_barcodeFormatsRepository.selectedFormats.toList())),
+      scannerFunction: () => ScanbotBarcodeSdkUiV2.startBarcodeScanner(configuration),
     );
   }
 
   Future<void> startMultipleScanV2(BuildContext context) async {
+    var configuration = rtuUiV2MultipleScanningUseCase();
+    configuration.recognizerConfiguration.barcodeFormats = _barcodeFormatsRepository.selectedFormats.toList();
+
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdkUiV2.startBarcodeScanner(rtuUiV2MultipleScanningUseCase(_barcodeFormatsRepository.selectedFormats.toList())),
+      scannerFunction: () => ScanbotBarcodeSdkUiV2.startBarcodeScanner(configuration),
     );
   }
 
   Future<void> startFindAndPickScanV2(BuildContext context) async {
+    var configuration = rtuUiV2FindAndPickModeUseCase();
+    configuration.recognizerConfiguration.barcodeFormats = _barcodeFormatsRepository.selectedFormats.toList();
+
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdkUiV2.startBarcodeScanner(rtuUiV2FindAndPickModeUseCase(_barcodeFormatsRepository.selectedFormats.toList())),
+      scannerFunction: () => ScanbotBarcodeSdkUiV2.startBarcodeScanner(configuration),
     );
   }
 
   Future<void> startAROverlayScanV2(BuildContext context) async {
+    var configuration = rtuUiArOverlayUseCase();
+    configuration.recognizerConfiguration.barcodeFormats = _barcodeFormatsRepository.selectedFormats.toList();
+
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdkUiV2.startBarcodeScanner(rtuUiArOverlayUseCase(_barcodeFormatsRepository.selectedFormats.toList())),
+      scannerFunction: () => ScanbotBarcodeSdkUiV2.startBarcodeScanner(configuration),
     );
   }
 
   Future<void> startItemMappingScanV2(BuildContext context) async {
+    var configuration = rtuUiV2MappingItemConfiguration();
+    configuration.recognizerConfiguration.barcodeFormats = _barcodeFormatsRepository.selectedFormats.toList();
+
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdkUiV2.startBarcodeScanner(rtuUiV2MappingItemConfiguration(_barcodeFormatsRepository.selectedFormats.toList())),
+      scannerFunction: () => ScanbotBarcodeSdkUiV2.startBarcodeScanner(configuration),
     );
   }
 }

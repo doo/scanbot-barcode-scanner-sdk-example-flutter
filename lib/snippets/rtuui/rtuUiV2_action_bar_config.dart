@@ -1,6 +1,6 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
 
-BarcodeScannerConfiguration rtuUiV2ActionBarConfiguration(List<BarcodeFormat>? barcodeFormats) {
+BarcodeScannerConfiguration rtuUiV2ActionBarConfiguration() {
   // Create the default configuration object.
   var config = BarcodeScannerConfiguration();
 
@@ -34,9 +34,6 @@ BarcodeScannerConfiguration rtuUiV2ActionBarConfiguration(List<BarcodeFormat>? b
   // Flip camera button has no active state - it only switches between front and back camera.
 
   // Configure other parameters as needed.
-  // Set an array of accepted barcode types. If barcodeFormats is null, all barcode types are allowed.
-  if (barcodeFormats != null)
-    config.recognizerConfiguration.barcodeFormats = barcodeFormats;
 
   return config;
 }

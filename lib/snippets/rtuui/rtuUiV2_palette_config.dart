@@ -1,6 +1,6 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
 
-BarcodeScannerConfiguration rtuUiV2PaletteConfig(List<BarcodeFormat>? barcodeFormats) {
+BarcodeScannerConfiguration rtuUiV2PaletteConfig() {
   // Create the default configuration object.
   var config = BarcodeScannerConfiguration();
 
@@ -24,10 +24,6 @@ BarcodeScannerConfiguration rtuUiV2PaletteConfig(List<BarcodeFormat>? barcodeFor
   config.palette.sbColorSurfaceLow = ScanbotColor('#00000026');
   config.palette.sbColorSurfaceHigh = ScanbotColor('#0000007A');
   config.palette.sbColorModalOverlay = ScanbotColor('#000000A3');
-
-  // Set an array of accepted barcode types. If barcodeFormats is null, all barcode types are allowed.
-  if (barcodeFormats != null)
-    config.recognizerConfiguration.barcodeFormats = barcodeFormats;
 
   return config;
 }

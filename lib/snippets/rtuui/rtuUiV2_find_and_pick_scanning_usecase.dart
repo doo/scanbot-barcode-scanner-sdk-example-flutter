@@ -1,6 +1,6 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
 
-BarcodeScannerConfiguration rtuUiV2FindAndPickModeUseCase(List<BarcodeFormat>? barcodeFormats) {
+BarcodeScannerConfiguration rtuUiV2FindAndPickModeUseCase() {
   // Create the default configuration object.
   var configuration = BarcodeScannerConfiguration();
 
@@ -50,9 +50,6 @@ BarcodeScannerConfiguration rtuUiV2FindAndPickModeUseCase(List<BarcodeFormat>? b
   configuration.useCase = scanningMode;
 
   // Configure other parameters as needed.
-  // Set an array of accepted barcode types. If barcodeFormats is null, all barcode types are allowed.
-  if (barcodeFormats != null)
-    configuration.recognizerConfiguration.barcodeFormats = barcodeFormats;
 
   return configuration;
 }

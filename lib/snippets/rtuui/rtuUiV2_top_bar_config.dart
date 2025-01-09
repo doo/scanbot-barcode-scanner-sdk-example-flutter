@@ -1,6 +1,6 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
 
-BarcodeScannerConfiguration rtuUiV2TopBarConfiguration(List<BarcodeFormat>? barcodeFormats) {
+BarcodeScannerConfiguration rtuUiV2TopBarConfiguration() {
   // Create the default configuration object.
   var configuration = BarcodeScannerConfiguration();
 
@@ -20,9 +20,6 @@ BarcodeScannerConfiguration rtuUiV2TopBarConfiguration(List<BarcodeFormat>? barc
   configuration.topBar.cancelButton.foreground.color = ScanbotColor("#FFFFFF");
 
   // Configure other parameters as needed.
-  // Set an array of accepted barcode types. If barcodeFormats is null, all barcode types are allowed.
-  if (barcodeFormats != null)
-    configuration.recognizerConfiguration.barcodeFormats = barcodeFormats;
 
   return configuration;
 }

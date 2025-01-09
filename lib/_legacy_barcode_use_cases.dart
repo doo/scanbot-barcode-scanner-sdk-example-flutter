@@ -75,10 +75,13 @@ class _BarcodeLegacyUseCasesWidget extends State<BarcodeLegacyUseCasesWidget> {
   }
 
   Future<void> _startBarcodeScanner(BuildContext context) async {
+    var configuration = barcodeConfigurationSnippet();
+    configuration.barcodeFormats = _barcodeFormatsRepository.selectedFormats.toList();
+
     await startScan(
       context: context,
       scannerFunction: () =>
-          ScanbotBarcodeSdk.startBarcodeScanner(barcodeConfigurationSnippet(_barcodeFormatsRepository.selectedFormats.toList())),
+          ScanbotBarcodeSdk.startBarcodeScanner(configuration),
     );
   }
 
@@ -91,11 +94,13 @@ class _BarcodeLegacyUseCasesWidget extends State<BarcodeLegacyUseCasesWidget> {
   }
 
   Future<void> _startBatchBarcodeScanner(BuildContext context) async {
+    var configuration = batchBarcodeConfigurationSnippet();
+    configuration.barcodeFormats = _barcodeFormatsRepository.selectedFormats.toList();
+
     await startScan(
       context: context,
       scannerFunction: () =>
-          ScanbotBarcodeSdk.startBatchBarcodeScanner(
-              batchBarcodeConfigurationSnippet(_barcodeFormatsRepository.selectedFormats.toList())),
+          ScanbotBarcodeSdk.startBatchBarcodeScanner(configuration),
     );
   }
 }

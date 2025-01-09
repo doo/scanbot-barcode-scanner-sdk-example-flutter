@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart' as scanbot_sdk;
 
-BarcodeScannerConfiguration barcodeConfigurationSnippet(List<BarcodeFormat>? barcodeFormats) {
+BarcodeScannerConfiguration barcodeConfigurationSnippet() {
   return BarcodeScannerConfiguration(
     topBarBackgroundColor: const Color(0xFFc8193c),
-    barcodeFormats: barcodeFormats ?? PredefinedBarcodes.allBarcodeTypes(),
+    barcodeFormats: PredefinedBarcodes.allBarcodeTypes(),
     cameraOverlayColor: Colors.amber,
     overlayConfiguration: _overlayConfiguration(),
     finderAspectRatio: scanbot_sdk.AspectRatio(width: 4, height: 2), // Aspect ratio for the finder

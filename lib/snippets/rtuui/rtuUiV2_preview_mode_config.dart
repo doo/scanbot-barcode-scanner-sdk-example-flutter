@@ -1,6 +1,6 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
 
-BarcodeScannerConfiguration rtuUiV2PreviewModeConfiguration(List<BarcodeFormat>? barcodeFormats) {
+BarcodeScannerConfiguration rtuUiV2PreviewModeConfiguration() {
   // Create the default configuration object.
   var config = BarcodeScannerConfiguration();
 
@@ -21,9 +21,6 @@ BarcodeScannerConfiguration rtuUiV2PreviewModeConfiguration(List<BarcodeFormat>?
   // Configure other parameters, pertaining to multiple-scanning mode as needed.
 
   // Configure other parameters as needed.
-  // Set an array of accepted barcode types. If barcodeFormats is null, all barcode types are allowed.
-  if (barcodeFormats != null)
-    config.recognizerConfiguration.barcodeFormats = barcodeFormats;
 
   return config;
 }
