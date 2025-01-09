@@ -2,6 +2,7 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const Color ScanbotRedColor = Color(0xFFc8193c);
 
@@ -91,19 +92,19 @@ Widget buildBottomNavigationBar(BuildContext context) {
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // TextButton(
-        //   onPressed: _launchScanbotSDKURL,
-        //   style: TextButton.styleFrom(
-        //     padding: EdgeInsets.zero,
-        //     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        //   ),
-        //   child: const Text(
-        //     'Learn More About Scanbot SDK',
-        //     style: TextStyle(
-        //       color: ScanbotRedColor,
-        //     ),
-        //   ),
-        // ),
+        TextButton(
+          onPressed: _launchScanbotSDKURL,
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: const Text(
+            'Learn More About Scanbot SDK',
+            style: TextStyle(
+              color: ScanbotRedColor,
+            ),
+          ),
+        ),
         const SizedBox(height: 4),
         const Text(
           'Copyright 2024 Scanbot SDK GmbH. All rights reserved.',
@@ -119,17 +120,17 @@ Widget buildBottomNavigationBar(BuildContext context) {
   );
 }
 
-// Future<void> _launchScanbotSDKURL() async {
-//   var url = Uri.parse("https://scanbot.io/");
-//   if (await canLaunchUrl(url)) {
-//     await launchUrl(
-//       url,
-//       mode: LaunchMode.externalApplication,
-//     );
-//   } else {
-//     throw 'Could not launch $url';
-//   }
-// }
+Future<void> _launchScanbotSDKURL() async {
+  var url = Uri.parse("https://scanbot.io/");
+  if (await canLaunchUrl(url)) {
+    await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    );
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 
 bool isOperationSuccessful(Result result) {
   return result.operationResult == OperationResult.SUCCESS;
