@@ -7,7 +7,6 @@ BarcodeScannerConfiguration barcodeConfigurationSnippet() {
   return BarcodeScannerConfiguration(
     topBarBackgroundColor: const Color(0xFFc8193c),
     barcodeFormats: PredefinedBarcodes.allBarcodeTypes(),
-    cameraOverlayColor: Colors.amber,
     overlayConfiguration: _overlayConfiguration(),
     finderAspectRatio: scanbot_sdk.AspectRatio(width: 4, height: 2), // Aspect ratio for the finder
     finderTextHint: 'Please align any supported barcode in the frame to scan it.',

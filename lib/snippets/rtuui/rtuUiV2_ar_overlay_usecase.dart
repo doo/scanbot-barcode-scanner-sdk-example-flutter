@@ -13,8 +13,8 @@ BarcodeScannerConfiguration rtuUiArOverlayUseCase() {
   // Configure AR Overlay.
   scanningMode.arOverlay.visible = true;
   scanningMode.arOverlay.automaticSelectionEnabled = false;
-
-  // Configure other parameters, pertaining to use case as needed.
+  
+  configuration.useCase = scanningMode;
 
   // Configure other parameters as needed.
 

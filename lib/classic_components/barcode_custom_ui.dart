@@ -110,7 +110,6 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         border: Border.all(width: 5, color: Colors.deepPurple),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
-      backgroundColor: Colors.amber.withAlpha(150),
       finderAspectRatio: scanbot.AspectRatio(width: 3, height: 2),
     );
   }
