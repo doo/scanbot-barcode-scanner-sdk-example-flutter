@@ -13,10 +13,10 @@ packages:
     dependency: "direct main"
     description:
       name: barcode_scanner
-      sha256: "63387d727f2f7348949d6cff30129c99cf0989a97bf71792282210d8001e3799"
+      sha256: "97daa357571f92714c46a5162c03da783b07f158fd90ed23ca50534fca6f8dbe"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.0"
+    version: "6.1.1-alpha03"
   boolean_selector:
     dependency: transitive
     description:
