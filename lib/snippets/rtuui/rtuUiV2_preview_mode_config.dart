@@ -1,8 +1,8 @@
-import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
-BarcodeScannerConfiguration rtuUiV2PreviewModeConfiguration() {
+BarcodeScannerScreenConfiguration rtuUiV2PreviewModeConfiguration() {
   // Create the default configuration object.
-  var config = BarcodeScannerConfiguration();
+  var config = BarcodeScannerScreenConfiguration();
 
   // Initialize the use case for multiple scanning.
   var scanningMode = MultipleScanningMode();

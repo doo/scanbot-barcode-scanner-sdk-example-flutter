@@ -1,8 +1,8 @@
-import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
-BarcodeScannerConfiguration rtuUiArOverlayUseCase() {
+BarcodeScannerScreenConfiguration rtuUiArOverlayUseCase() {
   // Create the default configuration object.
-  var configuration = BarcodeScannerConfiguration();
+  var configuration = BarcodeScannerScreenConfiguration();
 
   // Initialize the use case for multiple scanning.
   var scanningMode = MultipleScanningMode();
@@ -13,7 +13,7 @@ BarcodeScannerConfiguration rtuUiArOverlayUseCase() {
   // Configure AR Overlay.
   scanningMode.arOverlay.visible = true;
   scanningMode.arOverlay.automaticSelectionEnabled = false;
-  
+
   configuration.useCase = scanningMode;
 
   // Configure other parameters as needed.

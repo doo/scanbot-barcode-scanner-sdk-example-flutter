@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget BuildMenuItem(
-    BuildContext context,
-    String title,
-    Future<void> Function(BuildContext) onTap,
-    ) {
-  return MenuItemWidget(
-    title: title,
-    onTap: () => onTap(context),
-  );
-}
+import '../utility/utils.dart';
 
 class MenuItemWidget extends StatelessWidget {
   final String title;
@@ -87,6 +78,52 @@ class TitleItemWidget extends StatelessWidget {
           letterSpacing: 1.2,
         ),
       ),
+    );
+  }
+}
+
+class ToggleMenuItemWidget extends StatelessWidget {
+  final String title;
+
+  const ToggleMenuItemWidget({
+    required this.title,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ValueListenableBuilder<bool>(
+          valueListenable: shouldReturnImageNotifier,
+          builder: (_, shouldReturnImage, __) => SwitchListTile(
+            title: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500,
+                color: Colors.black87,
+              ),
+            ),
+            value: shouldReturnImage,
+            onChanged: (value) {
+              shouldReturnImageNotifier.value = value;
+            },
+            activeColor: ScanbotRedColor,
+            tileColor: Colors.grey[100],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+          ),
+        ),
+        const Divider(
+          color: Colors.black26,
+          height: 1,
+          endIndent: 16,
+          indent: 16,
+        ),
+      ],
     );
   }
 }

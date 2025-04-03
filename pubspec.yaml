@@ -14,15 +14,16 @@ description: Scanbot Barcode Scanner SDK Example App for Flutter
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.15.0-0 <4.0.0'
-  flutter: '>=2.0.1'
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: '>=3.24.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
   # Scanbot Barcode Scanner SDK
-  barcode_scanner: ^6.1.0
+  barcode_scanner:
+    path: ../scanbot-sdk-flutter/barcode_sdk
 
   image_picker: ^1.1.2
   url_launcher: ^6.1.8

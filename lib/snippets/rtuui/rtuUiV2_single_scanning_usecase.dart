@@ -1,8 +1,8 @@
-import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
-BarcodeScannerConfiguration rtuUiV2SingleScanningUseCase() {
+BarcodeScannerScreenConfiguration rtuUiV2SingleScanningUseCase() {
   // Create the default configuration object.
-  var configuration = BarcodeScannerConfiguration();
+  var configuration = BarcodeScannerScreenConfiguration();
 
   // Initialize the use case for single scanning.
   var scanningMode = SingleScanningMode();

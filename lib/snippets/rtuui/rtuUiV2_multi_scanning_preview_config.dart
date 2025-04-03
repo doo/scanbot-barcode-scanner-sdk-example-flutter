@@ -1,8 +1,8 @@
-import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
-BarcodeScannerConfiguration rtuUiV2MultipleScanningPreviewConfig() {
+BarcodeScannerScreenConfiguration rtuUiV2MultipleScanningPreviewConfig() {
   // Create the default configuration object.
-  var config = BarcodeScannerConfiguration();
+  var config = BarcodeScannerScreenConfiguration();
 
   // Initialize the use case for multiple scanning.
   var scanningMode = MultipleScanningMode();
@@ -23,7 +23,7 @@ BarcodeScannerConfiguration rtuUiV2MultipleScanningPreviewConfig() {
   config.localization.cameraPermissionCloseButton = 'Custom Close title';
   // Configure other strings as needed.
 
-   // Configure other parameters, pertaining to multiple-scanning mode as needed.
+  // Configure other parameters, pertaining to multiple-scanning mode as needed.
 
   config.useCase = scanningMode;
 
