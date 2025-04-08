@@ -1,6 +1,6 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
-BarcodeScannerScreenConfiguration rtuUiV2PaletteConfig() {
+BarcodeScannerScreenConfiguration rtuUiPaletteConfig() {
   // Create the default configuration object.
   var config = BarcodeScannerScreenConfiguration();
 

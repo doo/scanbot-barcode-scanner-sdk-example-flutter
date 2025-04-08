@@ -7,7 +7,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:logging/logging.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../ui/preview/barcode_preview.dart';
+import '../ui/preview/barcodes_result_preview.dart';
 import '../utility/utils.dart';
 
 /// A widget that demonstrates integrating a classical barcode scanner.
@@ -21,7 +21,7 @@ class BarcodeScannerWidget extends StatefulWidget {
 class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   /// Stream used to show live scanned results on top of the camera.
   /// Scanning stops and returns the first result, unless this is utilized.
-  final resultStream = StreamController<BarcodeScannerResult>();
+  final resultStream = StreamController<List<BarcodeItem>>();
 
   // States to manage various functionalities
   bool permissionGranted = false;
@@ -64,7 +64,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: ScanbotAppBar("Scan barcodes", showBackButton: true, context: context, actions: [_buildFlashToggleButton()]),
       body: Container(
         color: Colors.black,
         child: Stack(
@@ -117,7 +117,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   BarcodeClassicScannerConfiguration
   _buildBarcodeClassicScannerConfiguration() {
     return BarcodeClassicScannerConfiguration(
-      returnBarcodeImage: shouldReturnImageNotifier.value,
+      returnBarcodeImage: shouldReturnImage,
       barcodeFormatConfigurations: [BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()],
       engineMode: BarcodeScannerEngineMode.NEXT_GEN, // Uses the latest engine for scanning.
     );
@@ -134,8 +134,10 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
       overlayTextColor: Colors.white,
       overlayTextContainerColor: Colors.grey,
       onBarcodeClicked: (barcode) async {
-        if(shouldReturnImageNotifier.value)
-          barcode.encodeImages();
+
+       /// if you want to use image later call encodeImages() to save in buffer
+       // if(shouldReturnImage)
+       //   barcode.encodeImages();
 
         await _showResult([barcode]);
       },
@@ -161,20 +163,22 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
       ),
       barcodeListener: (barcodeItems) async {
         // Use update function to show result overlay on top of the camera or
-        //resultStream.add(scanningResult),
+        // resultStream.add(barcodeItems);
 
-        if(shouldReturnImageNotifier.value)
-          barcodeItems.forEach((item) {
-            item.encodeImages();
-          });
+        /// if you want to use image later call encodeImages() to save in buffer
+        // if(shouldReturnImage)
+        //   barcodeItems.forEach((item) {
+        //     item.encodeImages();
+        //   });
+
         // this to return result to preview screen
         await _showResult(barcodeItems);
       }, // Handle barcode scanning results.
-      errorListener: (error) {
+      errorListener: (licenseStatus) {
         setState(() {
           licenseIsActive = false;
         });
-        Logger.root.severe(error.toString());
+        Logger.root.severe(licenseStatus);
       },
       onCameraPreviewStarted: (isFlashAvailable) {
         setState(() {
@@ -182,29 +186,6 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         });
       },
       onHeavyOperationProcessing: (show) {},
-    );
-  }
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      iconTheme: const IconThemeData(),
-      leading: _buildBackButton(),
-      backgroundColor: Colors.white,
-      title: const Text(
-        'Scan barcodes',
-        style: TextStyle(color: Colors.black),
-      ),
-      actions: [_buildFlashToggleButton()],
-    );
-  }
-
-  Widget _buildBackButton() {
-    return GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
-      child: const Icon(
-        Icons.arrow_back,
-        color: Colors.black,
-      ),
     );
   }
 
@@ -246,7 +227,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   /// Builds a stream builder that listens to scanning results and displays them.
   Widget _buildResultStream() {
-    return StreamBuilder<BarcodeScannerResult>(
+    return StreamBuilder<List<BarcodeItem>>(
       stream: resultStream.stream,
       builder: (context, snapshot) {
         if (snapshot.data == null) return Container();
@@ -261,11 +242,11 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   }
 
   /// Creates a ListView to display the scanned barcode texts.
-  Widget _buildBarcodeListView(BarcodeScannerResult? data) {
+  Widget _buildBarcodeListView(List<BarcodeItem>? data) {
     return ListView.builder(
-      itemCount: data?.barcodes.length ?? 0,
+      itemCount: data?.length ?? 0,
       itemBuilder: (context, index) {
-        var barcode = data?.barcodes[index].text ?? '';
+        var barcode = data?[index].text ?? '';
         return Container(
           color: Colors.white60,
           child: Text(barcode),

@@ -29,8 +29,6 @@ Value: ${wrappedGenericFieldValue?.value?.text ?? "N/A"}
         return SwissQR(genericDocument).iban;
       case DEMedicalPlan.DOCUMENT_TYPE:
         return DEMedicalPlan(genericDocument).doctor.issuerName;
-      case DEMedicalPlanDoctor.DOCUMENT_TYPE:
-        return DEMedicalPlanDoctor(genericDocument).doctorNumber;
       case IDCardPDF417.DOCUMENT_TYPE:
         return IDCardPDF417(genericDocument).dateExpired;
       case GS1.DOCUMENT_TYPE:

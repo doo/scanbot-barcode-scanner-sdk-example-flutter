@@ -1,6 +1,6 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
-BarcodeScannerScreenConfiguration rtuUiV2FindAndPickModeUseCase() {
+BarcodeScannerScreenConfiguration rtuUiFindAndPickModeUseCase() {
   // Create the default configuration object.
   var configuration = BarcodeScannerScreenConfiguration();
 

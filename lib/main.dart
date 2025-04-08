@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../ui/preview/barcode_preview.dart';
 import '../ui/menu_item.dart';
 import '../utility/utils.dart';
 
@@ -14,7 +14,9 @@ import 'barcode_use_cases.dart';
 import 'classic_components/barcode_custom_ui.dart';
 
 import 'ui/barcode_formats/selector.dart';
-import 'ui/preview/barcode_multi_images_preview.dart';
+import 'ui/preview/barcodes_result_preview.dart';
+
+bool shouldInitWithEncryption = false;
 
 void main() => runApp(MyApp());
 
@@ -35,7 +37,7 @@ Future<void> _initScanbotSdk() async {
     // Consider switching logging OFF in production. builds for security and performance reasons.
     licenseKey: BARCODE_SDK_LICENSE_KEY,
     // Uncomment to use custom storage directory
-    storageBaseDirectory: customStorageBaseDirectory,
+    // storageBaseDirectory: customStorageBaseDirectory,
   );
 
   if(shouldInitWithEncryption) {
@@ -44,8 +46,8 @@ Future<void> _initScanbotSdk() async {
   }
 
   try {
-    var result = await ScanbotBarcodeSdk.initScanbotSdk(config);
-    print(result);
+    var statusLicenseResult = await ScanbotBarcodeSdk.initScanbotSdk(config);
+    print(statusLicenseResult.licenseStatus);
   } catch (e) {
     print(e);
   }
@@ -100,8 +102,12 @@ class _MainPageWidgetState extends State<MainPageWidget> {
         appBar: ScanbotAppBar('Scanbot SDK Flutter Example'),
         body: ListView(
           children: [
-            const TitleItemWidget(title: 'Settings:'),
-            const ToggleMenuItemWidget(title: "Return cropped ImageRef"),
+            BarcodeUseCasesWidget(),
+            const TitleItemWidget(title: 'Custom UI'),
+            MenuItemWidget(title: 'Classic Component', onTap: () => _startBarcodeCustomUIScanner(context)),
+            const TitleItemWidget(title: 'Other SDK API'),
+            MenuItemWidget(title: 'Detect Barcodes from Still Image', onTap: () => _detectBarcodeOnImage(context)),
+            MenuItemWidget(title: 'Detect Barcodes from Multiple Still Images', onTap: () => _detectBarcodesOnImages(context)),
             MenuItemWidget(
               title: "Set accepted barcode types (RTU)",
               onTap: () {
@@ -112,12 +118,6 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                 );
               },
             ),
-            BarcodeUseCasesWidget(),
-            const TitleItemWidget(title: 'Custom UI'),
-            MenuItemWidget(title: 'Classic Component', onTap: () => _startBarcodeCustomUIScanner(context)),
-            const TitleItemWidget(title: 'Other SDK API'),
-            MenuItemWidget(title: 'Detect Barcodes from Still Image', onTap: () => _detectBarcodeOnImage(context)),
-            MenuItemWidget(title: 'Detect Barcodes from Multiple Still Images', onTap: () => _detectBarcodesOnImages(context)),
             MenuItemWidget(
               title: 'getLicenseStatus()',
               startIcon: Icons.phonelink_lock,
@@ -163,26 +163,26 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       final response = await selectImageFromLibrary();
 
       if (response == null || response.path.isEmpty) {
-        await showAlertDialog(context, "RESULT IS EMPTY");
+        await showAlertDialog(context, title: "Info", "No image picked.");
         return;
       }
 
       final uriPath = Uri.file(response.path);
 
-      await autorelease(() async {
-        var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
-            uriPath,
-            BarcodeScannerConfiguration(returnBarcodeImage: shouldReturnImageNotifier.value));
+      var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
+          uriPath,
+          BarcodeScannerConfiguration());
 
-        if(shouldReturnImageNotifier.value)
-          result.encodeImages();
-
-        await Navigator.of(context).push(
-          MaterialPageRoute(
-              builder: (context) => BarcodesResultPreviewWidget(result.barcodes)),
-        );
+      if(!result.success) {
+        await showAlertDialog(context, title: "Info", "No barcodes detected.");
+        return;
       }
+
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidget(result.barcodes)),
       );
+
     } catch (ex) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(ex.toString()),
@@ -199,35 +199,47 @@ class _MainPageWidgetState extends State<MainPageWidget> {
     try {
       List<Uri> uris = List.empty(growable: true);
 
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const Center(child: CircularProgressIndicator());
+          }
+      );
+
       final response = await ImagePicker().pickMultiImage();
       if (response.isEmpty) {
-        showAlertDialog(context, "RESULT IS EMPTY");
+        await showAlertDialog(context, title: "Info", "No image picked.");
         return;
       }
 
       uris = response.map((image) => Uri.file(image.path)).toList();
 
-      List<BarcodeScannerResult> results = [];
+      List<BarcodeItem> allBarcodes = [];
 
-      await autorelease(() async {
-        for (var uri in uris) {
-          var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
-              uri,
-              BarcodeScannerConfiguration(returnBarcodeImage: shouldReturnImageNotifier.value));
+      for (var uri in uris) {
+        var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
+          uri,
+          BarcodeScannerConfiguration());
 
-          if(shouldReturnImageNotifier.value)
-            result.encodeImages();
+        allBarcodes.addAll(result.barcodes);
+      }
 
-          results.add(result);
-        }
+      Navigator.of(context).pop();
 
-        if (!results.isEmpty) {
-          await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) =>
-                  MultiImageBarcodesResultPreviewWidget(results)));
-        }
-      });
+      if (allBarcodes.isNotEmpty) {
+        await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidget(allBarcodes),
+          ),
+        );
+      } else {
+        await showAlertDialog(context, title: "Info", "No barcodes detected.");
+        return;
+      }
+
     } catch (ex) {
+      Navigator.of(context, rootNavigator: true).pop();
+
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(ex.toString()),
       ));
@@ -238,10 +250,10 @@ class _MainPageWidgetState extends State<MainPageWidget> {
     try {
       final result = await ScanbotBarcodeSdk.getLicenseStatus();
       await showAlertDialog(context,
-          "${result.licenseStatus} expirationDate: ${result.licenseExpirationDate}",
+          "Status: ${result.licenseStatus.name} \n ExpirationDate: ${result.licenseExpirationDate}",
           title: 'License Status');
     } catch (e) {
-      await showAlertDialog(context, 'Error getting license status');
+      await showAlertDialog(context, title: "Info", 'Error getting license status');
     }
   }
 }

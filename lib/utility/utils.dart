@@ -7,29 +7,34 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_picker/image_picker.dart' as picker;
 import 'package:url_launcher/url_launcher.dart';
 
-bool shouldInitWithEncryption = false;
-
-final shouldReturnImageNotifier = ValueNotifier<bool>(false);
+final shouldReturnImage = false;
 final selectedFormatsNotifier = ValueNotifier<Set<BarcodeFormat>>(
     BarcodeFormats.all.toSet()
 );
 
 const Color ScanbotRedColor = Color(0xFFc8193c);
 
-AppBar ScanbotAppBar(String title) {
+AppBar ScanbotAppBar(String title, {bool showBackButton = false, BuildContext? context, List<Widget>? actions}) {
   return AppBar(
     iconTheme: const IconThemeData(
       color: Colors.white,
     ),
     backgroundColor: ScanbotRedColor,
+    leading: showBackButton && context != null
+        ? GestureDetector(
+      onTap: () => Navigator.of(context).pop(),
+      child: const Icon(Icons.arrow_back, color: Colors.white),
+    )
+        : null,
     title: Text(
       title,
       style: const TextStyle(
-          inherit: true,
-          color: Colors.white,
-          fontSize: 20
+        inherit: true,
+        color: Colors.white,
+        fontSize: 20,
       ),
     ),
+    actions: actions,
   );
 }
 
@@ -55,7 +60,7 @@ Widget buildBottomNavigationBar(BuildContext context) {
         ),
         const SizedBox(height: 4),
         const Text(
-          'Copyright 2024 Scanbot SDK GmbH. All rights reserved.',
+          'Copyright 2025 Scanbot SDK GmbH. All rights reserved.',
           style: TextStyle(
             fontSize: 10,
             color: Colors.black,
@@ -74,7 +79,7 @@ Future<bool> checkLicenseStatus(BuildContext context) async {
     return true;
   }
   await showAlertDialog(
-      context, 'Scanbot SDK (trial) period or license has expired.',
+      context, result.licenseStatusMessage ?? "Invalid license",
       title: 'Info');
   return false;
 }
@@ -117,27 +122,6 @@ Future<void> showAlertDialog(BuildContext context, String textToShow,
     context: context,
     builder: (BuildContext context) {
       return dialog;
-    },
-  );
-}
-
-void showResultTextDialog(BuildContext context, result) {
-  Widget okButton = TextButton(
-    onPressed: () => Navigator.pop(context),
-    child: const Text('OK'),
-  );
-  var alert = AlertDialog(
-    title: const Text('Result'),
-    content: Text(result),
-    actions: [
-      okButton,
-    ],
-  );
-
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
     },
   );
 }

@@ -8,7 +8,7 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - permission_handler_apple (9.1.1):
+  - permission_handler_apple (9.3.0):
     - Flutter
   - ScanbotBarcodeScannerSDK (7.0.0)
   - ScanbotBarcodeSDKWrapper (7.0.0.0):
@@ -48,7 +48,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
-  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
+  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   ScanbotBarcodeScannerSDK: 2a0662658520207f8ab6e5769d661e5966779b8a
   ScanbotBarcodeSDKWrapper: 12c70d47f2f726ba8535ccea788e60d6cfe71462
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe

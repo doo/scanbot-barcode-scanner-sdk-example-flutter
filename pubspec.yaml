@@ -26,15 +26,15 @@ dependencies:
     path: ../scanbot-sdk-flutter/barcode_sdk
 
   image_picker: ^1.1.2
-  url_launcher: ^6.1.8
-  path_provider: ^2.0.1
-  cupertino_icons: ^1.0.2
-  permission_handler: ^10.0.0
+  url_launcher: ^6.3.1
+  path_provider: ^2.1.5
+  cupertino_icons: ^1.0.8
+  permission_handler: ^11.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lints: ^2.0.1
+  lints: ^5.1.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

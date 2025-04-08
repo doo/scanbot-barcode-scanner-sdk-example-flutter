@@ -10,18 +10,7 @@ class BarcodesFormatSelectorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        leading: GestureDetector(
-          child: const Icon(Icons.arrow_back),
-          onTap: () => Navigator.of(context).pop(),
-        ),
-        backgroundColor: Colors.white,
-        title: const Text(
-          'Scanned barcodes',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+      appBar: ScanbotAppBar('Scanned barcodes', showBackButton: true, context: context),
       body: ValueListenableBuilder<Set<BarcodeFormat>>(
         valueListenable: selectedFormatsNotifier,
         builder: (context, selectedFormats, _) {

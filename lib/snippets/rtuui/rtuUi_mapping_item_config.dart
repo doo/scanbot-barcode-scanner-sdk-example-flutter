@@ -1,6 +1,6 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
-BarcodeScannerScreenConfiguration rtuUiV2MappingItemConfiguration() {
+BarcodeScannerScreenConfiguration rtuUiMappingItemConfiguration() {
   // Create the default configuration object.
   var configuration = BarcodeScannerScreenConfiguration();
 
@@ -15,7 +15,7 @@ BarcodeScannerScreenConfiguration rtuUiV2MappingItemConfiguration() {
      * See example below.
      */
     var title = "Some product ${item.text}";
-    var subtitle = item.format.name ?? "Unknown";
+    var subtitle = item.format.name;
     var image =
         "https://avatars.githubusercontent.com/u/1454920";
 
