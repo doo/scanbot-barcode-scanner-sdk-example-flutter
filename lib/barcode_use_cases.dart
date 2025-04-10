@@ -27,11 +27,11 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const TitleItemWidget(title: 'Barcode Scanners (RTU)'),
-        MenuItemWidget(title: "Single Scan with confirmation dialog", onTap: () => startSingleScanV2(context)),
-        MenuItemWidget(title: "Multiple Scan", onTap: () => startMultipleScanV2(context)),
-        MenuItemWidget(title: "Find and Pick", onTap: () => startFindAndPickScanV2(context)),
-        MenuItemWidget(title: "Multiple Scan With AR Overlay", onTap: () => startAROverlayScanV2(context)),
-        MenuItemWidget(title: "Multiple Scan with Info Mapping", onTap: () => startItemMappingScanV2(context)),
+        MenuItemWidget(title: "Single Scan with confirmation dialog", onTap: () => startSingleScan(context)),
+        MenuItemWidget(title: "Multiple Scan", onTap: () => startMultipleScan(context)),
+        MenuItemWidget(title: "Find and Pick", onTap: () => startFindAndPickScan(context)),
+        MenuItemWidget(title: "Multiple Scan With AR Overlay", onTap: () => startAROverlayScan(context)),
+        MenuItemWidget(title: "Multiple Scan with Info Mapping", onTap: () => startItemMappingScan(context)),
       ],
     );
   }
@@ -50,8 +50,8 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
         var result = await scannerFunction();
 
-        /// if you want to use image later call encodeImages() to save in buffer
-        // if(shouldReturnImage)
+        /// if you want to use image later, call encodeImages() to save in buffer
+        // if(enableImagesInScannedBarcodesResults)
         //   result.data?.encodeImages();
 
         if (result.status == OperationStatus.OK && result.data != null) {
@@ -63,14 +63,13 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
             ),
           );
         }
-
       // });
     } catch (e) {
       print(e);
     }
   }
 
-  Future<void> startSingleScanV2(BuildContext context) async {
+  Future<void> startSingleScan(BuildContext context) async {
     var configuration = rtuUiSingleScanningUseCase();
     configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
 
@@ -80,7 +79,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
     );
   }
 
-  Future<void> startMultipleScanV2(BuildContext context) async {
+  Future<void> startMultipleScan(BuildContext context) async {
     var configuration = rtuUiMultipleScanningUseCase();
     configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
 
@@ -90,7 +89,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
     );
   }
 
-  Future<void> startFindAndPickScanV2(BuildContext context) async {
+  Future<void> startFindAndPickScan(BuildContext context) async {
     var configuration = rtuUiFindAndPickModeUseCase();
     configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
 
@@ -100,7 +99,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
     );
   }
 
-  Future<void> startAROverlayScanV2(BuildContext context) async {
+  Future<void> startAROverlayScan(BuildContext context) async {
     var configuration = rtuUiArOverlayUseCase();
     configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
 
@@ -110,7 +109,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
     );
   }
 
-  Future<void> startItemMappingScanV2(BuildContext context) async {
+  Future<void> startItemMappingScan(BuildContext context) async {
     var configuration = rtuUiMappingItemConfiguration();
     configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
 

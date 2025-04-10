@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_picker/image_picker.dart' as picker;
 import 'package:url_launcher/url_launcher.dart';
 
-final shouldReturnImage = false;
+final enableImagesInScannedBarcodesResults = false;
 final selectedFormatsNotifier = ValueNotifier<Set<BarcodeFormat>>(
     BarcodeFormats.all.toSet()
 );

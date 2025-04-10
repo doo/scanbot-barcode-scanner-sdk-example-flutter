@@ -117,7 +117,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   BarcodeClassicScannerConfiguration
   _buildBarcodeClassicScannerConfiguration() {
     return BarcodeClassicScannerConfiguration(
-      returnBarcodeImage: shouldReturnImage,
+      returnBarcodeImage: enableImagesInScannedBarcodesResults,
       barcodeFormatConfigurations: [BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()],
       engineMode: BarcodeScannerEngineMode.NEXT_GEN, // Uses the latest engine for scanning.
     );
@@ -129,14 +129,14 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     return SelectionOverlayScannerConfiguration(
       overlayEnabled: showPolygon,
       automaticSelectionEnabled: false,
-      overlayTextFormat: BarcodeOverlayTextFormat.CODE,
-      overlayPolygonColor: Colors.green,
-      overlayTextColor: Colors.white,
-      overlayTextContainerColor: Colors.grey,
+      textFormat: BarcodeOverlayTextFormat.CODE,
+      polygonColor: Colors.green,
+      textColor: Colors.white,
+      textContainerColor: Colors.grey,
       onBarcodeClicked: (barcode) async {
 
        /// if you want to use image later call encodeImages() to save in buffer
-       // if(shouldReturnImage)
+       // if(enableImagesInScannedBarcodesResults)
        //   barcode.encodeImages();
 
         await _showResult([barcode]);
@@ -166,7 +166,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         // resultStream.add(barcodeItems);
 
         /// if you want to use image later call encodeImages() to save in buffer
-        // if(shouldReturnImage)
+        // if(enableImagesInScannedBarcodesResults)
         //   barcodeItems.forEach((item) {
         //     item.encodeImages();
         //   });

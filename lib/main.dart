@@ -199,18 +199,18 @@ class _MainPageWidgetState extends State<MainPageWidget> {
     try {
       List<Uri> uris = List.empty(growable: true);
 
+      final response = await ImagePicker().pickMultiImage();
+      if (response.isEmpty) {
+        await showAlertDialog(context, title: "Info", "No image picked.");
+        return;
+      }
+
       showDialog(
           context: context,
           builder: (context) {
             return const Center(child: CircularProgressIndicator());
           }
       );
-
-      final response = await ImagePicker().pickMultiImage();
-      if (response.isEmpty) {
-        await showAlertDialog(context, title: "Info", "No image picked.");
-        return;
-      }
 
       uris = response.map((image) => Uri.file(image.path)).toList();
 
@@ -249,9 +249,13 @@ class _MainPageWidgetState extends State<MainPageWidget> {
   Future<void> _getLicenseStatus() async {
     try {
       final result = await ScanbotBarcodeSdk.getLicenseStatus();
-      await showAlertDialog(context,
-          "Status: ${result.licenseStatus.name} \n ExpirationDate: ${result.licenseExpirationDate}",
-          title: 'License Status');
+      var status = " Status: ${result.licenseStatus.name}";
+
+      if (result.licenseExpirationDate != null) {
+        status += "\n ExpirationDate: ${result.licenseExpirationDate}";
+      }
+
+      await showAlertDialog(context, status, title: 'License Status');
     } catch (e) {
       await showAlertDialog(context, title: "Info", 'Error getting license status');
     }
