@@ -136,8 +136,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
       onBarcodeClicked: (barcode) async {
 
        /// if you want to use image later call encodeImages() to save in buffer
-       // if(enableImagesInScannedBarcodesResults)
-       //   barcode.encodeImages();
+       if(enableImagesInScannedBarcodesResults)
+         barcode.encodeImages();
 
         await _showResult([barcode]);
       },
@@ -166,10 +166,10 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         // resultStream.add(barcodeItems);
 
         /// if you want to use image later call encodeImages() to save in buffer
-        // if(enableImagesInScannedBarcodesResults)
-        //   barcodeItems.forEach((item) {
-        //     item.encodeImages();
-        //   });
+        if(enableImagesInScannedBarcodesResults)
+          barcodeItems.forEach((item) {
+            item.encodeImages();
+          });
 
         // this to return result to preview screen
         await _showResult(barcodeItems);
