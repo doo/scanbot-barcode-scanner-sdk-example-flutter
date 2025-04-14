@@ -108,7 +108,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
             const TitleItemWidget(title: 'Other SDK API'),
             MenuItemWidget(title: 'Detect Barcodes from Still Image', onTap: () => _detectBarcodeOnImage(context)),
             MenuItemWidget(title: 'Detect Barcodes from Multiple Still Images', onTap: () => _detectBarcodesOnImages(context)),
-            MenuItemWidget(title: 'Detect Images From Pdf', onTap: () => _detectImagesOnPdf(context)),
+            MenuItemWidget(title: 'Extract Images From Pdf', onTap: () => _extractImagesFromPdf(context)),
             MenuItemWidget(
               title: "Set accepted barcode types (RTU)",
               onTap: () {
@@ -219,8 +219,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
 
       for (var uri in uris) {
         var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
-          uri,
-          BarcodeScannerConfiguration());
+            uri,
+            BarcodeScannerConfiguration());
 
         allBarcodes.addAll(result.barcodes);
       }
@@ -262,7 +262,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
     }
   }
 
-  Future<void> _detectImagesOnPdf(BuildContext context) async {
+  Future<void> _extractImagesFromPdf(BuildContext context) async {
     if (!await checkLicenseStatus(context)) {
       return;
     }
@@ -275,8 +275,11 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       }
 
       var result = await ScanbotBarcodeSdk.extractImagesFromPdf(ExtractImagesFromPdfParams(pdfFilePath: response!.path!));
-      if(result != null) {
-        await showAlertDialog(context, title: "Result", result.join('\n'));
+
+      if(result?.isNotEmpty == true) {
+        await showAlertDialog(context, title: "Result", result!.join('\n'));
+      } else {
+        await showAlertDialog(context, title: "Info", "No images extracted.");
       }
     } catch (ex) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

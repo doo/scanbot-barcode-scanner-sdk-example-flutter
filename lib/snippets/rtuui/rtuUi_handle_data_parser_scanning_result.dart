@@ -60,9 +60,6 @@ Future<List<dynamic>> handleScanningResultWithDataParsers() async {
         case HIBC.DOCUMENT_TYPE:
           parsedData.add(HIBC(genericDocument).labelerIdentificationCode);
           break;
-
-        default:
-          parsedData.add(null);
       }
     }
 

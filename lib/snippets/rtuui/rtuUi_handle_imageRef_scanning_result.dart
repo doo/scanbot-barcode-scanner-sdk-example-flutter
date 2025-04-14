@@ -6,10 +6,10 @@ Future<List<BarcodeItem>> handleScanningResultWithImageRef() async {
   // Start the barcode RTU UI with default configuration
   var config = BarcodeScannerScreenConfiguration();
   config.scannerConfiguration.returnBarcodeImage = true;
-  final scanningResult = await ScanbotBarcodeSdk.startBarcodeScanner(config);
 
   // Autorelease executes the given block and releases native resources
-  await autorelease(() => {
+  await autorelease(() async {
+    final scanningResult = await ScanbotBarcodeSdk.startBarcodeScanner(config);
     if(scanningResult.status == OperationStatus.OK && scanningResult.data != null) {
         scanningResult.data?.items.forEach((item) async {
           if(item.barcode.sourceImage != null) {
@@ -21,7 +21,8 @@ Future<List<BarcodeItem>> handleScanningResultWithImageRef() async {
             final byteArray = await item.barcode.sourceImage?.encodeImage(options: EncodeImageOptions());
           };
         }
-      )}
+      );
+    }
   });
 
   return [];
@@ -32,13 +33,12 @@ Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef() async {
   var config = BarcodeScannerScreenConfiguration();
   config.scannerConfiguration.returnBarcodeImage = true;
 
-  final scanningResult = await ScanbotBarcodeSdk.startBarcodeScanner(config);
-
   // This will hold the serialized result outside autorelease
   Map<String, dynamic>? serializedResult;
 
   // First autorelease block: serialize the scanning result
   await autorelease(() async {
+    final scanningResult = await ScanbotBarcodeSdk.startBarcodeScanner(config);
     if (scanningResult.status == OperationStatus.OK && scanningResult.data != null) {
       // Serialized the scanned result in order to move the data outside the autorelease block
       serializedResult = await scanningResult.data!.toJson();
@@ -74,11 +74,10 @@ Future<List<Uint8List?>> handleScanningResultWithEncodedImageRef() async {
   var config = BarcodeScannerScreenConfiguration();
   config.scannerConfiguration.returnBarcodeImage = true;
 
-  final scanningResult = await ScanbotBarcodeSdk.startBarcodeScanner(config);
-
   List<Uint8List?> imageBuffers = [];
 
   await autorelease(() async {
+    final scanningResult = await ScanbotBarcodeSdk.startBarcodeScanner(config);
     if (scanningResult.status == OperationStatus.OK && scanningResult.data != null) {
       // Trigger encoding of all ImageRefs
       scanningResult.data!.encodeImages();
