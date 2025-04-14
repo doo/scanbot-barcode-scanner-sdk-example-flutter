@@ -1,4 +1,5 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:file_picker/file_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material;
@@ -128,4 +129,17 @@ Future<void> showAlertDialog(BuildContext context, String textToShow,
 
 Future<XFile?> selectImageFromLibrary() async {
   return await ImagePicker().pickImage(source: picker.ImageSource.gallery);
+}
+
+Future<PlatformFile?> selectPdfFile() async {
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['pdf'],
+  );
+
+  if (result != null && result.files.isNotEmpty) {
+    return result.files.first;
+  }
+
+  return null;
 }

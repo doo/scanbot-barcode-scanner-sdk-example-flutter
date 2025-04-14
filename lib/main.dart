@@ -108,6 +108,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
             const TitleItemWidget(title: 'Other SDK API'),
             MenuItemWidget(title: 'Detect Barcodes from Still Image', onTap: () => _detectBarcodeOnImage(context)),
             MenuItemWidget(title: 'Detect Barcodes from Multiple Still Images', onTap: () => _detectBarcodesOnImages(context)),
+            MenuItemWidget(title: 'Detect Images From Pdf', onTap: () => _detectImagesOnPdf(context)),
             MenuItemWidget(
               title: "Set accepted barcode types (RTU)",
               onTap: () {
@@ -260,4 +261,28 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       await showAlertDialog(context, title: "Info", 'Error getting license status');
     }
   }
+
+  Future<void> _detectImagesOnPdf(BuildContext context) async {
+    if (!await checkLicenseStatus(context)) {
+      return;
+    }
+    try {
+      final response = await selectPdfFile();
+
+      if (response?.path == null) {
+        await showAlertDialog(context, title: "Info", "No pdf picked.");
+        return;
+      }
+
+      var result = await ScanbotBarcodeSdk.extractImagesFromPdf(ExtractImagesFromPdfParams(pdfFilePath: response!.path!));
+      if(result != null) {
+        await showAlertDialog(context, title: "Result", result.join('\n'));
+      }
+    } catch (ex) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(ex.toString()),
+      ));
+    }
+  }
+
 }
