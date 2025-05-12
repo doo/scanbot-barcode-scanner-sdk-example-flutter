@@ -170,9 +170,24 @@ class _MainPageWidgetState extends State<MainPageWidget> {
 
       final uriPath = Uri.file(response.path);
 
+      var scannerConfiguration = new BarcodeScannerConfiguration();
+
+      var barcodeFormatCommonConfiguration = new BarcodeFormatCommonConfiguration();
+      barcodeFormatCommonConfiguration.addAdditionalQuietZone = true;
+      barcodeFormatCommonConfiguration.minimumTextLength = 5;
+
+      // Configure different parameters for specific barcode format.
+      var barcodeFormatCode128Configuration = new BarcodeFormatCode128Configuration();
+      barcodeFormatCode128Configuration.minimumTextLength = 6;
+
+      scannerConfiguration.barcodeFormatConfigurations = [
+        barcodeFormatCommonConfiguration,
+        barcodeFormatCode128Configuration,
+      ];
+
       var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
           uriPath,
-          BarcodeScannerConfiguration());
+          scannerConfiguration);
 
       if(!result.success) {
         await showAlertDialog(context, title: "Info", "No barcodes detected.");
@@ -217,10 +232,25 @@ class _MainPageWidgetState extends State<MainPageWidget> {
 
       List<BarcodeItem> allBarcodes = [];
 
+      var scannerConfiguration = new BarcodeScannerConfiguration();
+
+      var barcodeFormatCommonConfiguration = new BarcodeFormatCommonConfiguration();
+      barcodeFormatCommonConfiguration.addAdditionalQuietZone = true;
+      barcodeFormatCommonConfiguration.minimumTextLength = 5;
+
+      // Configure different parameters for specific barcode format.
+      var barcodeFormatQrCodeConfiguration = new BarcodeFormatQrCodeConfiguration();
+      barcodeFormatQrCodeConfiguration.microQr = true;
+
+      scannerConfiguration.barcodeFormatConfigurations = [
+        barcodeFormatCommonConfiguration,
+        barcodeFormatQrCodeConfiguration,
+      ];
+
       for (var uri in uris) {
         var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
             uri,
-            BarcodeScannerConfiguration());
+            scannerConfiguration);
 
         allBarcodes.addAll(result.barcodes);
       }

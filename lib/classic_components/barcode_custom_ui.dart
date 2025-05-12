@@ -116,9 +116,18 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   /// Builds the configuration for the classical barcode scanner.
   BarcodeClassicScannerConfiguration
   _buildBarcodeClassicScannerConfiguration() {
+
+    var barcodeFormatCommonConfiguration = new BarcodeFormatCommonConfiguration();
+    barcodeFormatCommonConfiguration.stripCheckDigits = false;
+    barcodeFormatCommonConfiguration.minimumTextLength = 3;
+
+    // Configure different parameters for specific barcode format.
+    var barcodeFormatCode128Configuration = new BarcodeFormatCode128Configuration();
+    barcodeFormatCode128Configuration.minimumTextLength = 5;
+
     return BarcodeClassicScannerConfiguration(
       returnBarcodeImage: enableImagesInScannedBarcodesResults,
-      barcodeFormatConfigurations: [BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()],
+      barcodeFormatConfigurations: [barcodeFormatCommonConfiguration, barcodeFormatCode128Configuration],
       engineMode: BarcodeScannerEngineMode.NEXT_GEN, // Uses the latest engine for scanning.
     );
   }
