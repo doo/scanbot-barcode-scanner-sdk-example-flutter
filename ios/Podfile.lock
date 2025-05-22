@@ -1,7 +1,7 @@
 PODS:
   - barcode_scanner (1.0.0):
     - Flutter
-    - ScanbotBarcodeSDKWrapper (= 7.0.2.0)
+    - ScanbotBarcodeSDKWrapper (= 7.0.2.2)
   - DKImagePickerController/Core (4.3.9):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -44,9 +44,9 @@ PODS:
     - FlutterMacOS
   - permission_handler_apple (9.3.0):
     - Flutter
-  - ScanbotBarcodeScannerSDK (7.0.2-Beta3)
-  - ScanbotBarcodeSDKWrapper (7.0.2.0):
-    - ScanbotBarcodeScannerSDK (= 7.0.2-Beta3)
+  - ScanbotBarcodeScannerSDK (7.0.2-RC2)
+  - ScanbotBarcodeSDKWrapper (7.0.2.2):
+    - ScanbotBarcodeScannerSDK (= 7.0.2-RC2)
   - SDWebImage (5.21.0):
     - SDWebImage/Core (= 5.21.0)
   - SDWebImage/Core (5.21.0)
@@ -89,7 +89,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  barcode_scanner: 4be38cec62837458d776529dd3410f0841bbcc31
+  barcode_scanner: e57ccd9b8eebea39d2e63380238f470fde8e0595
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
   file_picker: a0560bc09d61de87f12d246fc47d2119e6ef37be
@@ -97,8 +97,8 @@ SPEC CHECKSUMS:
   image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
-  ScanbotBarcodeScannerSDK: 56e34d32f6addb42d0b6bb3692591ce349dbcd4f
-  ScanbotBarcodeSDKWrapper: c379840cdbaabd47fc8b0509196a464e07dc24fd
+  ScanbotBarcodeScannerSDK: 91e13efa83c41ca7fe46d6126118540f70634d21
+  ScanbotBarcodeSDKWrapper: f8f01ce546f6dd5d075a33b4b20ce8197ace037d
   SDWebImage: f84b0feeb08d2d11e6a9b843cb06d75ebf5b8868
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
