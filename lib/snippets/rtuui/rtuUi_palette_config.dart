@@ -1,8 +1,8 @@
-import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
-BarcodeScannerConfiguration rtuUiV2PaletteConfig() {
+BarcodeScannerScreenConfiguration rtuUiPaletteConfig() {
   // Create the default configuration object.
-  var config = BarcodeScannerConfiguration();
+  var config = BarcodeScannerScreenConfiguration();
 
   // Simply alter one color and keep the other default.
   config.palette.sbColorPrimary = ScanbotColor('c86e19');

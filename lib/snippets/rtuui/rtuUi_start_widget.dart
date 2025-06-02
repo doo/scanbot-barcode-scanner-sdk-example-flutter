@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -9,11 +9,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   _startBarcodeScanner() async {
     // Create the default configuration object.
-    var configuration = BarcodeScannerConfiguration();
+    var configuration = BarcodeScannerScreenConfiguration();
 
     // TODO: configure as needed
 
-    var result = await ScanbotBarcodeSdkUiV2.startBarcodeScanner(configuration);
+    var result = await ScanbotBarcodeSdk.startBarcodeScanner(configuration);
 
     if(result.status == OperationStatus.OK)
     {

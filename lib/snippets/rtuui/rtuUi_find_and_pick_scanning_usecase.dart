@@ -1,8 +1,8 @@
-import 'package:barcode_scanner/scanbot_barcode_sdk_ui_v2.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
-BarcodeScannerConfiguration rtuUiV2FindAndPickModeUseCase() {
+BarcodeScannerScreenConfiguration rtuUiFindAndPickModeUseCase() {
   // Create the default configuration object.
-  var configuration = BarcodeScannerConfiguration();
+  var configuration = BarcodeScannerScreenConfiguration();
 
   // Initialize the use case for find and pick scanning.
   var scanningMode = FindAndPickScanningMode();
@@ -37,13 +37,13 @@ BarcodeScannerConfiguration rtuUiV2FindAndPickModeUseCase() {
         barcodeValue: "123456",
         title: "numeric barcode",
         image:
-            "https://avatars.githubusercontent.com/u/1454920",
+        "https://avatars.githubusercontent.com/u/1454920",
         count: 4),
     ExpectedBarcode(
         barcodeValue: "SCANBOT",
         title: "value barcode",
         image:
-            "https://avatars.githubusercontent.com/u/1454920",
+        "https://avatars.githubusercontent.com/u/1454920",
         count: 3)
   ];
 

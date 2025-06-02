@@ -1,5 +1,6 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as material;
 
 class GenericDocumentHelper {
   static Widget wrappedGenericDocumentField(GenericDocument? genericDocument) {
@@ -8,7 +9,7 @@ class GenericDocumentHelper {
     final wrappedGenericFieldValue = _getGenericFieldValue(genericDocument);
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const material.EdgeInsets.all(8.0),
       child: Text(
         '''
 Document: ${genericDocument.type.name}
@@ -40,6 +41,8 @@ Value: ${wrappedGenericFieldValue?.value?.text ?? "N/A"}
         return VCard(genericDocument).firstName?.rawValue;
       case AAMVA.DOCUMENT_TYPE:
         return AAMVA(genericDocument).issuerIdentificationNumber;
+      case HIBC.DOCUMENT_TYPE:
+        return HIBC(genericDocument).labelerIdentificationCode;
       default:
         return null;
     }

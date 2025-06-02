@@ -1,16 +1,5 @@
 import 'package:flutter/material.dart';
 
-Widget BuildMenuItem(
-    BuildContext context,
-    String title,
-    Future<void> Function(BuildContext) onTap,
-    ) {
-  return MenuItemWidget(
-    title: title,
-    onTap: () => onTap(context),
-  );
-}
-
 class MenuItemWidget extends StatelessWidget {
   final String title;
   final GestureTapCallback onTap;
