@@ -36,7 +36,6 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     super.initState();
     _checkPermission(); // Check for camera permission on widget initialization.
   }
-
   /// Shows the result on a new screen and resets scanning state after the screen is popped.
   Future<void> _showResult(List<BarcodeItem> barcodeItems) async {
     Navigator.of(context)
@@ -137,12 +136,35 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   _buildSelectionOverlayScannerConfiguration() {
     return SelectionOverlayScannerConfiguration(
       overlayEnabled: showPolygon,
-      automaticSelectionEnabled: false,
       textFormat: BarcodeOverlayTextFormat.CODE,
-      polygonColor: Colors.green,
+      polygonColor: Colors.green.shade700,
       textColor: Colors.white,
-      textContainerColor: Colors.grey,
-      onBarcodeClicked: (barcode) async {
+      strokeColor: Colors.green.shade800,
+      textContainerColor: Colors.grey.shade800,
+      highlightedTextColor: Colors.yellow,
+      highlightedTextContainerColor: Colors.purple.shade300,
+      highlightedStrokeColor: Colors.deepOrange,
+      highlightedPolygonColor: Colors.deepPurple,
+      barcodeItemOverlayViewBinder: (barcodeItems) async {
+        return barcodeItems.map((item) {
+          if (item.format == BarcodeFormat.AZTEC) {
+            return BarcodeItemOverlayViewConfig.create(
+              item,
+              polygonColor: Colors.orange.shade600,
+              textColor: Colors.black,
+              strokeColor: Colors.orange.shade900,
+              textContainerColor: Colors.amber.shade100,
+              highlightedTextColor: Colors.white,
+              highlightedTextContainerColor: Colors.pink.shade400,
+              highlightedStrokeColor: Colors.lime,
+              highlightedPolygonColor: Colors.pink.shade700,
+            );
+          }
+          return BarcodeItemOverlayViewConfig.create(item);
+        }).toList();
+      },
+      onBarcodeClicked: (barcode, highlighted) async
+      {
 
        /// if you want to use image later call encodeImages() to save in buffer
        if(enableImagesInScannedBarcodesResults)
@@ -179,7 +201,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
           barcodeItems.forEach((item) {
             item.encodeImages();
           });
-
+        
         // this to return result to preview screen
         await _showResult(barcodeItems);
       }, // Handle barcode scanning results.
