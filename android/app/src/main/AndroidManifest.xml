@@ -15,7 +15,6 @@
         </intent>
     </queries>
     <application
-        android:name=".Application"
         android:label="Barcode SDK Flutter Example App"
         android:icon="@mipmap/ic_launcher">
         <activity

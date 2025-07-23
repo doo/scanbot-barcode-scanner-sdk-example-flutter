@@ -137,12 +137,11 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   _buildSelectionOverlayScannerConfiguration() {
     return SelectionOverlayScannerConfiguration(
       overlayEnabled: showPolygon,
-      automaticSelectionEnabled: false,
       textFormat: BarcodeOverlayTextFormat.CODE,
       polygonColor: Colors.green,
       textColor: Colors.white,
       textContainerColor: Colors.grey,
-      onBarcodeClicked: (barcode) async {
+      onBarcodeTap: (barcode, highlighted) async {
 
        /// if you want to use image later call encodeImages() to save in buffer
        if(enableImagesInScannedBarcodesResults)
