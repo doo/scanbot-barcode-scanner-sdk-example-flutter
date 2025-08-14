@@ -235,17 +235,23 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   /// Builds a stream builder that listens to scanning results and displays them.
   Widget _buildResultStream() {
-    return StreamBuilder<List<BarcodeItem>>(
-      stream: resultStream.stream,
-      builder: (context, snapshot) {
-        if (snapshot.data == null) return Container();
+    return Positioned(
+      top: 0,
+      left: 0,
+      right: 0,
+      height: 150,
+      child: StreamBuilder<List<BarcodeItem>>(
+        stream: resultStream.stream,
+        builder: (context, snapshot) {
+          if (snapshot.data == null) return Container();
 
-        return Stack(
-          children: [
-            _buildBarcodeListView(snapshot.data),
-          ],
-        );
-      },
+          return Stack(
+            children: [
+              _buildBarcodeListView(snapshot.data),
+            ],
+          );
+        },
+      ),
     );
   }
 
