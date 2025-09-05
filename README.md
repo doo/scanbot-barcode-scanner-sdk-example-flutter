@@ -19,7 +19,7 @@ It operates entirely offline on the user's mobile device and takes only 0.04 sec
 
 The SDK can be implemented into your Flutter project with just a few lines of code and comes with Ready-To-Use UI components.
 
-💡 For more details about the Scanbot Flutter Barcode Scanner, please see our [documentation](https://docs.scanbot.io/barcode-scanner-sdk/flutter/introduction/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) or visit our [pub dev page](https://pub.dev/publishers/scanbot.io/packages) to download our Flutter packages.
+💡 For more details about the Scanbot Flutter Barcode Scanner, please see our [documentation](https://docs.scanbot.io/flutter/barcode-scanner-sdk/introduction/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) or visit our [pub dev page](https://pub.dev/publishers/scanbot.io/packages) to download our Flutter packages.
 
 ## Requirements
 
@@ -116,13 +116,13 @@ The Scanbot barcode scanner library supports all common 1D- and 2D barcodes, suc
 | 2D Barcodes        | [QR Codes](https://scanbot.io/glossary/qr-code/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [Micro QR Codes](https://scanbot.io/barcode-scanner-sdk/micro-qr-code/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [Aztec Code](https://scanbot.io/barcode-scanner-sdk/aztec-code/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [PDF417 Code](https://scanbot.io/barcode-scanner-sdk/pdf417/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [Data Matrix](https://scanbot.io/barcode-scanner-sdk/data-matrix/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [GiroCode](https://scanbot.io/glossary/giro-code/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [GTIN Code](https://scanbot.io/glossary/gtin/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [PPN Code](https://scanbot.io/glossary/ppn/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [UDI Code](https://scanbot.io/glossary/udi/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites), [Royal Mail](https://scanbot.io/barcode-scanner-sdk/royal-mail/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) |
 | Postal Symbologies | USPS Intelligent Mail (IMb), Royal Mail RM4SCC Barcode, Australia Post 4-State Customer Code, Japan Post 4-State Customer Code, KIX                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 
-💡 Please visit our [docs](https://docs.scanbot.io/barcode-scanner-sdk/flutter/supported-barcodes/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) for a complete overview of the supported barcode symbologies.
+💡 Please visit our [docs](https://docs.scanbot.io/flutter/barcode-scanner-sdk/supported-barcodes/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) for a complete overview of the supported barcode symbologies.
 
 ### Data Parsers
 
 The Scanbot Barcode Scanner SDK supports a variety of data parsers that extract structured information from 2D barcodes such as QR Codes and Data Matrix. These include parsers for documents such as driving licences (AAMVA), boarding passes, medical certificates, SEPA forms, Swiss QR codes and vCard business cards.
 
-💡 Please refer to our [documentation](https://docs.scanbot.io/barcode-scanner-sdk/flutter/supported-barcodes/#data-parsers) for a full list of supported data parsers.
+💡 Please refer to our [documentation](https://docs.scanbot.io/barcode-scanner-sdk/flutter/supported-barcodes/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites#data-parsers) for a full list of supported data parsers.
 
 ## Additional information
 
@@ -144,7 +144,7 @@ As a customer, you also get access to a dedicated support Slack or Microsoft Tea
 
 The Scanbot Flutter Barcode Scanner will run for one minute per session without a license. After that, all functionalities and UI components will stop working.
 
-To try the Barcode Scanner SDK without the one-minute limit, you can request a free, no-strings-attached [7-day trial license](https://scanbot.io/trial/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites).
+To try the Barcode Scanner SDK without the one-minute limit, you can request a free, no-strings-attached [7-day trial license](https://docs.scanbot.io/trial/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites).
 
 Our pricing model is simple: Unlimited mobile barcode scanning for a flat annual license fee, and full support is included. There are no tiers, usage charges, or extra fees. [Contact](https://scanbot.io/contact-sales/?utm_source=github.com&utm_medium=referral&utm_campaign=dev_sites) our team to receive your quote.
 
