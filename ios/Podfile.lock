@@ -1,7 +1,7 @@
 PODS:
   - barcode_scanner (1.0.0):
     - Flutter
-    - ScanbotBarcodeSDKWrapper (= 7.1.0.4)
+    - ScanbotBarcodeSDKWrapper (= 7.1.2.0)
   - DKImagePickerController/Core (4.3.9):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -44,12 +44,12 @@ PODS:
     - FlutterMacOS
   - permission_handler_apple (9.3.0):
     - Flutter
-  - ScanbotBarcodeScannerSDK (7.1.0)
-  - ScanbotBarcodeSDKWrapper (7.1.0.4):
-    - ScanbotBarcodeScannerSDK (= 7.1.0)
-  - SDWebImage (5.21.1):
-    - SDWebImage/Core (= 5.21.1)
-  - SDWebImage/Core (5.21.1)
+  - ScanbotBarcodeScannerSDK (7.1.2)
+  - ScanbotBarcodeSDKWrapper (7.1.2.0):
+    - ScanbotBarcodeScannerSDK (= 7.1.2)
+  - SDWebImage (5.21.2):
+    - SDWebImage/Core (= 5.21.2)
+  - SDWebImage/Core (5.21.2)
   - SwiftyGif (5.4.5)
   - url_launcher_ios (0.0.1):
     - Flutter
@@ -89,17 +89,17 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  barcode_scanner: 6235ebbe8357d0a18513cf6a8115a5406368fc51
+  barcode_scanner: 6615bb366686abc20ace8dfbe0fa3efb7725ae62
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
   file_picker: b159e0c068aef54932bb15dc9fd1571818edaf49
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
-  ScanbotBarcodeScannerSDK: dd809c293b7200eeac9e422eff61ed2d2336aa1d
-  ScanbotBarcodeSDKWrapper: 74ed50ff76aefadfabd78f2a1c0aa6040b0e74cc
-  SDWebImage: f29024626962457f3470184232766516dee8dfea
+  ScanbotBarcodeScannerSDK: 55ba2ef913a5562243190df760b1dc8f8cc8dd58
+  ScanbotBarcodeSDKWrapper: 4a9b937644a197d2052437e6c419692bbb4be9db
+  SDWebImage: 9f177d83116802728e122410fb25ad88f5c7608a
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
