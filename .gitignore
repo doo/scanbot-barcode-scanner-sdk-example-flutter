@@ -38,3 +38,4 @@ lib/generated_plugin_registrant.dart
 
 ios/build
 android/app/.cxx
+ios/Flutter/ephemeral/
