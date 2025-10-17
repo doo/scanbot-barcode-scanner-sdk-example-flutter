@@ -1,7 +1,7 @@
 PODS:
   - barcode_scanner (1.0.0):
     - Flutter
-    - ScanbotBarcodeSDKWrapper (= 7.1.2.0)
+    - ScanbotBarcodeSDKWrapper (= 7.1.3.0)
   - DKImagePickerController/Core (4.3.9):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -44,12 +44,12 @@ PODS:
     - FlutterMacOS
   - permission_handler_apple (9.3.0):
     - Flutter
-  - ScanbotBarcodeScannerSDK (7.1.2)
-  - ScanbotBarcodeSDKWrapper (7.1.2.0):
-    - ScanbotBarcodeScannerSDK (= 7.1.2)
-  - SDWebImage (5.21.2):
-    - SDWebImage/Core (= 5.21.2)
-  - SDWebImage/Core (5.21.2)
+  - ScanbotBarcodeScannerSDK (7.1.3)
+  - ScanbotBarcodeSDKWrapper (7.1.3.0):
+    - ScanbotBarcodeScannerSDK (= 7.1.3)
+  - SDWebImage (5.21.3):
+    - SDWebImage/Core (= 5.21.3)
+  - SDWebImage/Core (5.21.3)
   - SwiftyGif (5.4.5)
   - url_launcher_ios (0.0.1):
     - Flutter
@@ -89,19 +89,19 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  barcode_scanner: 6615bb366686abc20ace8dfbe0fa3efb7725ae62
+  barcode_scanner: 5d26cab6f276aac4a27483fcd3226bbe43f373bd
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
-  file_picker: b159e0c068aef54932bb15dc9fd1571818edaf49
-  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
-  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
-  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
-  ScanbotBarcodeScannerSDK: 55ba2ef913a5562243190df760b1dc8f8cc8dd58
-  ScanbotBarcodeSDKWrapper: 4a9b937644a197d2052437e6c419692bbb4be9db
-  SDWebImage: 9f177d83116802728e122410fb25ad88f5c7608a
+  file_picker: a0560bc09d61de87f12d246fc47d2119e6ef37be
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
+  permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
+  ScanbotBarcodeScannerSDK: 5038c438ee1f61eb1e5d45972b028b6e79cb3651
+  ScanbotBarcodeSDKWrapper: d660b19e9ea2c9c3593af038a65bab5adfbb840a
+  SDWebImage: 16309af6d214ba3f77a7c6f6fdda888cb313a50a
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
-  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
+  url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
 
 PODFILE CHECKSUM: 0d0bb4227597b86ca8af077e0d717fea0a00c766
 
