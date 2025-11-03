@@ -21,7 +21,7 @@ Future<List<dynamic>> handleScanningResultWithDataParsers() async {
 
       switch (typeName) {
         case BoardingPass.DOCUMENT_TYPE:
-          parsedData.add(BoardingPass(genericDocument).electronicTicket);
+          parsedData.add(BoardingPass(genericDocument).electronicTicketIndicator);
           break;
 
         case SwissQR.DOCUMENT_TYPE:
@@ -50,7 +50,7 @@ Future<List<dynamic>> handleScanningResultWithDataParsers() async {
           break;
 
         case VCard.DOCUMENT_TYPE:
-          parsedData.add(VCard(genericDocument).firstName?.rawValue);
+          parsedData.add(VCard(genericDocument).formattedName?.rawValue);
           break;
 
         case AAMVA.DOCUMENT_TYPE:

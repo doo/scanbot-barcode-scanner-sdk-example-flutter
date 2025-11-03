@@ -31,7 +31,7 @@ class BarcodesResultPreviewWidget extends StatelessWidget {
               BarcodeCard(
                 sourceImage: result.sourceImage?.buffer != null ? Image.memory(result.sourceImage!.buffer!) : null,
                 format: result.format.name,
-                text: result.text,
+                text: result.text + " " + result.upcEanExtension,
                 extraWidget: GenericDocumentHelper.wrappedGenericDocumentField(result.extractedDocument),
               ),
             ],
