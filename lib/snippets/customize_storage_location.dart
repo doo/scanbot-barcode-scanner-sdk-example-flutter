@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:barcode_scanner/barcode_sdk.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<String> getCustomStorageBaseDirectoryLocation() async {
@@ -22,11 +22,12 @@ Future<void> initalizeSdk() async {
   var customStorageBaseDirectory =
       await getCustomStorageBaseDirectoryLocation();
 
-  var config = ScanbotSdkConfig(
+  var config = SdkConfiguration(
+    licenseKey: "",
     storageBaseDirectory: customStorageBaseDirectory,
     // Additional configuration options...
   );
 
   // Initialize the Scanbot SDK with the specified configuration
-  await ScanbotBarcodeSdk.initScanbotSdk(config);
+  await ScanbotSdk.init(config);
 }

@@ -1,4 +1,4 @@
-import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:barcode_scanner/barcode_sdk.dart';
 import 'package:file_picker/file_picker.dart';
 
 import 'package:flutter/material.dart';
@@ -75,12 +75,12 @@ Widget buildBottomNavigationBar(BuildContext context) {
 }
 
 Future<bool> checkLicenseStatus(BuildContext context) async {
-  final result = await ScanbotBarcodeSdk.getLicenseStatus();
-  if (result.isLicenseValid) {
+  final result = await ScanbotSdk.getLicenseInfo();
+  if (result.isValid) {
     return true;
   }
   await showAlertDialog(
-      context, result.licenseStatusMessage ?? "Invalid license",
+      context, result.licenseStatusMessage,
       title: 'Info');
   return false;
 }

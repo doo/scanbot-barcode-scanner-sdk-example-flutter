@@ -1,8 +1,8 @@
-import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:barcode_scanner/barcode_sdk.dart';
 
 Future<List<dynamic>> handleScanningResultWithDataParsers() async {
   // Start the barcode RTU UI with default configuration
-  final scanningResult = await ScanbotBarcodeSdk.startBarcodeScanner(
+  final scanningResult = await ScanbotSdk.barcode.startScanner(
     BarcodeScannerScreenConfiguration(),
   );
 

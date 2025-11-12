@@ -1,4 +1,4 @@
-import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:barcode_scanner/barcode_sdk.dart';
 
 Future<List<String>?> extractImagesFromPdf() async {
     /**
@@ -10,7 +10,7 @@ Future<List<String>?> extractImagesFromPdf() async {
     /**
      * Extract the images from the pdf with the desired configuration options
      */
-    var result = await ScanbotBarcodeSdk.extractImagesFromPdf(ExtractImagesFromPdfParams(pdfFilePath: pdfFilePath));
+    var result = await ScanbotSdk.imageOperations.extractImagesFromPdf(ExtractImagesFromPdfParams(pdfFilePath: pdfFilePath));
 
     /**
      * Handle the result

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:barcode_scanner/barcode_sdk.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -32,7 +32,7 @@ Future<void> _initScanbotSdk() async {
   // Consider adjusting this optional storageBaseDirectory - see the comments below.
   final customStorageBaseDirectory = await getDemoStorageBaseDirectory();
 
-  var config = ScanbotSdkConfig(
+  var config = SdkConfiguration(
     loggingEnabled: true,
     // Consider switching logging OFF in production. builds for security and performance reasons.
     licenseKey: BARCODE_SDK_LICENSE_KEY,
@@ -46,8 +46,8 @@ Future<void> _initScanbotSdk() async {
   }
 
   try {
-    var statusLicenseResult = await ScanbotBarcodeSdk.initScanbotSdk(config);
-    print(statusLicenseResult.licenseStatus);
+    var statusLicenseResult = await ScanbotSdk.init(config);
+    print(statusLicenseResult.status);
   } catch (e) {
     print(e);
   }
@@ -168,8 +168,6 @@ class _MainPageWidgetState extends State<MainPageWidget> {
         return;
       }
 
-      final uriPath = Uri.file(response.path);
-
       var scannerConfiguration = new BarcodeScannerConfiguration();
 
       var barcodeFormatCommonConfiguration = new BarcodeFormatCommonConfiguration();
@@ -185,8 +183,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
         barcodeFormatCode128Configuration,
       ];
 
-      var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
-          uriPath,
+      var result = await ScanbotSdk.barcode.scanFromImageFileUri(
+          response.path,
           scannerConfiguration);
 
       if(!result.success) {
@@ -248,8 +246,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       ];
 
       for (var uri in uris) {
-        var result = await ScanbotBarcodeSdk.detectBarcodesOnImage(
-            uri,
+        var result = await ScanbotSdk.barcode.scanFromImageFileUri(
+            uri.path,
             scannerConfiguration);
 
         allBarcodes.addAll(result.barcodes);
@@ -279,8 +277,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
 
   Future<void> _getLicenseStatus() async {
     try {
-      final result = await ScanbotBarcodeSdk.getLicenseStatus();
-      var status = " Status: ${result.licenseStatus.name}";
+      final result = await ScanbotSdk.getLicenseInfo();
+      var status = " Status: ${result.status.name}";
 
       if (result.licenseExpirationDate != null) {
         status += "\n ExpirationDate: ${result.licenseExpirationDate}";
@@ -304,10 +302,10 @@ class _MainPageWidgetState extends State<MainPageWidget> {
         return;
       }
 
-      var result = await ScanbotBarcodeSdk.extractImagesFromPdf(ExtractImagesFromPdfParams(pdfFilePath: response!.path!));
+      var result = await ScanbotSdk.imageOperations.extractImagesFromPdf(ExtractImagesFromPdfParams(pdfFilePath: response!.path!));
 
-      if(result?.isNotEmpty == true) {
-        await showAlertDialog(context, title: "Result", result!.join('\n'));
+      if (result.isNotEmpty) {
+        await showAlertDialog(context, title: "Result", result.join('\n'));
       } else {
         await showAlertDialog(context, title: "Info", "No images extracted.");
       }

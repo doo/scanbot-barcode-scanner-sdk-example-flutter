@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:barcode_scanner/barcode_sdk.dart';
 
 Future<List<BarcodeItem>> handleScanningResultWithImageRef() async {
   // Start the barcode RTU UI with default configuration
@@ -9,7 +9,7 @@ Future<List<BarcodeItem>> handleScanningResultWithImageRef() async {
 
   // Autorelease executes the given block and releases native resources
   await autorelease(() async {
-    final scanningResult = await ScanbotBarcodeSdk.startBarcodeScanner(config);
+    final scanningResult = await ScanbotSdk.barcode.startScanner(config);
     if(scanningResult.status == OperationStatus.OK && scanningResult.data != null) {
         scanningResult.data?.items.forEach((item) async {
           if(item.barcode.sourceImage != null) {
@@ -38,7 +38,7 @@ Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef() async {
 
   // First autorelease block: serialize the scanning result
   await autorelease(() async {
-    final scanningResult = await ScanbotBarcodeSdk.startBarcodeScanner(config);
+    final scanningResult = await ScanbotSdk.barcode.startScanner(config);
     if (scanningResult.status == OperationStatus.OK && scanningResult.data != null) {
       // Serialized the scanned result in order to move the data outside the autorelease block
       serializedResult = await scanningResult.data!.toJson();
@@ -77,7 +77,7 @@ Future<List<Uint8List?>> handleScanningResultWithEncodedImageRef() async {
   List<Uint8List?> imageBuffers = [];
 
   await autorelease(() async {
-    final scanningResult = await ScanbotBarcodeSdk.startBarcodeScanner(config);
+    final scanningResult = await ScanbotSdk.barcode.startScanner(config);
     if (scanningResult.status == OperationStatus.OK && scanningResult.data != null) {
       // Trigger encoding of all ImageRefs
       scanningResult.data!.encodeImages();
