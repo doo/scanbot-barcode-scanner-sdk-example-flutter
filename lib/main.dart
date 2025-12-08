@@ -119,10 +119,10 @@ class _MainPageWidgetState extends State<MainPageWidget> {
               },
             ),
             MenuItemWidget(
-              title: 'getLicenseStatus()',
+              title: 'License Info',
               startIcon: Icons.phonelink_lock,
               onTap: () {
-                _getLicenseStatus();
+                _getLicenseInfo();
               },
             ),
             MenuItemWidget(
@@ -274,12 +274,12 @@ class _MainPageWidgetState extends State<MainPageWidget> {
     }
   }
 
-  Future<void> _getLicenseStatus() async {
+  Future<void> _getLicenseInfo() async {
     try {
       final result = await ScanbotSdk.getLicenseInfo();
-      var licenseInfo = "Status: ${result.status.name}\nExpirationDate: ${result.expirationDateString}";
+      var licenseInfo = "Status: ${result.status.name}\nExpiration Date: ${result.expirationDateString}";
 
-      await showAlertDialog(context, licenseInfo, title: 'License Status');
+      await showAlertDialog(context, licenseInfo, title: 'License Info');
     } catch (e) {
       await showAlertDialog(context, title: "Info", 'Error getting license status');
     }
