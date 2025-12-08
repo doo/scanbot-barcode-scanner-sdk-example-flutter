@@ -81,8 +81,10 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
   Future<void> startSingleScan(BuildContext context) async {
     var configuration = rtuUiSingleScanningUseCase();
-    configuration.scannerConfiguration.barcodeFormats =
-        selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormatConfigurations = [
+      BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
+        ..formats = selectedFormatsNotifier.value.toList()
+    ];
 
     await startScan(
       context: context,
@@ -92,8 +94,10 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
   Future<void> startMultipleScan(BuildContext context) async {
     var configuration = rtuUiMultipleScanningUseCase();
-    configuration.scannerConfiguration.barcodeFormats =
-        selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormatConfigurations = [
+      BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
+        ..formats = selectedFormatsNotifier.value.toList()
+    ];
 
     await startScan(
       context: context,
@@ -103,8 +107,10 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
   Future<void> startFindAndPickScan(BuildContext context) async {
     var configuration = rtuUiFindAndPickModeUseCase();
-    configuration.scannerConfiguration.barcodeFormats =
-        selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormatConfigurations = [
+      BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
+        ..formats = selectedFormatsNotifier.value.toList()
+    ];
 
     await startScan(
       context: context,
@@ -114,8 +120,10 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
   Future<void> startAROverlayScan(BuildContext context) async {
     var configuration = rtuUiArOverlayUseCase();
-    configuration.scannerConfiguration.barcodeFormats =
-        selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormatConfigurations = [
+      BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
+        ..formats = selectedFormatsNotifier.value.toList()
+    ];
 
     await startScan(
       context: context,
@@ -125,8 +133,10 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
   Future<void> startItemMappingScan(BuildContext context) async {
     var configuration = rtuUiMappingItemConfiguration();
-    configuration.scannerConfiguration.barcodeFormats =
-        selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormatConfigurations = [
+      BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
+        ..formats = selectedFormatsNotifier.value.toList()
+    ];
 
     await startScan(
       context: context,
