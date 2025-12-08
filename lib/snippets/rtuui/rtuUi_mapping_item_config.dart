@@ -16,8 +16,7 @@ BarcodeScannerScreenConfiguration rtuUiMappingItemConfiguration() {
      */
     var title = "Some product ${item.text}";
     var subtitle = item.format.name;
-    var image =
-        "https://avatars.githubusercontent.com/u/1454920";
+    var image = "https://avatars.githubusercontent.com/u/1454920";
 
     /** TODO: call [onError()] in case of error during obtaining mapped data. */
     if (item.text == "Error occurred!") {

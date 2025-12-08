@@ -40,7 +40,7 @@ Future<void> _initScanbotSdk() async {
     // storageBaseDirectory: customStorageBaseDirectory,
   );
 
-  if(shouldInitWithEncryption) {
+  if (shouldInitWithEncryption) {
     config.fileEncryptionPassword = 'SomeSecretPa\$\$w0rdForFileEncryption';
     config.fileEncryptionMode = FileEncryptionMode.AES256;
   }
@@ -95,7 +95,6 @@ class MainPageWidget extends StatefulWidget {
 }
 
 class _MainPageWidgetState extends State<MainPageWidget> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,17 +103,22 @@ class _MainPageWidgetState extends State<MainPageWidget> {
           children: [
             BarcodeUseCasesWidget(),
             const TitleItemWidget(title: 'Custom UI'),
-            MenuItemWidget(title: 'Classic Component', onTap: () => _startBarcodeCustomUIScanner(context)),
+            MenuItemWidget(
+                title: 'Classic Component',
+                onTap: () => _startBarcodeCustomUIScanner(context)),
             const TitleItemWidget(title: 'Other SDK API'),
-            MenuItemWidget(title: 'Detect Barcodes from Still Image', onTap: () => _detectBarcodeOnImage(context)),
-            MenuItemWidget(title: 'Detect Barcodes from Multiple Still Images', onTap: () => _detectBarcodesOnImages(context)),
+            MenuItemWidget(
+                title: 'Detect Barcodes from Still Image',
+                onTap: () => _detectBarcodeOnImage(context)),
+            MenuItemWidget(
+                title: 'Detect Barcodes from Multiple Still Images',
+                onTap: () => _detectBarcodesOnImages(context)),
             MenuItemWidget(
               title: "Set accepted barcode types (RTU)",
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (context) =>
-                          BarcodesFormatSelectorWidget()),
+                      builder: (context) => BarcodesFormatSelectorWidget()),
                 );
               },
             ),
@@ -137,8 +141,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
             ),
           ],
         ),
-        bottomNavigationBar: buildBottomNavigationBar(context)
-    );
+        bottomNavigationBar: buildBottomNavigationBar(context));
   }
 
   Future<void> _startBarcodeCustomUIScanner(BuildContext context) async {
@@ -169,12 +172,14 @@ class _MainPageWidgetState extends State<MainPageWidget> {
 
       var scannerConfiguration = new BarcodeScannerConfiguration();
 
-      var barcodeFormatCommonConfiguration = new BarcodeFormatCommonConfiguration();
+      var barcodeFormatCommonConfiguration =
+          new BarcodeFormatCommonConfiguration();
       barcodeFormatCommonConfiguration.addAdditionalQuietZone = true;
       barcodeFormatCommonConfiguration.minimumTextLength = 5;
 
       // Configure different parameters for specific barcode format.
-      var barcodeFormatCode128Configuration = new BarcodeFormatCode128Configuration();
+      var barcodeFormatCode128Configuration =
+          new BarcodeFormatCode128Configuration();
       barcodeFormatCode128Configuration.minimumTextLength = 6;
 
       scannerConfiguration.barcodeFormatConfigurations = [
@@ -182,11 +187,10 @@ class _MainPageWidgetState extends State<MainPageWidget> {
         barcodeFormatCode128Configuration,
       ];
 
-      var result = await ScanbotSdk.barcode.scanFromImageFileUri(
-          response.path,
-          scannerConfiguration);
+      var result = await ScanbotSdk.barcode
+          .scanFromImageFileUri(response.path, scannerConfiguration);
 
-      if(!result.success) {
+      if (!result.success) {
         await showAlertDialog(context, title: "Info", "No barcodes detected.");
         return;
       }
@@ -195,7 +199,6 @@ class _MainPageWidgetState extends State<MainPageWidget> {
         MaterialPageRoute(
             builder: (context) => BarcodesResultPreviewWidget(result.barcodes)),
       );
-
     } catch (ex) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(ex.toString()),
@@ -222,8 +225,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
           context: context,
           builder: (context) {
             return const Center(child: CircularProgressIndicator());
-          }
-      );
+          });
 
       uris = response.map((image) => Uri.file(image.path)).toList();
 
@@ -231,12 +233,14 @@ class _MainPageWidgetState extends State<MainPageWidget> {
 
       var scannerConfiguration = new BarcodeScannerConfiguration();
 
-      var barcodeFormatCommonConfiguration = new BarcodeFormatCommonConfiguration();
+      var barcodeFormatCommonConfiguration =
+          new BarcodeFormatCommonConfiguration();
       barcodeFormatCommonConfiguration.addAdditionalQuietZone = true;
       barcodeFormatCommonConfiguration.minimumTextLength = 5;
 
       // Configure different parameters for specific barcode format.
-      var barcodeFormatQrCodeConfiguration = new BarcodeFormatQrCodeConfiguration();
+      var barcodeFormatQrCodeConfiguration =
+          new BarcodeFormatQrCodeConfiguration();
       barcodeFormatQrCodeConfiguration.microQr = true;
 
       scannerConfiguration.barcodeFormatConfigurations = [
@@ -245,9 +249,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       ];
 
       for (var uri in uris) {
-        var result = await ScanbotSdk.barcode.scanFromImageFileUri(
-            uri.path,
-            scannerConfiguration);
+        var result = await ScanbotSdk.barcode
+            .scanFromImageFileUri(uri.path, scannerConfiguration);
 
         allBarcodes.addAll(result.barcodes);
       }
@@ -264,7 +267,6 @@ class _MainPageWidgetState extends State<MainPageWidget> {
         await showAlertDialog(context, title: "Info", "No barcodes detected.");
         return;
       }
-
     } catch (ex) {
       Navigator.of(context, rootNavigator: true).pop();
 
@@ -277,11 +279,13 @@ class _MainPageWidgetState extends State<MainPageWidget> {
   Future<void> _getLicenseInfo() async {
     try {
       final result = await ScanbotSdk.getLicenseInfo();
-      var licenseInfo = "Status: ${result.status.name}\nExpiration Date: ${result.expirationDateString}";
+      var licenseInfo =
+          "Status: ${result.status.name}\nExpiration Date: ${result.expirationDateString}";
 
       await showAlertDialog(context, licenseInfo, title: 'License Info');
     } catch (e) {
-      await showAlertDialog(context, title: "Info", 'Error getting license status');
+      await showAlertDialog(
+          context, title: "Info", 'Error getting license status');
     }
   }
 }

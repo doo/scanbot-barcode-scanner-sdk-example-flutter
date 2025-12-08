@@ -64,7 +64,10 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScanbotAppBar("Scan barcodes", showBackButton: true, context: context, actions: [_buildFlashToggleButton()]),
+      appBar: ScanbotAppBar("Scan barcodes",
+          showBackButton: true,
+          context: context,
+          actions: [_buildFlashToggleButton()]),
       body: Container(
         color: Colors.black,
         child: Stack(
@@ -101,7 +104,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         child: Container(
           decoration: BoxDecoration(
             border:
-            Border.all(width: 5, color: Colors.lightBlue.withAlpha(155)),
+                Border.all(width: 5, color: Colors.lightBlue.withAlpha(155)),
             borderRadius: const BorderRadius.all(Radius.circular(20)),
           ),
         ),
@@ -115,26 +118,31 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   /// Builds the configuration for the classical barcode scanner.
   BarcodeClassicScannerConfiguration
-  _buildBarcodeClassicScannerConfiguration() {
-
-    var barcodeFormatCommonConfiguration = new BarcodeFormatCommonConfiguration();
+      _buildBarcodeClassicScannerConfiguration() {
+    var barcodeFormatCommonConfiguration =
+        new BarcodeFormatCommonConfiguration();
     barcodeFormatCommonConfiguration.stripCheckDigits = false;
     barcodeFormatCommonConfiguration.minimumTextLength = 3;
 
     // Configure different parameters for specific barcode format.
-    var barcodeFormatCode128Configuration = new BarcodeFormatCode128Configuration();
+    var barcodeFormatCode128Configuration =
+        new BarcodeFormatCode128Configuration();
     barcodeFormatCode128Configuration.minimumTextLength = 5;
 
     return BarcodeClassicScannerConfiguration(
       returnBarcodeImage: enableImagesInScannedBarcodesResults,
-      barcodeFormatConfigurations: [barcodeFormatCommonConfiguration, barcodeFormatCode128Configuration],
-      engineMode: BarcodeScannerEngineMode.NEXT_GEN, // Uses the latest engine for scanning.
+      barcodeFormatConfigurations: [
+        barcodeFormatCommonConfiguration,
+        barcodeFormatCode128Configuration
+      ],
+      engineMode: BarcodeScannerEngineMode
+          .NEXT_GEN, // Uses the latest engine for scanning.
     );
   }
 
   /// Builds the configuration for the selection overlay scanner.
   SelectionOverlayScannerConfiguration
-  _buildSelectionOverlayScannerConfiguration() {
+      _buildSelectionOverlayScannerConfiguration() {
     return SelectionOverlayScannerConfiguration(
       overlayEnabled: showPolygon,
       textFormat: BarcodeOverlayTextFormat.CODE,
@@ -142,10 +150,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
       textColor: Colors.white,
       textContainerColor: Colors.grey,
       onBarcodeTap: (barcode, highlighted) async {
-
-       /// if you want to use image later call encodeImages() to save in buffer
-       if(enableImagesInScannedBarcodesResults)
-         barcode.encodeImages();
+        /// if you want to use image later call encodeImages() to save in buffer
+        if (enableImagesInScannedBarcodesResults) barcode.encodeImages();
 
         await _showResult([barcode]);
       },
@@ -162,7 +168,6 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     return BarcodeScannerCamera(
       configuration: BarcodeCameraConfiguration(
         flashEnabled: flashEnabled,
-
         detectionEnabled: detectionEnabled,
         scannerConfiguration: _buildBarcodeClassicScannerConfiguration(),
         cameraZoomFactor: 0.01,
@@ -174,7 +179,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         // resultStream.add(barcodeItems);
 
         /// if you want to use image later call encodeImages() to save in buffer
-        if(enableImagesInScannedBarcodesResults)
+        if (enableImagesInScannedBarcodesResults)
           barcodeItems.forEach((item) {
             item.encodeImages();
           });

@@ -10,12 +10,14 @@ import 'barcode_card.dart';
 class BarcodesResultPreviewWidget extends StatelessWidget {
   final List<BarcodeItem> previewItems;
 
-  const BarcodesResultPreviewWidget(this.previewItems, {Key? key}) : super(key: key);
+  const BarcodesResultPreviewWidget(this.previewItems, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScanbotAppBar('Scanned barcodes', showBackButton: true, context: context),
+      appBar: ScanbotAppBar('Scanned barcodes',
+          showBackButton: true, context: context),
       body: ListView.builder(
         itemCount: previewItems.length,
         itemBuilder: (context, imageIndex) {
@@ -26,13 +28,17 @@ class BarcodesResultPreviewWidget extends StatelessWidget {
               Padding(
                 padding: const material.EdgeInsets.all(15),
                 child: Text('Result ${imageIndex + 1}',
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.bold)),
               ),
               BarcodeCard(
-                sourceImage: result.sourceImage?.buffer != null ? Image.memory(result.sourceImage!.buffer!) : null,
+                sourceImage: result.sourceImage?.buffer != null
+                    ? Image.memory(result.sourceImage!.buffer!)
+                    : null,
                 format: result.format.name,
                 text: result.text + " " + result.upcEanExtension,
-                extraWidget: GenericDocumentHelper.wrappedGenericDocumentField(result.extractedDocument),
+                extraWidget: GenericDocumentHelper.wrappedGenericDocumentField(
+                    result.extractedDocument),
               ),
             ],
           );

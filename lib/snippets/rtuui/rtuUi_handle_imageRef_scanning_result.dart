@@ -10,18 +10,21 @@ Future<List<BarcodeItem>> handleScanningResultWithImageRef() async {
   // Autorelease executes the given block and releases native resources
   await autorelease(() async {
     final scanningResult = await ScanbotSdk.barcode.startScanner(config);
-    if(scanningResult.status == OperationStatus.OK && scanningResult.data != null) {
-        scanningResult.data?.items.forEach((item) async {
-          if(item.barcode.sourceImage != null) {
-            // Saves the stored image at path with the given options
-            final path = '/my_custom_path/my_file.jpg';
-            await item.barcode.sourceImage?.saveImage(path, options: SaveImageOptions());
+    if (scanningResult.status == OperationStatus.OK &&
+        scanningResult.data != null) {
+      scanningResult.data?.items.forEach((item) async {
+        if (item.barcode.sourceImage != null) {
+          // Saves the stored image at path with the given options
+          final path = '/my_custom_path/my_file.jpg';
+          await item.barcode.sourceImage
+              ?.saveImage(path, options: SaveImageOptions());
 
-            // Returns the stored image as Uint8List.
-            final byteArray = await item.barcode.sourceImage?.encodeImage(options: EncodeImageOptions());
-          };
+          // Returns the stored image as Uint8List.
+          final byteArray = await item.barcode.sourceImage
+              ?.encodeImage(options: EncodeImageOptions());
         }
-      );
+        ;
+      });
     }
   });
 
@@ -39,7 +42,8 @@ Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef() async {
   // First autorelease block: serialize the scanning result
   await autorelease(() async {
     final scanningResult = await ScanbotSdk.barcode.startScanner(config);
-    if (scanningResult.status == OperationStatus.OK && scanningResult.data != null) {
+    if (scanningResult.status == OperationStatus.OK &&
+        scanningResult.data != null) {
       // Serialized the scanned result in order to move the data outside the autorelease block
       serializedResult = await scanningResult.data!.toJson();
     }
@@ -54,13 +58,13 @@ Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef() async {
     for (final item in barcodeResult.items) {
       final sourceImage = item.barcode.sourceImage;
       if (sourceImage != null) {
-
         // Saves the stored image at path with the given options
         final path = '/your_custom_path/my_file.jpg';
         await sourceImage.saveImage(path, options: SaveImageOptions());
 
         // Get the image buffer (as Uint8List)
-        final buffer = await sourceImage.encodeImage(options: EncodeImageOptions());
+        final buffer =
+            await sourceImage.encodeImage(options: EncodeImageOptions());
         imageBuffers.add(buffer);
       }
     }
@@ -78,7 +82,8 @@ Future<List<Uint8List?>> handleScanningResultWithEncodedImageRef() async {
 
   await autorelease(() async {
     final scanningResult = await ScanbotSdk.barcode.startScanner(config);
-    if (scanningResult.status == OperationStatus.OK && scanningResult.data != null) {
+    if (scanningResult.status == OperationStatus.OK &&
+        scanningResult.data != null) {
       // Trigger encoding of all ImageRefs
       scanningResult.data!.encodeImages();
 
@@ -86,7 +91,7 @@ Future<List<Uint8List?>> handleScanningResultWithEncodedImageRef() async {
       imageBuffers = scanningResult.data!.items
           .map((item) => item.barcode.sourceImage?.buffer)
           .toList();
-      }
+    }
   });
 
   return imageBuffers;

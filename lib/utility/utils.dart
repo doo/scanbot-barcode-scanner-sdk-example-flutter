@@ -9,13 +9,15 @@ import 'package:image_picker/image_picker.dart' as picker;
 import 'package:url_launcher/url_launcher.dart';
 
 final enableImagesInScannedBarcodesResults = false;
-final selectedFormatsNotifier = ValueNotifier<Set<BarcodeFormat>>(
-    BarcodeFormats.all.toSet()
-);
+final selectedFormatsNotifier =
+    ValueNotifier<Set<BarcodeFormat>>(BarcodeFormats.all.toSet());
 
 const Color ScanbotRedColor = Color(0xFFc8193c);
 
-AppBar ScanbotAppBar(String title, {bool showBackButton = false, BuildContext? context, List<Widget>? actions}) {
+AppBar ScanbotAppBar(String title,
+    {bool showBackButton = false,
+    BuildContext? context,
+    List<Widget>? actions}) {
   return AppBar(
     iconTheme: const IconThemeData(
       color: Colors.white,
@@ -23,9 +25,9 @@ AppBar ScanbotAppBar(String title, {bool showBackButton = false, BuildContext? c
     backgroundColor: ScanbotRedColor,
     leading: showBackButton && context != null
         ? GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
-      child: const Icon(Icons.arrow_back, color: Colors.white),
-    )
+            onTap: () => Navigator.of(context).pop(),
+            child: const Icon(Icons.arrow_back, color: Colors.white),
+          )
         : null,
     title: Text(
       title,
@@ -79,9 +81,7 @@ Future<bool> checkLicenseStatus(BuildContext context) async {
   if (result.isValid) {
     return true;
   }
-  await showAlertDialog(
-      context, result.licenseStatusMessage,
-      title: 'Info');
+  await showAlertDialog(context, result.licenseStatusMessage, title: 'Info');
   return false;
 }
 
@@ -96,7 +96,6 @@ Future<void> _launchScanbotSDKURL() async {
     throw 'Could not launch $url';
   }
 }
-
 
 Future<void> showAlertDialog(BuildContext context, String textToShow,
     {String? title}) async {

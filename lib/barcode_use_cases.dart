@@ -27,18 +27,27 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const TitleItemWidget(title: 'Barcode Scanners (RTU)'),
-        MenuItemWidget(title: "Single Scan with confirmation dialog", onTap: () => startSingleScan(context)),
-        MenuItemWidget(title: "Multiple Scan", onTap: () => startMultipleScan(context)),
-        MenuItemWidget(title: "Find and Pick", onTap: () => startFindAndPickScan(context)),
-        MenuItemWidget(title: "Multiple Scan With AR Overlay", onTap: () => startAROverlayScan(context)),
-        MenuItemWidget(title: "Multiple Scan with Info Mapping", onTap: () => startItemMappingScan(context)),
+        MenuItemWidget(
+            title: "Single Scan with confirmation dialog",
+            onTap: () => startSingleScan(context)),
+        MenuItemWidget(
+            title: "Multiple Scan", onTap: () => startMultipleScan(context)),
+        MenuItemWidget(
+            title: "Find and Pick", onTap: () => startFindAndPickScan(context)),
+        MenuItemWidget(
+            title: "Multiple Scan With AR Overlay",
+            onTap: () => startAROverlayScan(context)),
+        MenuItemWidget(
+            title: "Multiple Scan with Info Mapping",
+            onTap: () => startItemMappingScan(context)),
       ],
     );
   }
 
   Future<void> startScan({
     required BuildContext context,
-    required Future<ResultWrapper<BarcodeScannerUiResult>> Function() scannerFunction,
+    required Future<ResultWrapper<BarcodeScannerUiResult>> Function()
+        scannerFunction,
   }) async {
     if (!await checkLicenseStatus(context)) {
       return;
@@ -48,21 +57,22 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
       /// otherwise you'll get exception "AutoReleasable objects must be created within autorelease"
       // await autorelease(() async {
 
-        var result = await scannerFunction();
+      var result = await scannerFunction();
 
-        /// if you want to use image later, call encodeImages() to save in buffer
-        // if(enableImagesInScannedBarcodesResults)
-        //   result.data?.encodeImages();
+      /// if you want to use image later, call encodeImages() to save in buffer
+      // if(enableImagesInScannedBarcodesResults)
+      //   result.data?.encodeImages();
 
-        if (result.status == OperationStatus.OK && result.data != null) {
-          final barcodeItems = result.data!.items.map((item) => item.barcode).toList();
+      if (result.status == OperationStatus.OK && result.data != null) {
+        final barcodeItems =
+            result.data!.items.map((item) => item.barcode).toList();
 
-          await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => BarcodesResultPreviewWidget(barcodeItems),
-            ),
-          );
-        }
+        await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidget(barcodeItems),
+          ),
+        );
+      }
       // });
     } catch (e) {
       print(e);
@@ -71,7 +81,8 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
   Future<void> startSingleScan(BuildContext context) async {
     var configuration = rtuUiSingleScanningUseCase();
-    configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormats =
+        selectedFormatsNotifier.value.toList();
 
     await startScan(
       context: context,
@@ -81,7 +92,8 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
   Future<void> startMultipleScan(BuildContext context) async {
     var configuration = rtuUiMultipleScanningUseCase();
-    configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormats =
+        selectedFormatsNotifier.value.toList();
 
     await startScan(
       context: context,
@@ -91,7 +103,8 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
   Future<void> startFindAndPickScan(BuildContext context) async {
     var configuration = rtuUiFindAndPickModeUseCase();
-    configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormats =
+        selectedFormatsNotifier.value.toList();
 
     await startScan(
       context: context,
@@ -101,7 +114,8 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
   Future<void> startAROverlayScan(BuildContext context) async {
     var configuration = rtuUiArOverlayUseCase();
-    configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormats =
+        selectedFormatsNotifier.value.toList();
 
     await startScan(
       context: context,
@@ -111,7 +125,8 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
   Future<void> startItemMappingScan(BuildContext context) async {
     var configuration = rtuUiMappingItemConfiguration();
-    configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormats =
+        selectedFormatsNotifier.value.toList();
 
     await startScan(
       context: context,
