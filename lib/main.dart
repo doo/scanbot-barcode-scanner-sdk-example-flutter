@@ -46,7 +46,7 @@ Future<void> _initScanbotSdk() async {
   }
 
   try {
-    var statusLicenseResult = await ScanbotSdk.init(config);
+    var statusLicenseResult = await ScanbotSdk.initialize(config);
     print(statusLicenseResult.status);
   } catch (e) {
     print(e);
@@ -108,7 +108,6 @@ class _MainPageWidgetState extends State<MainPageWidget> {
             const TitleItemWidget(title: 'Other SDK API'),
             MenuItemWidget(title: 'Detect Barcodes from Still Image', onTap: () => _detectBarcodeOnImage(context)),
             MenuItemWidget(title: 'Detect Barcodes from Multiple Still Images', onTap: () => _detectBarcodesOnImages(context)),
-            MenuItemWidget(title: 'Extract Images From Pdf', onTap: () => _extractImagesFromPdf(context)),
             MenuItemWidget(
               title: "Set accepted barcode types (RTU)",
               onTap: () {
@@ -278,42 +277,11 @@ class _MainPageWidgetState extends State<MainPageWidget> {
   Future<void> _getLicenseStatus() async {
     try {
       final result = await ScanbotSdk.getLicenseInfo();
-      var status = " Status: ${result.status.name}";
+      var licenseInfo = "Status: ${result.status.name}\nExpirationDate: ${result.expirationDateString}";
 
-      if (result.licenseExpirationDate != null) {
-        status += "\n ExpirationDate: ${result.licenseExpirationDate}";
-      }
-
-      await showAlertDialog(context, status, title: 'License Status');
+      await showAlertDialog(context, licenseInfo, title: 'License Status');
     } catch (e) {
       await showAlertDialog(context, title: "Info", 'Error getting license status');
     }
   }
-
-  Future<void> _extractImagesFromPdf(BuildContext context) async {
-    if (!await checkLicenseStatus(context)) {
-      return;
-    }
-    try {
-      final response = await selectPdfFile();
-
-      if (response?.path == null) {
-        await showAlertDialog(context, title: "Info", "No pdf picked.");
-        return;
-      }
-
-      var result = await ScanbotSdk.imageOperations.extractImagesFromPdf(ExtractImagesFromPdfParams(pdfFilePath: response!.path!));
-
-      if (result.isNotEmpty) {
-        await showAlertDialog(context, title: "Result", result.join('\n'));
-      } else {
-        await showAlertDialog(context, title: "Info", "No images extracted.");
-      }
-    } catch (ex) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(ex.toString()),
-      ));
-    }
-  }
-
 }
