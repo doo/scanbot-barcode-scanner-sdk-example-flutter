@@ -9,7 +9,7 @@ Future<List<BarcodeItem>> handleScanningResultWithImageRef() async {
 
   // Autorelease executes the given block and releases native resources
   await autorelease(() async {
-    final scanningResult = await ScanbotSdk.barcode.startScanner(config);
+    final scanningResult = await ScanbotBarcodeSdk.barcode.startScanner(config);
     if (scanningResult.status == OperationStatus.OK &&
         scanningResult.data != null) {
       scanningResult.data?.items.forEach((item) async {
@@ -41,7 +41,7 @@ Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef() async {
 
   // First autorelease block: serialize the scanning result
   await autorelease(() async {
-    final scanningResult = await ScanbotSdk.barcode.startScanner(config);
+    final scanningResult = await ScanbotBarcodeSdk.barcode.startScanner(config);
     if (scanningResult.status == OperationStatus.OK &&
         scanningResult.data != null) {
       // Serialized the scanned result in order to move the data outside the autorelease block
@@ -81,7 +81,7 @@ Future<List<Uint8List?>> handleScanningResultWithEncodedImageRef() async {
   List<Uint8List?> imageBuffers = [];
 
   await autorelease(() async {
-    final scanningResult = await ScanbotSdk.barcode.startScanner(config);
+    final scanningResult = await ScanbotBarcodeSdk.barcode.startScanner(config);
     if (scanningResult.status == OperationStatus.OK &&
         scanningResult.data != null) {
       // Trigger encoding of all ImageRefs

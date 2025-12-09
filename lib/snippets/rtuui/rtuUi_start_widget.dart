@@ -13,7 +13,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // TODO: configure as needed
 
-    var result = await ScanbotSdk.barcode.startScanner(configuration);
+    var result = await ScanbotBarcodeSdk.barcode.startScanner(configuration);
 
     if (result.status == OperationStatus.OK) {
       // TODO: present barcode result as needed

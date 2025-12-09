@@ -38,15 +38,15 @@ Future<void> _initScanbotSdk() async {
     licenseKey: BARCODE_SDK_LICENSE_KEY,
     // Uncomment to use custom storage directory
     // storageBaseDirectory: customStorageBaseDirectory,
+     fileEncryptionPassword: shouldInitWithEncryption
+          ? 'SomeSecretPa\$\$w0rdForFileEncryption'
+          : null,
+      fileEncryptionMode:
+          shouldInitWithEncryption ? FileEncryptionMode.AES256 : null,
   );
 
-  if (shouldInitWithEncryption) {
-    config.fileEncryptionPassword = 'SomeSecretPa\$\$w0rdForFileEncryption';
-    config.fileEncryptionMode = FileEncryptionMode.AES256;
-  }
-
   try {
-    var statusLicenseResult = await ScanbotSdk.initialize(config);
+    var statusLicenseResult = await ScanbotBarcodeSdk.initialize(config);
     print(statusLicenseResult.status);
   } catch (e) {
     print(e);
@@ -187,7 +187,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
         barcodeFormatCode128Configuration,
       ];
 
-      var result = await ScanbotSdk.barcode
+      var result = await ScanbotBarcodeSdk.barcode
           .scanFromImageFileUri(response.path, scannerConfiguration);
 
       if (!result.success) {
@@ -249,7 +249,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       ];
 
       for (var uri in uris) {
-        var result = await ScanbotSdk.barcode
+        var result = await ScanbotBarcodeSdk.barcode
             .scanFromImageFileUri(uri.path, scannerConfiguration);
 
         allBarcodes.addAll(result.barcodes);
@@ -278,7 +278,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
 
   Future<void> _getLicenseInfo() async {
     try {
-      final result = await ScanbotSdk.getLicenseInfo();
+      final result = await ScanbotBarcodeSdk.getLicenseInfo();
       var licenseInfo =
           "Status: ${result.status.name}\nExpiration Date: ${result.expirationDateString}";
 

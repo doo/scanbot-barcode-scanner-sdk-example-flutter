@@ -7,5 +7,5 @@ Future mockCamera() async {
    *  API < 33, READ_EXTERNAL_STORAGE permission is required.
    *  The image must have even values for both width and height.
    */
-  await ScanbotSdk.mockCamera("{path to your image file}");
+  await ScanbotBarcodeSdk.mockCamera("{path to your image file}");
 }

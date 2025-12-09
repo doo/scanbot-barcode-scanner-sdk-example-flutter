@@ -77,7 +77,7 @@ Widget buildBottomNavigationBar(BuildContext context) {
 }
 
 Future<bool> checkLicenseStatus(BuildContext context) async {
-  final result = await ScanbotSdk.getLicenseInfo();
+  final result = await ScanbotBarcodeSdk.getLicenseInfo();
   if (result.isValid) {
     return true;
   }

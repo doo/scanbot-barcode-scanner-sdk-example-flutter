@@ -29,5 +29,5 @@ Future<void> initalizeSdk() async {
   );
 
   // Initialize the Scanbot SDK with the specified configuration
-  await ScanbotSdk.initialize(config);
+  await ScanbotBarcodeSdk.initialize(config);
 }

@@ -2,7 +2,7 @@ import 'package:barcode_scanner/barcode_sdk.dart';
 
 Future<List<BarcodeItem>> handleScanningResult() async {
   // Start the barcode RTU UI with default configuration
-  final scanningResult = await ScanbotSdk.barcode
+  final scanningResult = await ScanbotBarcodeSdk.barcode
       .startScanner(BarcodeScannerScreenConfiguration());
 
   // Check if the status returned is ok and that the data is present
