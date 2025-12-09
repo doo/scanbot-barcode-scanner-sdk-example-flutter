@@ -88,7 +88,8 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdk.barcode.startScanner(configuration),
+      scannerFunction: () =>
+          ScanbotBarcodeSdk.barcode.startScanner(configuration),
     );
   }
 
@@ -101,7 +102,8 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdk.barcode.startScanner(configuration),
+      scannerFunction: () =>
+          ScanbotBarcodeSdk.barcode.startScanner(configuration),
     );
   }
 
@@ -114,7 +116,8 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdk.barcode.startScanner(configuration),
+      scannerFunction: () =>
+          ScanbotBarcodeSdk.barcode.startScanner(configuration),
     );
   }
 
@@ -127,7 +130,8 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdk.barcode.startScanner(configuration),
+      scannerFunction: () =>
+          ScanbotBarcodeSdk.barcode.startScanner(configuration),
     );
   }
 
@@ -140,7 +144,8 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdk.barcode.startScanner(configuration),
+      scannerFunction: () =>
+          ScanbotBarcodeSdk.barcode.startScanner(configuration),
     );
   }
 }
