@@ -23,7 +23,6 @@ Future<List<BarcodeItem>> handleScanningResultWithImageRef() async {
           final byteArray = await item.barcode.sourceImage
               ?.encodeImage(options: EncodeImageOptions());
         }
-        ;
       });
     }
   });
