@@ -16,11 +16,11 @@ Future<List<BarcodeItem>> handleScanningResultWithImageRef() async {
         if (item.barcode.sourceImage != null) {
           // Saves the stored image at path with the given options
           final path = '/my_custom_path/my_file.jpg';
-          await item.barcode.sourceImage
+          item.barcode.sourceImage
               ?.saveImage(path, options: SaveImageOptions());
 
           // Returns the stored image as Uint8List.
-          final byteArray = await item.barcode.sourceImage
+          final byteArray = item.barcode.sourceImage
               ?.encodeImage(options: EncodeImageOptions());
         }
       });
@@ -59,11 +59,10 @@ Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef() async {
       if (sourceImage != null) {
         // Saves the stored image at path with the given options
         final path = '/your_custom_path/my_file.jpg';
-        await sourceImage.saveImage(path, options: SaveImageOptions());
+        sourceImage.saveImage(path, options: SaveImageOptions());
 
         // Get the image buffer (as Uint8List)
-        final buffer =
-            await sourceImage.encodeImage(options: EncodeImageOptions());
+        final buffer = sourceImage.encodeImage(options: EncodeImageOptions());
         imageBuffers.add(buffer);
       }
     }

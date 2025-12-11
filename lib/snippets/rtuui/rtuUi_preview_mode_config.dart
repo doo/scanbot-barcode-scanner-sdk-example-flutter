@@ -21,7 +21,5 @@ BarcodeScannerScreenConfiguration rtuUiPreviewModeConfiguration() {
   config.useCase = scanningMode;
   // Configure other parameters, pertaining to multiple-scanning mode as needed.
 
-  // Configure other parameters as needed.
-
   return config;
 }
