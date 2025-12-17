@@ -7,9 +7,8 @@ Future<List<dynamic>> handleScanningResultWithDataParsers() async {
   );
 
   // Check if the status returned is ok and that the data is present
-  if (scanningResult.status == OperationStatus.OK &&
-      scanningResult.data != null) {
-    final items = scanningResult.data!.items;
+  if (scanningResult is Ok<BarcodeScannerUiResult>) {
+    final items = scanningResult.value.items;
     final parsedData = <dynamic>[];
 
     // Loop through the scanned barcode items and extract the desired barcode data

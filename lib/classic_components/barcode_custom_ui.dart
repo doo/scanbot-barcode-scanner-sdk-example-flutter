@@ -217,7 +217,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   /// Displays a view indicating that the license is inactive.
   Widget _buildLicenseInactiveView() {
-    return _buildCenteredMessage('License is No more active');
+    return _buildCenteredMessage('License is no more active');
   }
 
   /// Displays a view indicating that permissions have not been granted.

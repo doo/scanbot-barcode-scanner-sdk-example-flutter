@@ -46,37 +46,31 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
   Future<void> startScan({
     required BuildContext context,
-    required Future<ResultWrapper<BarcodeScannerUiResult>> Function()
-        scannerFunction,
+    required Future<Result<BarcodeScannerUiResult>> Function() scannerFunction,
   }) async {
     if (!await checkLicenseStatus(context)) {
       return;
     }
-    try {
-      /// if scannerConfiguration.returnBarcodeImage = true, you must use autorelease for result object
-      /// otherwise you'll get exception "AutoReleasable objects must be created within autorelease"
-      // await autorelease(() async {
 
-      var result = await scannerFunction();
+    /// if scannerConfiguration.returnBarcodeImage = true, you must use autorelease for result object
+    /// otherwise you'll get exception "AutoReleasable objects must be created within autorelease"
+    // await autorelease(() async {
 
+    var result = await scannerFunction();
+    if (result is Ok<BarcodeScannerUiResult>) {
       /// if you want to use image later, call encodeImages() to save in buffer
-      // if(enableImagesInScannedBarcodesResults)
-      //   result.data?.encodeImages();
+      // if (enableImagesInScannedBarcodesResults) result.value.encodeImages();
 
-      if (result.status == OperationStatus.OK && result.data != null) {
-        final barcodeItems =
-            result.data!.items.map((item) => item.barcode).toList();
+      final barcodeItems =
+          result.value.items.map((item) => item.barcode).toList();
 
-        await Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => BarcodesResultPreviewWidget(barcodeItems),
-          ),
-        );
-      }
-      // });
-    } catch (e) {
-      print(e);
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => BarcodesResultPreviewWidget(barcodeItems),
+        ),
+      );
     }
+    // });
   }
 
   Future<void> startSingleScan(BuildContext context) async {

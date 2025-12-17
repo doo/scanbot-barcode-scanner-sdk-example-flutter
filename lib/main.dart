@@ -45,11 +45,11 @@ Future<void> _initScanbotSdk() async {
         shouldInitWithEncryption ? FileEncryptionMode.AES256 : null,
   );
 
-  try {
-    var statusLicenseResult = await ScanbotBarcodeSdk.initialize(config);
-    print(statusLicenseResult.status);
-  } catch (e) {
-    print(e);
+  var licenseResult = await ScanbotBarcodeSdk.initialize(config);
+  if (licenseResult is Ok<LicenseInfo>) {
+    print(licenseResult.value.status);
+  } else if (licenseResult is Error<LicenseInfo>) {
+    print(licenseResult.error.toString());
   }
 }
 
@@ -162,47 +162,44 @@ class _MainPageWidgetState extends State<MainPageWidget> {
     if (!await checkLicenseStatus(context)) {
       return;
     }
-    try {
-      final response = await selectImageFromLibrary();
+    final response = await selectImageFromLibrary();
 
-      if (response == null || response.path.isEmpty) {
-        await showAlertDialog(context, title: "Info", "No image picked.");
-        return;
-      }
+    if (response == null || response.path.isEmpty) {
+      await showAlertDialog(context, title: "Info", "No image picked.");
+      return;
+    }
 
-      var scannerConfiguration = new BarcodeScannerConfiguration();
+    var scannerConfiguration = new BarcodeScannerConfiguration();
 
-      var barcodeFormatCommonConfiguration =
-          new BarcodeFormatCommonConfiguration();
-      barcodeFormatCommonConfiguration.addAdditionalQuietZone = true;
-      barcodeFormatCommonConfiguration.minimumTextLength = 5;
+    var barcodeFormatCommonConfiguration =
+        new BarcodeFormatCommonConfiguration();
+    barcodeFormatCommonConfiguration.addAdditionalQuietZone = true;
+    barcodeFormatCommonConfiguration.minimumTextLength = 5;
 
-      // Configure different parameters for specific barcode format.
-      var barcodeFormatCode128Configuration =
-          new BarcodeFormatCode128Configuration();
-      barcodeFormatCode128Configuration.minimumTextLength = 6;
+    // Configure different parameters for specific barcode format.
+    var barcodeFormatCode128Configuration =
+        new BarcodeFormatCode128Configuration();
+    barcodeFormatCode128Configuration.minimumTextLength = 6;
 
-      scannerConfiguration.barcodeFormatConfigurations = [
-        barcodeFormatCommonConfiguration,
-        barcodeFormatCode128Configuration,
-      ];
+    scannerConfiguration.barcodeFormatConfigurations = [
+      barcodeFormatCommonConfiguration,
+      barcodeFormatCode128Configuration,
+    ];
 
-      var result = await ScanbotBarcodeSdk.barcode
-          .scanFromImageFileUri(response.path, scannerConfiguration);
+    var result = await ScanbotBarcodeSdk.barcode
+        .scanFromImageFileUri(response.path, scannerConfiguration);
 
-      if (!result.success) {
+    if (result is Ok<BarcodeScannerResult>) {
+      if (!result.value.success) {
         await showAlertDialog(context, title: "Info", "No barcodes detected.");
         return;
       }
 
       await Navigator.of(context).push(
         MaterialPageRoute(
-            builder: (context) => BarcodesResultPreviewWidget(result.barcodes)),
+            builder: (context) =>
+                BarcodesResultPreviewWidget(result.value.barcodes)),
       );
-    } catch (ex) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(ex.toString()),
-      ));
     }
   }
 
@@ -212,78 +209,72 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       return;
     }
 
-    try {
-      List<Uri> uris = List.empty(growable: true);
+    List<Uri> uris = List.empty(growable: true);
 
-      final response = await ImagePicker().pickMultiImage();
-      if (response.isEmpty) {
-        await showAlertDialog(context, title: "Info", "No image picked.");
-        return;
+    final response = await ImagePicker().pickMultiImage();
+    if (response.isEmpty) {
+      await showAlertDialog(context, title: "Info", "No image picked.");
+      return;
+    }
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        });
+
+    uris = response.map((image) => Uri.file(image.path)).toList();
+
+    List<BarcodeItem> allBarcodes = [];
+
+    var scannerConfiguration = new BarcodeScannerConfiguration();
+
+    var barcodeFormatCommonConfiguration =
+        new BarcodeFormatCommonConfiguration();
+    barcodeFormatCommonConfiguration.addAdditionalQuietZone = true;
+    barcodeFormatCommonConfiguration.minimumTextLength = 5;
+
+    // Configure different parameters for specific barcode format.
+    var barcodeFormatQrCodeConfiguration =
+        new BarcodeFormatQrCodeConfiguration();
+    barcodeFormatQrCodeConfiguration.microQr = true;
+
+    scannerConfiguration.barcodeFormatConfigurations = [
+      barcodeFormatCommonConfiguration,
+      barcodeFormatQrCodeConfiguration,
+    ];
+
+    for (var uri in uris) {
+      var result = await ScanbotBarcodeSdk.barcode
+          .scanFromImageFileUri(uri.path, scannerConfiguration);
+
+      if (result is Ok<BarcodeScannerResult>) {
+        allBarcodes.addAll(result.value.barcodes);
       }
+    }
 
-      showDialog(
-          context: context,
-          builder: (context) {
-            return const Center(child: CircularProgressIndicator());
-          });
+    Navigator.of(context).pop();
 
-      uris = response.map((image) => Uri.file(image.path)).toList();
-
-      List<BarcodeItem> allBarcodes = [];
-
-      var scannerConfiguration = new BarcodeScannerConfiguration();
-
-      var barcodeFormatCommonConfiguration =
-          new BarcodeFormatCommonConfiguration();
-      barcodeFormatCommonConfiguration.addAdditionalQuietZone = true;
-      barcodeFormatCommonConfiguration.minimumTextLength = 5;
-
-      // Configure different parameters for specific barcode format.
-      var barcodeFormatQrCodeConfiguration =
-          new BarcodeFormatQrCodeConfiguration();
-      barcodeFormatQrCodeConfiguration.microQr = true;
-
-      scannerConfiguration.barcodeFormatConfigurations = [
-        barcodeFormatCommonConfiguration,
-        barcodeFormatQrCodeConfiguration,
-      ];
-
-      for (var uri in uris) {
-        var result = await ScanbotBarcodeSdk.barcode
-            .scanFromImageFileUri(uri.path, scannerConfiguration);
-
-        allBarcodes.addAll(result.barcodes);
-      }
-
-      Navigator.of(context).pop();
-
-      if (allBarcodes.isNotEmpty) {
-        await Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => BarcodesResultPreviewWidget(allBarcodes),
-          ),
-        );
-      } else {
-        await showAlertDialog(context, title: "Info", "No barcodes detected.");
-        return;
-      }
-    } catch (ex) {
-      Navigator.of(context, rootNavigator: true).pop();
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(ex.toString()),
-      ));
+    if (allBarcodes.isNotEmpty) {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => BarcodesResultPreviewWidget(allBarcodes),
+        ),
+      );
+    } else {
+      await showAlertDialog(context, title: "Info", "No barcodes detected.");
+      return;
     }
   }
 
   Future<void> _getLicenseInfo() async {
-    try {
-      final result = await ScanbotBarcodeSdk.getLicenseInfo();
+    final result = await ScanbotBarcodeSdk.getLicenseInfo();
+    if (result is Ok<LicenseInfo>) {
       var licenseInfo =
-          "Status: ${result.status.name}\nExpiration Date: ${result.expirationDateString}";
+          "Status: ${result.value.status.name}\nExpiration Date: ${result.value.expirationDateString}";
 
       await showAlertDialog(context, licenseInfo, title: 'License Info');
-    } catch (e) {
+    } else if (result is Error<LicenseInfo>) {
       await showAlertDialog(
           context, title: "Info", 'Error getting license status');
     }

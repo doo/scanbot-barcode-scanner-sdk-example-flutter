@@ -10,9 +10,8 @@ Future<List<BarcodeItem>> handleScanningResultWithImageRef() async {
   // Autorelease executes the given block and releases native resources
   await autorelease(() async {
     final scanningResult = await ScanbotBarcodeSdk.barcode.startScanner(config);
-    if (scanningResult.status == OperationStatus.OK &&
-        scanningResult.data != null) {
-      scanningResult.data?.items.forEach((item) async {
+    if (scanningResult is Ok<BarcodeScannerUiResult>) {
+      scanningResult.value.items.forEach((item) async {
         if (item.barcode.sourceImage != null) {
           // Saves the stored image at path with the given options
           final path = '/my_custom_path/my_file.jpg';
@@ -41,10 +40,9 @@ Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef() async {
   // First autorelease block: serialize the scanning result
   await autorelease(() async {
     final scanningResult = await ScanbotBarcodeSdk.barcode.startScanner(config);
-    if (scanningResult.status == OperationStatus.OK &&
-        scanningResult.data != null) {
+    if (scanningResult is Ok<BarcodeScannerUiResult>) {
       // Serialized the scanned result in order to move the data outside the autorelease block
-      serializedResult = await scanningResult.data!.toJson();
+      serializedResult = await scanningResult.value.toJson();
     }
   });
 
@@ -80,13 +78,12 @@ Future<List<Uint8List?>> handleScanningResultWithEncodedImageRef() async {
 
   await autorelease(() async {
     final scanningResult = await ScanbotBarcodeSdk.barcode.startScanner(config);
-    if (scanningResult.status == OperationStatus.OK &&
-        scanningResult.data != null) {
+    if (scanningResult is Ok<BarcodeScannerUiResult>) {
       // Trigger encoding of all ImageRefs
-      scanningResult.data!.encodeImages();
+      scanningResult.value.encodeImages();
 
       // Collect all image buffers
-      imageBuffers = scanningResult.data!.items
+      imageBuffers = scanningResult.value.items
           .map((item) => item.barcode.sourceImage?.buffer)
           .toList();
     }

@@ -1,6 +1,6 @@
 import 'package:barcode_scanner/barcode_sdk.dart';
 
-Future<BarcodeScannerResult> detectBarcodeOnImage() async {
+Future<Result<BarcodeScannerResult>> detectBarcodeOnImage() async {
   /**
    * Select an image from the Image Library
    * Return early if no image is selected or there is an issue selecting an image
