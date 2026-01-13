@@ -193,7 +193,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         });
         Logger.root.severe(licenseStatus);
       },
-      onCameraPreviewStarted: (takePictureTrigger, isFlashAvailable) {
+      onCameraPreviewStarted: (isFlashAvailable) {
         setState(() {
           flashAvailable = isFlashAvailable;
         });
