@@ -1,4 +1,4 @@
-import 'package:barcode_scanner/barcode_sdk.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:file_picker/file_picker.dart';
 
 import 'package:flutter/material.dart';
@@ -82,7 +82,7 @@ Future<bool> checkLicenseStatus(BuildContext context) async {
     if (result.value.isValid) {
       return true;
     }
-    
+
     await showAlertDialog(context, result.value.licenseStatusMessage,
         title: 'Info');
     return false;

@@ -1,4 +1,4 @@
-import 'package:barcode_scanner/barcode_sdk.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 BarcodeScannerScreenConfiguration configurationWithLocalizationSnippet() {
   // Create the default configuration object.

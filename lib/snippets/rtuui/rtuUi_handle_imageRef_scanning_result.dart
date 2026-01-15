@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:barcode_scanner/barcode_sdk.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 Future<List<BarcodeItem>> handleScanningResultWithImageRef() async {
   // Start the barcode RTU UI with default configuration

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:barcode_scanner/barcode_sdk.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 import '../snippets/rtuui/rtuUi_ar_overlay_usecase.dart';
 import '../snippets/rtuui/rtuUi_find_and_pick_scanning_usecase.dart';

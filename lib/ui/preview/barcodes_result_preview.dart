@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material;
 
-import 'package:barcode_scanner/barcode_sdk.dart';
+import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 import '../../utility/generic_document_helper.dart';
 import '../../utility/utils.dart';
