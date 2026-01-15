@@ -35,7 +35,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
         MenuItemWidget(
             title: "Find and Pick", onTap: () => startFindAndPickScan(context)),
         MenuItemWidget(
-            title: "Multiple Scan With AR Overlay",
+            title: "Multiple Scan with AR Overlay",
             onTap: () => startAROverlayScan(context)),
         MenuItemWidget(
             title: "Multiple Scan with Info Mapping",
