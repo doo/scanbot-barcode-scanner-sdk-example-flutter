@@ -12,6 +12,11 @@ Future<List<BarcodeItem>> handleScanningResult() async {
         scanningResult.value.items.map((item) => item.barcode).toList();
 
     return barcodes;
+  } else if (scanningResult is Error<BarcodeScannerUiResult>) {
+    // Handle the error here
+    print(scanningResult.error.message);
+  } else if (scanningResult is Cancel) {
+    // Handle the cancellation here
   }
   return [];
 }

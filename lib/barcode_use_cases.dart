@@ -69,6 +69,11 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
           builder: (context) => BarcodesResultPreviewWidget(barcodeItems),
         ),
       );
+    } else if (result is Error<BarcodeScannerUiResult>) {
+      // Handle the error here
+      print(result.error.message);
+    } else if (result is Cancel) {
+      // Handle the cancellation here
     }
     // });
   }
