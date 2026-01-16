@@ -38,12 +38,12 @@ Future<void> _initScanbotSdk() async {
     licenseKey: BARCODE_SDK_LICENSE_KEY,
     // Uncomment to use custom storage directory
     // storageBaseDirectory: customStorageBaseDirectory,
-    fileEncryptionPassword: shouldInitWithEncryption
-        ? 'SomeSecretPa\$\$w0rdForFileEncryption'
-        : null,
-    fileEncryptionMode:
-        shouldInitWithEncryption ? FileEncryptionMode.AES256 : null,
   );
+
+  if (shouldInitWithEncryption) {
+    config.fileEncryptionPassword = 'SomeSecretPa\$\$w0rdForFileEncryption';
+    config.fileEncryptionMode = FileEncryptionMode.AES256;
+  }
 
   var licenseResult = await ScanbotBarcodeSdk.initialize(config);
   if (licenseResult is Ok<LicenseInfo>) {

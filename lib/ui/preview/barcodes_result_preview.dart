@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as material;
 
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
@@ -26,7 +25,7 @@ class BarcodesResultPreviewWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding: const material.EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 child: Text('Result ${imageIndex + 1}',
                     style: const TextStyle(
                         fontSize: 14, fontWeight: FontWeight.bold)),

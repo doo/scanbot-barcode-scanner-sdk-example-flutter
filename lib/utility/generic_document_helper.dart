@@ -1,6 +1,5 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as material;
 
 class GenericDocumentHelper {
   static Widget wrappedGenericDocumentField(GenericDocument? genericDocument) {
@@ -9,7 +8,7 @@ class GenericDocumentHelper {
     final wrappedGenericFieldValue = _getGenericFieldValue(genericDocument);
 
     return Padding(
-      padding: const material.EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Text(
         '''
 Document: ${genericDocument.type.name}

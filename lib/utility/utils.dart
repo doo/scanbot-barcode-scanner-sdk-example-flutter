@@ -2,7 +2,6 @@ import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:file_picker/file_picker.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as material;
 
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker/image_picker.dart' as picker;
@@ -44,14 +43,14 @@ AppBar ScanbotAppBar(String title,
 Widget buildBottomNavigationBar(BuildContext context) {
   return Container(
     color: Colors.grey[200],
-    padding: const material.EdgeInsets.all(10.0),
+    padding: const EdgeInsets.all(10.0),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         TextButton(
           onPressed: _launchScanbotSDKURL,
           style: TextButton.styleFrom(
-            padding: material.EdgeInsets.zero,
+            padding: EdgeInsets.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
           child: const Text(
@@ -112,7 +111,7 @@ Future<void> showAlertDialog(BuildContext context, String textToShow,
   final dialog = AlertDialog(
     title: title != null ? Text(title) : null,
     content: text,
-    contentPadding: const material.EdgeInsets.all(0),
+    contentPadding: const EdgeInsets.all(0),
     actions: <Widget>[
       TextButton(
         onPressed: () {

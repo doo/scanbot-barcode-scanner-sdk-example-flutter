@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as material;
 
 import 'package:logging/logging.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -100,7 +99,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         ),
       ),
       widget: Padding(
-        padding: const material.EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Container(
           decoration: BoxDecoration(
             border:
@@ -205,7 +204,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   Widget _buildFlashToggleButton() {
     if (!flashAvailable) return Container();
 
-    return material.IconButton(
+    return IconButton(
       onPressed: () {
         setState(() {
           flashEnabled = !flashEnabled;
