@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -108,13 +109,16 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                 onTap: () => _startBarcodeCustomUIScanner(context)),
             const TitleItemWidget(title: 'Other SDK API'),
             MenuItemWidget(
-                title: 'Detect Barcodes from Still Image',
-                onTap: () => _detectBarcodeOnImage(context)),
+                title: 'Scan Barcodes from Still Image',
+                onTap: () => _scanBarcodesFromImage(context)),
             MenuItemWidget(
-                title: 'Detect Barcodes from Multiple Still Images',
-                onTap: () => _detectBarcodesOnImages(context)),
+                title: 'Scan Barcodes from Multiple Still Images',
+                onTap: () => _scanBarcodesFromImages(context)),
             MenuItemWidget(
-              title: "Set accepted barcode types (RTU)",
+                title: 'Scan Barcodes from Pdf',
+                onTap: () => _scanBarcodesFromPdf(context)),
+            MenuItemWidget(
+              title: "Set accepted barcode types (RTU UI)",
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -158,7 +162,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
   }
 
   /// Detect barcodes from still image
-  Future<void> _detectBarcodeOnImage(BuildContext context) async {
+  Future<void> _scanBarcodesFromImage(BuildContext context) async {
     if (!await checkLicenseStatus(context)) {
       return;
     }
@@ -206,7 +210,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
   }
 
   /// Detect barcodes from multiple still images
-  Future<void> _detectBarcodesOnImages(BuildContext context) async {
+  Future<void> _scanBarcodesFromImages(BuildContext context) async {
     if (!await checkLicenseStatus(context)) {
       return;
     }
@@ -267,7 +271,43 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       );
     } else {
       await showAlertDialog(context, title: "Info", "No barcodes detected.");
+    }
+  }
+
+  Future<void> _scanBarcodesFromPdf(BuildContext context) async {
+    if (!await checkLicenseStatus(context)) {
       return;
+    }
+
+    var filePickerResult = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (filePickerResult != null &&
+        filePickerResult.files.single.path != null) {
+      String pdfFileUri = filePickerResult.files.single.path!;
+
+      var scanningResult = await ScanbotBarcodeSdk.barcode
+          .scanFromPdf(pdfFileUri, BarcodeScannerConfiguration());
+
+      if (scanningResult is Ok<BarcodeScannerResult>) {
+        var barcodes = scanningResult.value.barcodes;
+        if (barcodes.isNotEmpty) {
+          await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => BarcodesResultPreviewWidget(barcodes),
+            ),
+          );
+        } else {
+          await showAlertDialog(
+              context, title: "Info", "No barcodes detected.");
+          return;
+        }
+      } else {
+        await showAlertDialog(
+            context, title: "Info", scanningResult.toString());
+      }
     }
   }
 
@@ -277,7 +317,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       var licenseInfo =
           "Status: ${result.value.status.name}\nExpiration Date: ${result.value.expirationDateString}";
 
-      await showAlertDialog(context, licenseInfo, title: 'License Info');
+      await showAlertDialog(context, title: 'License Info', licenseInfo);
     } else {
       await showAlertDialog(context, title: "Info", result.toString());
     }
