@@ -48,8 +48,8 @@ Future<void> _initScanbotSdk() async {
   var licenseResult = await ScanbotBarcodeSdk.initialize(config);
   if (licenseResult is Ok<LicenseInfo>) {
     print(licenseResult.value.status);
-  } else if (licenseResult is Error<LicenseInfo>) {
-    print(licenseResult.error.toString());
+  } else {
+    print(licenseResult.toString());
   }
 }
 
@@ -200,6 +200,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
             builder: (context) =>
                 BarcodesResultPreviewWidget(result.value.barcodes)),
       );
+    } else {
+      await showAlertDialog(context, title: "Info", result.toString());
     }
   }
 
@@ -250,6 +252,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
 
       if (result is Ok<BarcodeScannerResult>) {
         allBarcodes.addAll(result.value.barcodes);
+      } else {
+        await showAlertDialog(context, title: "Info", result.toString());
       }
     }
 
@@ -274,9 +278,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
           "Status: ${result.value.status.name}\nExpiration Date: ${result.value.expirationDateString}";
 
       await showAlertDialog(context, licenseInfo, title: 'License Info');
-    } else if (result is Error<LicenseInfo>) {
-      await showAlertDialog(
-          context, title: "Info", 'Error getting license status');
+    } else {
+      await showAlertDialog(context, title: "Info", result.toString());
     }
   }
 }

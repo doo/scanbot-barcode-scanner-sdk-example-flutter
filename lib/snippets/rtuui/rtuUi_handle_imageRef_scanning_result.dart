@@ -1,8 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:flutter/material.dart';
+import 'package:scanbot_barcode_sdk_example/utility/utils.dart';
 
-Future<List<BarcodeItem>> handleScanningResultWithImageRef() async {
+Future<List<BarcodeItem>> handleScanningResultWithImageRef(
+    BuildContext context) async {
   // Start the barcode RTU UI with default configuration
   var config = BarcodeScannerScreenConfiguration();
   config.scannerConfiguration.returnBarcodeImage = true;
@@ -23,13 +26,16 @@ Future<List<BarcodeItem>> handleScanningResultWithImageRef() async {
               ?.encodeImage(options: EncodeImageOptions());
         }
       });
+    } else {
+      await showAlertDialog(context, title: "Info", scanningResult.toString());
     }
   });
 
   return [];
 }
 
-Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef() async {
+Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef(
+    BuildContext context) async {
   // Configure scanner to return image refs
   var config = BarcodeScannerScreenConfiguration();
   config.scannerConfiguration.returnBarcodeImage = true;
@@ -43,6 +49,8 @@ Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef() async {
     if (scanningResult is Ok<BarcodeScannerUiResult>) {
       // Serialized the scanned result in order to move the data outside the autorelease block
       serializedResult = await scanningResult.value.toJson();
+    } else {
+      await showAlertDialog(context, title: "Info", scanningResult.toString());
     }
   });
 
@@ -69,7 +77,8 @@ Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef() async {
   return imageBuffers;
 }
 
-Future<List<Uint8List?>> handleScanningResultWithEncodedImageRef() async {
+Future<List<Uint8List?>> handleScanningResultWithEncodedImageRef(
+    BuildContext context) async {
   // Configure scanner to return barcode images
   var config = BarcodeScannerScreenConfiguration();
   config.scannerConfiguration.returnBarcodeImage = true;
@@ -86,6 +95,8 @@ Future<List<Uint8List?>> handleScanningResultWithEncodedImageRef() async {
       imageBuffers = scanningResult.value.items
           .map((item) => item.barcode.sourceImage?.buffer)
           .toList();
+    } else {
+      await showAlertDialog(context, title: "Info", scanningResult.toString());
     }
   });
 

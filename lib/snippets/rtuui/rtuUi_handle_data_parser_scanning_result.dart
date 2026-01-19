@@ -1,6 +1,9 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:flutter/material.dart';
+import 'package:scanbot_barcode_sdk_example/utility/utils.dart';
 
-Future<List<dynamic>> handleScanningResultWithDataParsers() async {
+Future<List<dynamic>> handleScanningResultWithDataParsers(
+    BuildContext context) async {
   // Start the barcode RTU UI with default configuration
   final scanningResult = await ScanbotBarcodeSdk.barcode.startScanner(
     BarcodeScannerScreenConfiguration(),
@@ -66,6 +69,8 @@ Future<List<dynamic>> handleScanningResultWithDataParsers() async {
     }
 
     return parsedData;
+  } else {
+    await showAlertDialog(context, title: "Info", scanningResult.toString());
   }
 
   return [];

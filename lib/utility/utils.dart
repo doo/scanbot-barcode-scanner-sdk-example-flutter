@@ -85,6 +85,8 @@ Future<bool> checkLicenseStatus(BuildContext context) async {
     await showAlertDialog(context, result.value.licenseStatusMessage,
         title: 'Info');
     return false;
+  } else {
+    await showAlertDialog(context, title: "Info", result.toString());
   }
 
   return false;

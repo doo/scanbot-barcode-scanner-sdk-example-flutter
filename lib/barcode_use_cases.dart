@@ -57,23 +57,24 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
     // await autorelease(() async {
 
     var result = await scannerFunction();
-    if (result is Ok<BarcodeScannerUiResult>) {
-      /// if you want to use image later, call encodeImages() to save in buffer
-      // if (enableImagesInScannedBarcodesResults) result.value.encodeImages();
+    switch (result) {
+      case Ok<BarcodeScannerUiResult>():
+        // if you want to use image later, call encodeImages() to save in buffer
+        // if (enableImagesInScannedBarcodesResults) result.value.encodeImages();
 
-      final barcodeItems =
-          result.value.items.map((item) => item.barcode).toList();
+        final barcodeItems =
+            result.value.items.map((item) => item.barcode).toList();
 
-      await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => BarcodesResultPreviewWidget(barcodeItems),
-        ),
-      );
-    } else if (result is Error<BarcodeScannerUiResult>) {
-      // Handle the error here
-      print(result.error.message);
-    } else if (result is Cancel) {
-      // Handle the cancellation here
+        await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidget(barcodeItems),
+          ),
+        );
+      case Error<BarcodeScannerUiResult>():
+        await showAlertDialog(context, title: "Error", result.error.message);
+      case Cancel():
+        // Handle the cancellation here if needed
+        print("Operation was canceled");
     }
     // });
   }
