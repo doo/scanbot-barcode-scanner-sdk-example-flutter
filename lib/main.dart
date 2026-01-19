@@ -48,7 +48,7 @@ Future<void> _initScanbotSdk() async {
 
   var licenseResult = await ScanbotBarcodeSdk.initialize(config);
   if (licenseResult is Ok<LicenseInfo>) {
-    print(licenseResult.value.status);
+    print(licenseResult.value.status.name);
   } else {
     print(licenseResult.toString());
   }
