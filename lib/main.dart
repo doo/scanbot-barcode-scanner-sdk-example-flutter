@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
 
-import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../ui/menu_item.dart';
@@ -214,21 +213,18 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       return;
     }
 
-    List<Uri> uris = List.empty(growable: true);
-
-    final response = await ImagePicker().pickMultiImage();
-    if (response.isEmpty) {
-      await showAlertDialog(context, title: "Info", "No image picked.");
+    final paths = await selectImagesFromLibrary();
+    if (paths.isEmpty) {
+      await showAlertDialog(context, title: "Info", "No images picked.");
       return;
     }
 
     showDialog(
-        context: context,
-        builder: (context) {
-          return const Center(child: CircularProgressIndicator());
-        });
-
-    uris = response.map((image) => Uri.file(image.path)).toList();
+      context: context,
+      builder: (context) {
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
 
     List<BarcodeItem> allBarcodes = [];
 
@@ -249,9 +245,9 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       barcodeFormatQrCodeConfiguration,
     ];
 
-    for (var uri in uris) {
+    for (var path in paths) {
       var result = await ScanbotBarcodeSdk.barcode
-          .scanFromImageFileUri(uri.path, scannerConfiguration);
+          .scanFromImageFileUri(path, scannerConfiguration);
 
       if (result is Ok<BarcodeScannerResult>) {
         allBarcodes.addAll(result.value.barcodes);

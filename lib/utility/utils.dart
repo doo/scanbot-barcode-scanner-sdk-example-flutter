@@ -137,6 +137,12 @@ Future<XFile?> selectImageFromLibrary() async {
   return await ImagePicker().pickImage(source: picker.ImageSource.gallery);
 }
 
+Future<List<String>> selectImagesFromLibrary() async {
+  var images = await ImagePicker().pickMultiImage();
+
+  return images.isEmpty ? [] : images.map((image) => image.path).toList();
+}
+
 Future<PlatformFile?> selectPdfFile() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles(
     type: FileType.custom,
