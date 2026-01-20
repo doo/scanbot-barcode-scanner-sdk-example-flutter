@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -279,35 +278,28 @@ class _MainPageWidgetState extends State<MainPageWidget> {
       return;
     }
 
-    var filePickerResult = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
+    var pdfFile = await selectPdfFile();
+    if (pdfFile == null) {
+      return;
+    }
 
-    if (filePickerResult != null &&
-        filePickerResult.files.single.path != null) {
-      String pdfFileUri = filePickerResult.files.single.path!;
+    var scanningResult = await ScanbotBarcodeSdk.barcode
+        .scanFromPdf(pdfFile.path!, BarcodeScannerConfiguration());
 
-      var scanningResult = await ScanbotBarcodeSdk.barcode
-          .scanFromPdf(pdfFileUri, BarcodeScannerConfiguration());
-
-      if (scanningResult is Ok<BarcodeScannerResult>) {
-        var barcodes = scanningResult.value.barcodes;
-        if (barcodes.isNotEmpty) {
-          await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => BarcodesResultPreviewWidget(barcodes),
-            ),
-          );
-        } else {
-          await showAlertDialog(
-              context, title: "Info", "No barcodes detected.");
-          return;
-        }
+    if (scanningResult is Ok<BarcodeScannerResult>) {
+      var barcodes = scanningResult.value.barcodes;
+      if (barcodes.isNotEmpty) {
+        await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidget(barcodes),
+          ),
+        );
       } else {
-        await showAlertDialog(
-            context, title: "Info", scanningResult.toString());
+        await showAlertDialog(context, title: "Info", "No barcodes detected.");
+        return;
       }
+    } else {
+      await showAlertDialog(context, title: "Info", scanningResult.toString());
     }
   }
 
