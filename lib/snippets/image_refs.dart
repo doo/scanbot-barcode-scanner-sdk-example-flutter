@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
-void createImageRefFromPath(String imagePath) async {
+void createImageRefFromPath(String imagePath) {
   autorelease(() {
     // Create ImageRef from path
     var imageRef = ImageRef.fromPath(imagePath);
@@ -27,7 +27,7 @@ void createImageRefFromPath(String imagePath) async {
   });
 }
 
-void createImageRefFromEncodedBuffer(Uint8List bytes) async {
+void createImageRefFromEncodedBuffer(Uint8List bytes) {
   autorelease(() {
     // Create ImageRef from buffer
     var imageRef = ImageRef.fromEncodedBuffer(bytes);
@@ -69,5 +69,8 @@ void saveImage(ImageRef imageRef, String destinationPath) {
         // encryptionMode: EncryptionMode.DISABLED,
       ),
     );
+
+    // Returns the stored image as a byte array.
+    final byteArray = imageRef.encodeImage();
   });
 }
