@@ -47,30 +47,26 @@ void createImageRefFromEncodedBuffer(Uint8List bytes) {
 }
 
 ImageInfo getImageInfo(ImageRef imageRef) {
-  return autorelease(() {
-    var imageInfo = imageRef.info();
+  var imageInfo = imageRef.info();
 
-    var width = imageInfo.width;
-    var height = imageInfo.height;
-    // size on disk or in memory depending on load mode
-    var maxByteSize = imageInfo.maxByteSize;
+  var width = imageInfo.width;
+  var height = imageInfo.height;
+  // size on disk or in memory depending on load mode
+  var maxByteSize = imageInfo.maxByteSize;
 
-    return imageInfo;
-  });
+  return imageInfo;
 }
 
 void saveImage(ImageRef imageRef, String destinationPath) {
-  autorelease(() {
-    imageRef.saveImage(
-      destinationPath,
-      options: SaveImageOptions(
-        quality: 100, encryptionMode: EncryptionMode.AUTO,
-        // to disable decryption while reading for this specific file (in case its not encrypted with SDK encryption ON), use
-        // encryptionMode: EncryptionMode.DISABLED,
-      ),
-    );
+  imageRef.saveImage(
+    destinationPath,
+    options: SaveImageOptions(
+      quality: 100, encryptionMode: EncryptionMode.AUTO,
+      // to disable decryption while saving this specific file, use
+      // encryptionMode: EncryptionMode.DISABLED,
+    ),
+  );
 
-    // Returns the stored image as a byte array.
-    final byteArray = imageRef.encodeImage();
-  });
+  // Returns the stored image as a byte array.
+  final byteArray = imageRef.encodeImage();
 }
