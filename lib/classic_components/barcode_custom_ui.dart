@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
 
-import 'package:logging/logging.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../ui/preview/barcodes_result_preview.dart';
@@ -190,7 +189,6 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         setState(() {
           licenseIsActive = false;
         });
-        Logger.root.severe(licenseStatus);
       },
       onCameraPreviewStarted: (isFlashAvailable) {
         setState(() {
