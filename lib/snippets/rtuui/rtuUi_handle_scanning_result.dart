@@ -7,13 +7,13 @@ Future<List<BarcodeItem>> handleScanningResult(BuildContext context) async {
   final scanningResult = await ScanbotBarcodeSdk.barcode
       .startScanner(BarcodeScannerScreenConfiguration());
   switch (scanningResult) {
-    case Ok<BarcodeScannerUiResult>():
+    case Ok():
       // Extract the list of BarcodeItem from the scanning result
       final barcodes =
           scanningResult.value.items.map((item) => item.barcode).toList();
 
       return barcodes;
-    case Error<BarcodeScannerUiResult>():
+    case Error():
       await showAlertDialog(
           context, title: "Error", scanningResult.error.message);
     case Cancel():

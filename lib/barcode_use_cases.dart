@@ -58,7 +58,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
 
     var result = await scannerFunction();
     switch (result) {
-      case Ok<BarcodeScannerUiResult>():
+      case Ok():
         // if you want to use image later, call encodeImages() to save in buffer
         // if (enableImagesInScannedBarcodesResults) result.value.encodeImages();
 
@@ -70,7 +70,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
             builder: (context) => BarcodesResultPreviewWidget(barcodeItems),
           ),
         );
-      case Error<BarcodeScannerUiResult>():
+      case Error():
         await showAlertDialog(context, title: "Error", result.error.message);
       case Cancel():
         // Handle the cancellation here if needed
