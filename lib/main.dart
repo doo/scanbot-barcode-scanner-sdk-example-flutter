@@ -28,15 +28,13 @@ void main() => runApp(MyApp());
 const BARCODE_SDK_LICENSE_KEY = "";
 
 Future<void> _initScanbotSdk() async {
-  // Consider adjusting this optional storageBaseDirectory - see the comments below.
-  final customStorageBaseDirectory = await getDemoStorageBaseDirectory();
 
   var config = SdkConfiguration(
     loggingEnabled: true,
     // Consider switching logging OFF in production. builds for security and performance reasons.
     licenseKey: BARCODE_SDK_LICENSE_KEY,
     // Uncomment to use custom storage directory
-    // storageBaseDirectory: customStorageBaseDirectory,
+    // storageBaseDirectory: await getDemoStorageBaseDirectory(),
   );
 
   if (shouldInitWithEncryption) {
@@ -53,15 +51,7 @@ Future<void> _initScanbotSdk() async {
 }
 
 Future<String> getDemoStorageBaseDirectory() async {
-  Directory storageDirectory;
-  if (Platform.isAndroid) {
-    storageDirectory = (await getExternalStorageDirectory())!;
-  } else if (Platform.isIOS) {
-    storageDirectory = await getApplicationDocumentsDirectory();
-  } else {
-    throw ('Unsupported platform');
-  }
-
+  Directory storageDirectory = await getApplicationSupportDirectory();
   return '${storageDirectory.path}/my-custom-storage';
 }
 
