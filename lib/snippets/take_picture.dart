@@ -12,7 +12,7 @@ Widget buildCameraViewWithTakePictureButton() {
           scannerConfiguration: BarcodeClassicScannerConfiguration(),
           overlayConfiguration: SelectionOverlayScannerConfiguration(),
         ),
-        takePictureListener: (image) {
+        takePictureListener: (image) async {
           // Handle take picture event
         },
         barcodeListener: (barcodeItems) async {
