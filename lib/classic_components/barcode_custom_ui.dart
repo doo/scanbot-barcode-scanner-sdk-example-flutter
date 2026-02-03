@@ -26,7 +26,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   bool flashEnabled = false;
   bool showPolygon = true;
   bool flashAvailable = false;
-  bool licenseIsActive = true;
+  SBException? licenseError = null;
   bool detectionEnabled = true;
 
   @override
@@ -158,8 +158,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   /// Builds the camera view widget, handling licensing and permissions.
   Widget _buildCameraView() {
-    if (!licenseIsActive)
-      return _buildLicenseInactiveView(); // Handle inactive license state.
+    if (licenseError != null)
+      return _buildLicenseInactiveView(licenseError!.message); // Handle license error
     if (!permissionGranted)
       return _buildPermissionNotGrantedView(); // Handle no permission state.
 
@@ -185,10 +185,14 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         // this to return result to preview screen
         await _showResult(barcodeItems);
       }, // Handle barcode scanning results.
-      errorListener: (licenseStatus) {
-        setState(() {
-          licenseIsActive = false;
-        });
+      errorListener: (error) {
+        if (error is InvalidLicenseException) {
+          setState(() {
+            this.licenseError = error;
+          });
+        } else {
+          print(error.toString());
+        }
       },
       onCameraPreviewStarted: (isFlashAvailable) {
         setState(() {
@@ -213,8 +217,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   }
 
   /// Displays a view indicating that the license is inactive.
-  Widget _buildLicenseInactiveView() {
-    return _buildCenteredMessage('License is no more active');
+  Widget _buildLicenseInactiveView(String errorMessage) {
+    return _buildCenteredMessage(errorMessage);
   }
 
   /// Displays a view indicating that permissions have not been granted.
