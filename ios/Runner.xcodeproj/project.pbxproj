@@ -279,7 +279,7 @@
 				"${BUILT_PRODUCTS_DIR}/image_picker_ios/image_picker_ios.framework",
 				"${BUILT_PRODUCTS_DIR}/path_provider_foundation/path_provider_foundation.framework",
 				"${BUILT_PRODUCTS_DIR}/url_launcher_ios/url_launcher_ios.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ScanbotBarcodeSDKWrapper/ScanbotBarcodeSDKWrapper.framework/ScanbotBarcodeSDKWrapper",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ScanbotBarcodeSDKNativeWrapper/ScanbotBarcodeSDKWrapper.framework/ScanbotBarcodeSDKWrapper",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ScanbotBarcodeScannerSDK/ScanbotBarcodeScannerSDK.framework/ScanbotBarcodeScannerSDK",
 			);
 			name = "[CP] Embed Pods Frameworks";

@@ -1,7 +1,8 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
 
-ScanbotCameraController cameraController = ScanbotCameraController();
+BarcodeScannerCameraController cameraController =
+    BarcodeScannerCameraController();
 
 Widget buildCameraViewWithTakePictureButton() {
   return Stack(
@@ -12,7 +13,7 @@ Widget buildCameraViewWithTakePictureButton() {
           scannerConfiguration: BarcodeClassicScannerConfiguration(),
           overlayConfiguration: SelectionOverlayScannerConfiguration(),
         ),
-        takePictureListener: (image) async {
+        onPictureTaken: (image) async {
           // Handle take picture event
         },
         barcodeListener: (barcodeItems) async {

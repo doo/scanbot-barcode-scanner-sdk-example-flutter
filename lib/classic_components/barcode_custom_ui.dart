@@ -159,7 +159,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   /// Builds the camera view widget, handling licensing and permissions.
   Widget _buildCameraView() {
     if (licenseError != null)
-      return _buildLicenseInactiveView(licenseError!.message); // Handle license error
+      return _buildLicenseInactiveView(
+          licenseError!.message); // Handle license error
     if (!permissionGranted)
       return _buildPermissionNotGrantedView(); // Handle no permission state.
 
@@ -185,7 +186,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         // this to return result to preview screen
         await _showResult(barcodeItems);
       }, // Handle barcode scanning results.
-      errorListener: (error) {
+      onError: (error) {
         if (error is InvalidLicenseException) {
           setState(() {
             this.licenseError = error;
@@ -199,7 +200,6 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
           flashAvailable = isFlashAvailable;
         });
       },
-      onHeavyOperationProcessing: (show) {},
     );
   }
 

@@ -28,7 +28,6 @@ void main() => runApp(MyApp());
 const BARCODE_SDK_LICENSE_KEY = "";
 
 Future<void> _initScanbotSdk() async {
-
   var config = SdkConfiguration(
     loggingEnabled: true,
     // Consider switching logging OFF in production. builds for security and performance reasons.
