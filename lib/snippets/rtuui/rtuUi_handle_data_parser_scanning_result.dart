@@ -1,15 +1,17 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:flutter/material.dart';
+import 'package:scanbot_barcode_sdk_example/utility/utils.dart';
 
-Future<List<dynamic>> handleScanningResultWithDataParsers() async {
+Future<List<dynamic>> handleScanningResultWithDataParsers(
+    BuildContext context) async {
   // Start the barcode RTU UI with default configuration
-  final scanningResult = await ScanbotBarcodeSdk.startBarcodeScanner(
+  final scanningResult = await ScanbotBarcodeSdk.barcode.startScanner(
     BarcodeScannerScreenConfiguration(),
   );
 
   // Check if the status returned is ok and that the data is present
-  if (scanningResult.status == OperationStatus.OK && scanningResult.data != null) {
-
-    final items = scanningResult.data!.items;
+  if (scanningResult is Ok<BarcodeScannerUiResult>) {
+    final items = scanningResult.value.items;
     final parsedData = <dynamic>[];
 
     // Loop through the scanned barcode items and extract the desired barcode data
@@ -21,7 +23,8 @@ Future<List<dynamic>> handleScanningResultWithDataParsers() async {
 
       switch (typeName) {
         case BoardingPass.DOCUMENT_TYPE:
-          parsedData.add(BoardingPass(genericDocument).electronicTicketIndicator);
+          parsedData
+              .add(BoardingPass(genericDocument).electronicTicketIndicator);
           break;
 
         case SwissQR.DOCUMENT_TYPE:
@@ -38,7 +41,9 @@ Future<List<dynamic>> handleScanningResultWithDataParsers() async {
 
         case GS1.DOCUMENT_TYPE:
           final gs1Elements = GS1(genericDocument).elements;
-          parsedData.add(gs1Elements.isNotEmpty ? gs1Elements.first.applicationIdentifier : null);
+          parsedData.add(gs1Elements.isNotEmpty
+              ? gs1Elements.first.applicationIdentifier
+              : null);
           break;
 
         case SEPA.DOCUMENT_TYPE:
@@ -64,6 +69,8 @@ Future<List<dynamic>> handleScanningResultWithDataParsers() async {
     }
 
     return parsedData;
+  } else {
+    await showAlertDialog(context, title: "Info", scanningResult.toString());
   }
 
   return [];

@@ -2,20 +2,21 @@ import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:file_picker/file_picker.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as material;
 
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker/image_picker.dart' as picker;
 import 'package:url_launcher/url_launcher.dart';
 
 final enableImagesInScannedBarcodesResults = false;
-final selectedFormatsNotifier = ValueNotifier<Set<BarcodeFormat>>(
-    BarcodeFormats.all.toSet()
-);
+final selectedFormatsNotifier =
+    ValueNotifier<Set<BarcodeFormat>>(BarcodeFormats.all.toSet());
 
 const Color ScanbotRedColor = Color(0xFFc8193c);
 
-AppBar ScanbotAppBar(String title, {bool showBackButton = false, BuildContext? context, List<Widget>? actions}) {
+AppBar ScanbotAppBar(String title,
+    {bool showBackButton = false,
+    BuildContext? context,
+    List<Widget>? actions}) {
   return AppBar(
     iconTheme: const IconThemeData(
       color: Colors.white,
@@ -23,9 +24,9 @@ AppBar ScanbotAppBar(String title, {bool showBackButton = false, BuildContext? c
     backgroundColor: ScanbotRedColor,
     leading: showBackButton && context != null
         ? GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
-      child: const Icon(Icons.arrow_back, color: Colors.white),
-    )
+            onTap: () => Navigator.of(context).pop(),
+            child: const Icon(Icons.arrow_back, color: Colors.white),
+          )
         : null,
     title: Text(
       title,
@@ -42,14 +43,14 @@ AppBar ScanbotAppBar(String title, {bool showBackButton = false, BuildContext? c
 Widget buildBottomNavigationBar(BuildContext context) {
   return Container(
     color: Colors.grey[200],
-    padding: const material.EdgeInsets.all(10.0),
+    padding: const EdgeInsets.all(10.0),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         TextButton(
           onPressed: _launchScanbotSDKURL,
           style: TextButton.styleFrom(
-            padding: material.EdgeInsets.zero,
+            padding: EdgeInsets.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
           child: const Text(
@@ -61,7 +62,7 @@ Widget buildBottomNavigationBar(BuildContext context) {
         ),
         const SizedBox(height: 4),
         const Text(
-          'Copyright 2025 Scanbot SDK GmbH. All rights reserved.',
+          'Copyright 2026 Scanbot SDK GmbH. All rights reserved.',
           style: TextStyle(
             fontSize: 10,
             color: Colors.black,
@@ -75,13 +76,19 @@ Widget buildBottomNavigationBar(BuildContext context) {
 }
 
 Future<bool> checkLicenseStatus(BuildContext context) async {
-  final result = await ScanbotBarcodeSdk.getLicenseStatus();
-  if (result.isLicenseValid) {
-    return true;
+  final result = await ScanbotBarcodeSdk.getLicenseInfo();
+  if (result is Ok<LicenseInfo>) {
+    if (result.value.isValid) {
+      return true;
+    }
+
+    await showAlertDialog(context, result.value.licenseStatusMessage,
+        title: 'Info');
+    return false;
+  } else {
+    await showAlertDialog(context, title: "Info", result.toString());
   }
-  await showAlertDialog(
-      context, result.licenseStatusMessage ?? "Invalid license",
-      title: 'Info');
+
   return false;
 }
 
@@ -97,7 +104,6 @@ Future<void> _launchScanbotSDKURL() async {
   }
 }
 
-
 Future<void> showAlertDialog(BuildContext context, String textToShow,
     {String? title}) async {
   Widget text = SimpleDialogOption(
@@ -107,7 +113,7 @@ Future<void> showAlertDialog(BuildContext context, String textToShow,
   final dialog = AlertDialog(
     title: title != null ? Text(title) : null,
     content: text,
-    contentPadding: const material.EdgeInsets.all(0),
+    contentPadding: const EdgeInsets.all(0),
     actions: <Widget>[
       TextButton(
         onPressed: () {
@@ -129,6 +135,12 @@ Future<void> showAlertDialog(BuildContext context, String textToShow,
 
 Future<XFile?> selectImageFromLibrary() async {
   return await ImagePicker().pickImage(source: picker.ImageSource.gallery);
+}
+
+Future<List<String>> selectImagesFromLibrary() async {
+  var images = await ImagePicker().pickMultiImage();
+
+  return images.isEmpty ? [] : images.map((image) => image.path).toList();
 }
 
 Future<PlatformFile?> selectPdfFile() async {

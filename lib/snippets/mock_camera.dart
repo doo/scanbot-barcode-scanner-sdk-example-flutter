@@ -1,13 +1,11 @@
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 Future mockCamera() async {
-  var config = MockCameraParams(imageFileUri: "{path to your image file}");
-
   /**
    * For Android:
    *  API >= 33, READ_MEDIA_IMAGES and READ_MEDIA_VIDEO permissions are required.
    *  API < 33, READ_EXTERNAL_STORAGE permission is required.
    *  The image must have even values for both width and height.
    */
-  await ScanbotBarcodeSdk.mockCamera(config);
+  await ScanbotBarcodeSdk.mockCamera("{path to your image file}");
 }

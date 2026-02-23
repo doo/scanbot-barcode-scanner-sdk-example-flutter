@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as material;
 
-import 'package:logging/logging.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../ui/preview/barcodes_result_preview.dart';
@@ -28,7 +26,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   bool flashEnabled = false;
   bool showPolygon = true;
   bool flashAvailable = false;
-  bool licenseIsActive = true;
+  SBException? licenseError = null;
   bool detectionEnabled = true;
 
   @override
@@ -64,7 +62,10 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScanbotAppBar("Scan barcodes", showBackButton: true, context: context, actions: [_buildFlashToggleButton()]),
+      appBar: ScanbotAppBar("Scan barcodes",
+          showBackButton: true,
+          context: context,
+          actions: [_buildFlashToggleButton()]),
       body: Container(
         color: Colors.black,
         child: Stack(
@@ -97,11 +98,11 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         ),
       ),
       widget: Padding(
-        padding: const material.EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Container(
           decoration: BoxDecoration(
             border:
-            Border.all(width: 5, color: Colors.lightBlue.withAlpha(155)),
+                Border.all(width: 5, color: Colors.lightBlue.withAlpha(155)),
             borderRadius: const BorderRadius.all(Radius.circular(20)),
           ),
         ),
@@ -115,26 +116,31 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   /// Builds the configuration for the classical barcode scanner.
   BarcodeClassicScannerConfiguration
-  _buildBarcodeClassicScannerConfiguration() {
-
-    var barcodeFormatCommonConfiguration = new BarcodeFormatCommonConfiguration();
+      _buildBarcodeClassicScannerConfiguration() {
+    var barcodeFormatCommonConfiguration =
+        new BarcodeFormatCommonConfiguration();
     barcodeFormatCommonConfiguration.stripCheckDigits = false;
     barcodeFormatCommonConfiguration.minimumTextLength = 3;
 
     // Configure different parameters for specific barcode format.
-    var barcodeFormatCode128Configuration = new BarcodeFormatCode128Configuration();
+    var barcodeFormatCode128Configuration =
+        new BarcodeFormatCode128Configuration();
     barcodeFormatCode128Configuration.minimumTextLength = 5;
 
     return BarcodeClassicScannerConfiguration(
       returnBarcodeImage: enableImagesInScannedBarcodesResults,
-      barcodeFormatConfigurations: [barcodeFormatCommonConfiguration, barcodeFormatCode128Configuration],
-      engineMode: BarcodeScannerEngineMode.NEXT_GEN, // Uses the latest engine for scanning.
+      barcodeFormatConfigurations: [
+        barcodeFormatCommonConfiguration,
+        barcodeFormatCode128Configuration
+      ],
+      engineMode: BarcodeScannerEngineMode
+          .NEXT_GEN, // Uses the latest engine for scanning.
     );
   }
 
   /// Builds the configuration for the selection overlay scanner.
   SelectionOverlayScannerConfiguration
-  _buildSelectionOverlayScannerConfiguration() {
+      _buildSelectionOverlayScannerConfiguration() {
     return SelectionOverlayScannerConfiguration(
       overlayEnabled: showPolygon,
       textFormat: BarcodeOverlayTextFormat.CODE,
@@ -142,10 +148,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
       textColor: Colors.white,
       textContainerColor: Colors.grey,
       onBarcodeTap: (barcode, highlighted) async {
-
-       /// if you want to use image later call encodeImages() to save in buffer
-       if(enableImagesInScannedBarcodesResults)
-         barcode.encodeImages();
+        /// if you want to use image later call encodeImages() to save in buffer
+        if (enableImagesInScannedBarcodesResults) barcode.encodeImages();
 
         await _showResult([barcode]);
       },
@@ -154,15 +158,15 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   /// Builds the camera view widget, handling licensing and permissions.
   Widget _buildCameraView() {
-    if (!licenseIsActive)
-      return _buildLicenseInactiveView(); // Handle inactive license state.
+    if (licenseError != null)
+      return _buildLicenseInactiveView(
+          licenseError!.message); // Handle license error
     if (!permissionGranted)
       return _buildPermissionNotGrantedView(); // Handle no permission state.
 
     return BarcodeScannerCamera(
       configuration: BarcodeCameraConfiguration(
         flashEnabled: flashEnabled,
-
         detectionEnabled: detectionEnabled,
         scannerConfiguration: _buildBarcodeClassicScannerConfiguration(),
         cameraZoomFactor: 0.01,
@@ -174,7 +178,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         // resultStream.add(barcodeItems);
 
         /// if you want to use image later call encodeImages() to save in buffer
-        if(enableImagesInScannedBarcodesResults)
+        if (enableImagesInScannedBarcodesResults)
           barcodeItems.forEach((item) {
             item.encodeImages();
           });
@@ -182,25 +186,27 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         // this to return result to preview screen
         await _showResult(barcodeItems);
       }, // Handle barcode scanning results.
-      errorListener: (licenseStatus) {
-        setState(() {
-          licenseIsActive = false;
-        });
-        Logger.root.severe(licenseStatus);
+      onError: (error) {
+        if (error is InvalidLicenseException) {
+          setState(() {
+            this.licenseError = error;
+          });
+        } else {
+          print(error.toString());
+        }
       },
       onCameraPreviewStarted: (isFlashAvailable) {
         setState(() {
           flashAvailable = isFlashAvailable;
         });
       },
-      onHeavyOperationProcessing: (show) {},
     );
   }
 
   Widget _buildFlashToggleButton() {
     if (!flashAvailable) return Container();
 
-    return material.IconButton(
+    return IconButton(
       onPressed: () {
         setState(() {
           flashEnabled = !flashEnabled;
@@ -211,8 +217,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   }
 
   /// Displays a view indicating that the license is inactive.
-  Widget _buildLicenseInactiveView() {
-    return _buildCenteredMessage('License is No more active');
+  Widget _buildLicenseInactiveView(String errorMessage) {
+    return _buildCenteredMessage(errorMessage);
   }
 
   /// Displays a view indicating that permissions have not been granted.

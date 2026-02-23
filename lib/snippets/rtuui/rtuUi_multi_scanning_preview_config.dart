@@ -19,7 +19,8 @@ BarcodeScannerScreenConfiguration rtuUiMultipleScanningPreviewConfig() {
       ScanbotColor("#000000");
 
   // Configure localization parameters.
-  config.localization.barcodeInfoMappingErrorStateCancelButton = 'Custom Cancel title';
+  config.localization.barcodeInfoMappingErrorStateCancelButton =
+      'Custom Cancel title';
   config.localization.cameraPermissionCloseButton = 'Custom Close title';
   // Configure other strings as needed.
 

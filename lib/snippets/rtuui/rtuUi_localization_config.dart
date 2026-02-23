@@ -6,7 +6,7 @@ BarcodeScannerScreenConfiguration configurationWithLocalizationSnippet() {
 
   // Configure localization parameters.
   configuration.localization.barcodeInfoMappingErrorStateCancelButton =
-  "Custom Cancel title";
+      "Custom Cancel title";
   configuration.localization.cameraPermissionCloseButton = "Custom Close title";
 
   // Configure other strings as needed.

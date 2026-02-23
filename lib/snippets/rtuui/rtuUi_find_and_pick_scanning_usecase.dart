@@ -36,14 +36,12 @@ BarcodeScannerScreenConfiguration rtuUiFindAndPickModeUseCase() {
     ExpectedBarcode(
         barcodeValue: "123456",
         title: "numeric barcode",
-        image:
-        "https://avatars.githubusercontent.com/u/1454920",
+        image: "https://avatars.githubusercontent.com/u/1454920",
         count: 4),
     ExpectedBarcode(
         barcodeValue: "SCANBOT",
         title: "value barcode",
-        image:
-        "https://avatars.githubusercontent.com/u/1454920",
+        image: "https://avatars.githubusercontent.com/u/1454920",
         count: 3)
   ];
 

@@ -22,11 +22,12 @@ Future<void> initalizeSdk() async {
   var customStorageBaseDirectory =
       await getCustomStorageBaseDirectoryLocation();
 
-  var config = ScanbotSdkConfig(
+  var config = SdkConfiguration(
+    licenseKey: "",
     storageBaseDirectory: customStorageBaseDirectory,
     // Additional configuration options...
   );
 
   // Initialize the Scanbot SDK with the specified configuration
-  await ScanbotBarcodeSdk.initScanbotSdk(config);
+  await ScanbotBarcodeSdk.initialize(config);
 }

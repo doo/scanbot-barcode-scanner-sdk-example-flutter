@@ -27,95 +27,125 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const TitleItemWidget(title: 'Barcode Scanners (RTU)'),
-        MenuItemWidget(title: "Single Scan with confirmation dialog", onTap: () => startSingleScan(context)),
-        MenuItemWidget(title: "Multiple Scan", onTap: () => startMultipleScan(context)),
-        MenuItemWidget(title: "Find and Pick", onTap: () => startFindAndPickScan(context)),
-        MenuItemWidget(title: "Multiple Scan With AR Overlay", onTap: () => startAROverlayScan(context)),
-        MenuItemWidget(title: "Multiple Scan with Info Mapping", onTap: () => startItemMappingScan(context)),
+        MenuItemWidget(
+            title: "Single Scan with confirmation dialog",
+            onTap: () => startSingleScan(context)),
+        MenuItemWidget(
+            title: "Multiple Scan", onTap: () => startMultipleScan(context)),
+        MenuItemWidget(
+            title: "Find and Pick", onTap: () => startFindAndPickScan(context)),
+        MenuItemWidget(
+            title: "Multiple Scan with AR Overlay",
+            onTap: () => startAROverlayScan(context)),
+        MenuItemWidget(
+            title: "Multiple Scan with Info Mapping",
+            onTap: () => startItemMappingScan(context)),
       ],
     );
   }
 
   Future<void> startScan({
     required BuildContext context,
-    required Future<ResultWrapper<BarcodeScannerUiResult>> Function() scannerFunction,
+    required Future<Result<BarcodeScannerUiResult>> Function() scannerFunction,
   }) async {
     if (!await checkLicenseStatus(context)) {
       return;
     }
-    try {
-      /// if scannerConfiguration.returnBarcodeImage = true, you must use autorelease for result object
-      /// otherwise you'll get exception "AutoReleasable objects must be created within autorelease"
-      // await autorelease(() async {
 
-        var result = await scannerFunction();
+    /// if scannerConfiguration.returnBarcodeImage = true, you must use autorelease for result object
+    /// otherwise you'll get exception "AutoReleasable objects must be created within autorelease"
+    // await autorelease(() async {
 
-        /// if you want to use image later, call encodeImages() to save in buffer
-        // if(enableImagesInScannedBarcodesResults)
-        //   result.data?.encodeImages();
+    var result = await scannerFunction();
+    switch (result) {
+      case Ok():
+        // if you want to use image later, call encodeImages() to save in buffer
+        // if (enableImagesInScannedBarcodesResults) result.value.encodeImages();
 
-        if (result.status == OperationStatus.OK && result.data != null) {
-          final barcodeItems = result.data!.items.map((item) => item.barcode).toList();
+        final barcodeItems =
+            result.value.items.map((item) => item.barcode).toList();
 
-          await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => BarcodesResultPreviewWidget(barcodeItems),
-            ),
-          );
-        }
-      // });
-    } catch (e) {
-      print(e);
+        await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidget(barcodeItems),
+          ),
+        );
+      case Error():
+        await showAlertDialog(context, title: "Error", result.error.message);
+      case Cancel():
+        // Handle the cancellation here if needed
+        print("Operation was canceled");
     }
+    // });
   }
 
   Future<void> startSingleScan(BuildContext context) async {
     var configuration = rtuUiSingleScanningUseCase();
-    configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormatConfigurations = [
+      BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
+        ..formats = selectedFormatsNotifier.value.toList()
+    ];
 
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdk.startBarcodeScanner(configuration),
+      scannerFunction: () =>
+          ScanbotBarcodeSdk.barcode.startScanner(configuration),
     );
   }
 
   Future<void> startMultipleScan(BuildContext context) async {
     var configuration = rtuUiMultipleScanningUseCase();
-    configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormatConfigurations = [
+      BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
+        ..formats = selectedFormatsNotifier.value.toList()
+    ];
 
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdk.startBarcodeScanner(configuration),
+      scannerFunction: () =>
+          ScanbotBarcodeSdk.barcode.startScanner(configuration),
     );
   }
 
   Future<void> startFindAndPickScan(BuildContext context) async {
     var configuration = rtuUiFindAndPickModeUseCase();
-    configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormatConfigurations = [
+      BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
+        ..formats = selectedFormatsNotifier.value.toList()
+    ];
 
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdk.startBarcodeScanner(configuration),
+      scannerFunction: () =>
+          ScanbotBarcodeSdk.barcode.startScanner(configuration),
     );
   }
 
   Future<void> startAROverlayScan(BuildContext context) async {
     var configuration = rtuUiArOverlayUseCase();
-    configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormatConfigurations = [
+      BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
+        ..formats = selectedFormatsNotifier.value.toList()
+    ];
 
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdk.startBarcodeScanner(configuration),
+      scannerFunction: () =>
+          ScanbotBarcodeSdk.barcode.startScanner(configuration),
     );
   }
 
   Future<void> startItemMappingScan(BuildContext context) async {
     var configuration = rtuUiMappingItemConfiguration();
-    configuration.scannerConfiguration.barcodeFormats = selectedFormatsNotifier.value.toList();
+    configuration.scannerConfiguration.barcodeFormatConfigurations = [
+      BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
+        ..formats = selectedFormatsNotifier.value.toList()
+    ];
 
     await startScan(
       context: context,
-      scannerFunction: () => ScanbotBarcodeSdk.startBarcodeScanner(configuration),
+      scannerFunction: () =>
+          ScanbotBarcodeSdk.barcode.startScanner(configuration),
     );
   }
 }

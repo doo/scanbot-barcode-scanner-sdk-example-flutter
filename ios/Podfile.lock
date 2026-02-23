@@ -1,7 +1,7 @@
 PODS:
   - barcode_scanner (1.0.0):
     - Flutter
-    - ScanbotBarcodeSDKWrapper (= 7.1.4.0)
+    - ScanbotBarcodeSDKNativeWrapper (= 8.0.1.1)
   - DKImagePickerController/Core (4.3.9):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -44,9 +44,9 @@ PODS:
     - FlutterMacOS
   - permission_handler_apple (9.3.0):
     - Flutter
-  - ScanbotBarcodeScannerSDK (7.1.4)
-  - ScanbotBarcodeSDKWrapper (7.1.4.0):
-    - ScanbotBarcodeScannerSDK (= 7.1.4)
+  - ScanbotBarcodeScannerSDK (8.0.1)
+  - ScanbotBarcodeSDKNativeWrapper (8.0.1.1):
+    - ScanbotBarcodeScannerSDK (= 8.0.1)
   - SDWebImage (5.21.3):
     - SDWebImage/Core (= 5.21.3)
   - SDWebImage/Core (5.21.3)
@@ -68,7 +68,7 @@ SPEC REPOS:
     - DKImagePickerController
     - DKPhotoGallery
     - ScanbotBarcodeScannerSDK
-    - ScanbotBarcodeSDKWrapper
+    - ScanbotBarcodeSDKNativeWrapper
     - SDWebImage
     - SwiftyGif
 
@@ -89,16 +89,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  barcode_scanner: 31f26027b7ac71c51f19183e1c1897aaa0fdd601
+  barcode_scanner: b63fec82521c66be47144354972ae4cc1448ce1b
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
   file_picker: a0560bc09d61de87f12d246fc47d2119e6ef37be
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
-  ScanbotBarcodeScannerSDK: 763b4307353c249fa9d0eea69fb2a49df4f04889
-  ScanbotBarcodeSDKWrapper: 4a478864519ab5818e5bce9287dedcf1db9d96d6
+  ScanbotBarcodeScannerSDK: c0270115558662cc6af89991d79f724848fd480f
+  ScanbotBarcodeSDKNativeWrapper: 307bbacd4b52ad8f3714976050d3e7b724eed4e7
   SDWebImage: 16309af6d214ba3f77a7c6f6fdda888cb313a50a
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   url_launcher_ios: 694010445543906933d732453a59da0a173ae33d

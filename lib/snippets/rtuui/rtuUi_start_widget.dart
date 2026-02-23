@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
+import 'package:scanbot_barcode_sdk_example/utility/utils.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -13,11 +14,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // TODO: configure as needed
 
-    var result = await ScanbotBarcodeSdk.startBarcodeScanner(configuration);
+    var result = await ScanbotBarcodeSdk.barcode.startScanner(configuration);
 
-    if(result.status == OperationStatus.OK)
-    {
+    if (result is Ok<BarcodeScannerUiResult>) {
       // TODO: present barcode result as needed
+    } else {
+      await showAlertDialog(context, title: "Info", result.toString());
     }
   }
 

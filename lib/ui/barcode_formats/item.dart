@@ -1,7 +1,5 @@
-import 'package:barcode_scanner/core.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as material;
 
 class BarcodeFormatItemWidget extends StatelessWidget {
   final BarcodeFormat format;
@@ -17,7 +15,7 @@ class BarcodeFormatItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const material.EdgeInsets.only(
+            padding: const EdgeInsets.only(
                 left: 8.0, right: 8.0, top: 16, bottom: 16),
             child: Row(
               children: <Widget>[
