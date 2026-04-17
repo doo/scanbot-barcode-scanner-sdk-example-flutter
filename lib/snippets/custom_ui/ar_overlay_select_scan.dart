@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 Widget buildBarcodeScannerCamera() {
   return BarcodeScannerCamera(
     configuration: BarcodeCameraConfiguration(
-      scannerConfiguration: BarcodeClassicScannerConfiguration(
-        engineMode: BarcodeScannerEngineMode.NEXT_GEN_FAR_DISTANCE,
+      scannerConfiguration: BarcodeClassicScannerConfiguration(),
+      overlayConfiguration: SelectionOverlayScannerConfiguration(
+        overlayEnabled: true,
+        polygonColor: Colors.green,
+        textColor: Colors.white,
+        onBarcodeTap: (item, highlighted) {
+          // Handle selected barcode
+          print(item);
+        },
       ),
-      finder: FinderConfiguration(
-          decoration: BoxDecoration(
-        border: Border.all(width: 2, color: Colors.white),
-      )),
-      cameraZoomFactor: 0.3,
     ),
     barcodeListener: (barcodeItems) async {
       // Handle barcode scanning results

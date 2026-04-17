@@ -6,7 +6,10 @@ Widget buildBarcodeScannerCamera() {
     configuration: BarcodeCameraConfiguration(
       minFocusDistanceLock: true,
       scannerConfiguration: BarcodeClassicScannerConfiguration(),
-      finder: FinderConfiguration(decoration: BoxDecoration()),
+      finder: FinderConfiguration(
+          decoration: BoxDecoration(
+        border: Border.all(width: 2, color: Colors.white),
+      )),
     ),
     barcodeListener: (barcodeItems) async {
       // Handle barcode scanning results
