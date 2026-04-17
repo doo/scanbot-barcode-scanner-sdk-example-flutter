@@ -26,5 +26,4 @@ Future<void> startScan() async {
       // Handle the cancellation here if needed
       print("Operation was canceled");
   }
-  // });
 }
