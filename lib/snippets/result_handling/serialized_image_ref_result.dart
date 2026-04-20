@@ -4,7 +4,7 @@ import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:scanbot_barcode_sdk_example/utility/utils.dart';
 
-Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef(
+Future<List<Uint8List>> handleScanningResultWithSerializedImageRef(
     BuildContext context) async {
   // Configure scanner to return image refs
   var config = BarcodeScannerScreenConfiguration();
@@ -24,7 +24,7 @@ Future<List<Uint8List?>> handleScanningResultWithSerializedImageRef(
     }
   });
 
-  List<Uint8List?> imageBuffers = [];
+  List<Uint8List> imageBuffers = [];
 
   // In another part of the app utilize the serialized result
   await autorelease(() async {

@@ -1,12 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:scanbot_barcode_sdk_example/utility/utils.dart';
 
-Future<List<BarcodeItem>> handleScanningResultWithImageRef(
+Future<Uint8List?> handleScanningResultWithImageRef(
     BuildContext context) async {
   // Start the barcode RTU UI with default configuration
   var config = BarcodeScannerScreenConfiguration();
   config.scannerConfiguration.returnBarcodeImage = true;
+
+  Uint8List? byteArray;
 
   // Autorelease executes the given block and releases native resources
   await autorelease(() async {
@@ -20,7 +24,7 @@ Future<List<BarcodeItem>> handleScanningResultWithImageRef(
               ?.saveImage(path, options: SaveImageOptions());
 
           // Returns the stored image as Uint8List.
-          final byteArray = item.barcode.sourceImage
+          byteArray = item.barcode.sourceImage
               ?.encodeImage(options: EncodeImageOptions());
         }
       });
@@ -29,5 +33,5 @@ Future<List<BarcodeItem>> handleScanningResultWithImageRef(
     }
   });
 
-  return [];
+  return byteArray;
 }
