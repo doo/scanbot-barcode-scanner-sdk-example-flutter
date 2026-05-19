@@ -26,12 +26,12 @@ The SDK can be implemented into your Flutter project with just a few lines of co
 ### Dev tools
 
 * Latest [Flutter SDK](https://flutter.dev/)
-* For Android apps: Android SDK (API Level 21+), platforms and developer tools
+* For Android apps: Android SDK (API Level 23+), platforms and developer tools
 * For iOS apps: macOS with latest Xcode and command line tools
 
 ### Mobile platforms
 
-* Android 5.0 (API Level 21) and higher
+* Android 5.0 (API Level 23) and higher
 * iOS 13 and higher
 
 ## How to run the sample app
