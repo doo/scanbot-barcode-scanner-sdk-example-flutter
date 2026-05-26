@@ -37,7 +37,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   /// Shows the result on a new screen and resets scanning state after the screen is popped.
   Future<void> _showResult(List<BarcodeItem> barcodeItems) async {
-    Navigator.of(context)
+    await Navigator.of(context)
         .push(
       MaterialPageRoute(
           builder: (context) => BarcodesResultPreviewWidget(barcodeItems)),
