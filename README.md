@@ -31,7 +31,7 @@ The SDK can be implemented into your Flutter project with just a few lines of co
 
 ### Mobile platforms
 
-* Android 5.0 (API Level 23) and higher
+* Android 6.0 (API Level 23) and higher
 * iOS 13 and higher
 
 ## How to run the sample app
