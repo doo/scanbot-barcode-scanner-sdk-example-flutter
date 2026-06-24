@@ -1,8 +1,12 @@
 plugins {
     id "com.android.application"
-    id "kotlin-android"
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
+}
+
+def agpMajor = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0] as int
+if (agpMajor < 9) {
+   apply plugin: 'kotlin-android'
 }
 
 android {
@@ -14,13 +18,9 @@ android {
         targetCompatibility JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_21
-    }
-
     defaultConfig {
         applicationId "io.scanbot.example.sdk.barcode.flutter"
-        minSdk = flutter.minSdkVersion
+        minSdkVersion = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -34,6 +34,12 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled true
         }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
     }
 }
 
