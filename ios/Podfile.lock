@@ -1,7 +1,7 @@
 PODS:
   - barcode_scanner (1.0.0):
     - Flutter
-    - ScanbotBarcodeSDKNativeWrapper (= 8.0.1.1)
+    - ScanbotBarcodeSDKNativeWrapper (= 9.0.5)
   - DKImagePickerController/Core (4.3.9):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -44,12 +44,12 @@ PODS:
     - FlutterMacOS
   - permission_handler_apple (9.3.0):
     - Flutter
-  - ScanbotBarcodeScannerSDK (8.0.1)
-  - ScanbotBarcodeSDKNativeWrapper (8.0.1.1):
-    - ScanbotBarcodeScannerSDK (= 8.0.1)
-  - SDWebImage (5.21.3):
-    - SDWebImage/Core (= 5.21.3)
-  - SDWebImage/Core (5.21.3)
+  - ScanbotBarcodeScannerSDK (9.0.0)
+  - ScanbotBarcodeSDKNativeWrapper (9.0.5):
+    - ScanbotBarcodeScannerSDK (= 9.0.0)
+  - SDWebImage (5.21.7):
+    - SDWebImage/Core (= 5.21.7)
+  - SDWebImage/Core (5.21.7)
   - SwiftyGif (5.4.5)
   - url_launcher_ios (0.0.1):
     - Flutter
@@ -89,7 +89,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  barcode_scanner: b63fec82521c66be47144354972ae4cc1448ce1b
+  barcode_scanner: d9a79e155c97d8b389ed545bb4bd589ba863a7e8
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
   file_picker: a0560bc09d61de87f12d246fc47d2119e6ef37be
@@ -97,9 +97,9 @@ SPEC CHECKSUMS:
   image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
-  ScanbotBarcodeScannerSDK: c0270115558662cc6af89991d79f724848fd480f
-  ScanbotBarcodeSDKNativeWrapper: 307bbacd4b52ad8f3714976050d3e7b724eed4e7
-  SDWebImage: 16309af6d214ba3f77a7c6f6fdda888cb313a50a
+  ScanbotBarcodeScannerSDK: e592c50cffe2f85a514f4e69413bc62f30a0b23b
+  ScanbotBarcodeSDKNativeWrapper: 78d4e4ac76a0129ee9dcc8f8bf69d03ebefdf977
+  SDWebImage: e9fc87c1aab89a8ab1bbd74eba378c6f53be8abf
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
 
