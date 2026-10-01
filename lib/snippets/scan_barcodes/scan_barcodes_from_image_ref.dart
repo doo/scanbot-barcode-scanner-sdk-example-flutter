@@ -12,8 +12,10 @@ Future<Result<BarcodeScannerResult>> scanBarcodesFromImageRef() async {
     /**
      * Scan barcodes from the selected image
      */
-    var result = await ScanbotBarcodeSdk.barcode
-        .scanFromImageRef(imageRef, BarcodeScannerConfiguration());
+    var result = await ScanbotBarcodeSdk.barcode.scanFromImageRef(
+      imageRef,
+      BarcodeScannerConfiguration(),
+    );
 
     return result;
   });

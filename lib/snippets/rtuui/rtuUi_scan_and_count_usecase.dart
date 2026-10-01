@@ -24,8 +24,9 @@ BarcodeScannerScreenConfiguration rtuUiScanAndCountUseCase() {
 
   // Configure the submit button.
   scanningMode.sheetContent.submitButton.text = "Submit";
-  scanningMode.sheetContent.submitButton.foreground.color =
-      ScanbotColor("#000000");
+  scanningMode.sheetContent.submitButton.foreground.color = ScanbotColor(
+    "#000000",
+  );
 
   // Configure other parameters, pertaining to multiple-scanning mode as needed.
 

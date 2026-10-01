@@ -15,8 +15,9 @@ BarcodeScannerScreenConfiguration rtuUiMultipleScanningPreviewConfig() {
 
   // Configure the submit button on the sheet.
   scanningMode.sheetContent.submitButton.text = "Submit";
-  scanningMode.sheetContent.submitButton.foreground.color =
-      ScanbotColor("#000000");
+  scanningMode.sheetContent.submitButton.foreground.color = ScanbotColor(
+    "#000000",
+  );
 
   // Configure localization parameters.
   config.localization.barcodeInfoMappingErrorStateCancelButton =

@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:typed_data';
+
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 void createImageRefFromEncodedBuffer(Uint8List bytes) {
@@ -11,12 +12,13 @@ void createImageRefFromEncodedBuffer(Uint8List bytes) {
     var imageRefWithOptions = ImageRef.fromEncodedBuffer(
       bytes,
       options: BufferImageLoadOptions(
-          // Define crop rectangle
-          cropRect: Rectangle<int>(0, 0, 200, 200),
-          // Convert image to grayscale
-          colorConversion: ColorConversion.GRAY,
-          // Use lazy loading mode, image would be loaded into memory only when first used
-          loadMode: BufferLoadMode.LAZY),
+        // Define crop rectangle
+        cropRect: Rectangle<int>(0, 0, 200, 200),
+        // Convert image to grayscale
+        colorConversion: ColorConversion.GRAY,
+        // Use lazy loading mode, image would be loaded into memory only when first used
+        loadMode: BufferLoadMode.LAZY,
+      ),
     );
   });
 }

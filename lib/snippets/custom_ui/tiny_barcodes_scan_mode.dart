@@ -7,13 +7,14 @@ Widget buildBarcodeScannerCamera() {
       minFocusDistanceLock: true,
       scannerConfiguration: BarcodeClassicScannerConfiguration(),
       finder: FinderConfiguration(
-          decoration: BoxDecoration(
-        border: Border.all(width: 2, color: Colors.white),
-      )),
+        decoration: BoxDecoration(
+          border: Border.all(width: 2, color: Colors.white),
+        ),
+      ),
     ),
     barcodeListener: (barcodeItems) async {
       // Handle barcode scanning results
-      print(barcodeItems);
+      debugPrint(barcodeItems.toString());
     },
   );
 }

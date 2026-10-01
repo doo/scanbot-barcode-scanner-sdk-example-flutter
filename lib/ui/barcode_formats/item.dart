@@ -6,7 +6,12 @@ class BarcodeFormatItemWidget extends StatelessWidget {
   final bool selected;
   final ValueChanged<bool?> onSelect;
 
-  BarcodeFormatItemWidget(this.format, this.selected, {required this.onSelect});
+  const BarcodeFormatItemWidget(
+    this.format,
+    this.selected, {
+    super.key,
+    required this.onSelect,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,11 @@ class BarcodeFormatItemWidget extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(
-                left: 8.0, right: 8.0, top: 16, bottom: 16),
+              left: 8.0,
+              right: 8.0,
+              top: 16,
+              bottom: 16,
+            ),
             child: Row(
               children: <Widget>[
                 Text(
@@ -24,7 +33,7 @@ class BarcodeFormatItemWidget extends StatelessWidget {
                   style: const TextStyle(inherit: true, color: Colors.black),
                 ),
                 Expanded(child: Container()),
-                Checkbox(value: selected, onChanged: onSelect)
+                Checkbox(value: selected, onChanged: onSelect),
               ],
             ),
           ),

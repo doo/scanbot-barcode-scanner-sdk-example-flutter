@@ -10,8 +10,11 @@ class BarcodesFormatSelectorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScanbotAppBar('Accepted barcode types',
-          showBackButton: true, context: context),
+      appBar: scanbotAppBar(
+        'Accepted barcode types',
+        showBackButton: true,
+        context: context,
+      ),
       body: ValueListenableBuilder<Set<BarcodeFormat>>(
         valueListenable: selectedFormatsNotifier,
         builder: (context, selectedFormats, _) {
@@ -25,8 +28,9 @@ class BarcodesFormatSelectorWidget extends StatelessWidget {
                 item,
                 isSelected,
                 onSelect: (selected) {
-                  final updatedFormats =
-                      Set<BarcodeFormat>.from(selectedFormats);
+                  final updatedFormats = Set<BarcodeFormat>.from(
+                    selectedFormats,
+                  );
                   if (selected == true) {
                     updatedFormats.add(item);
                   } else {
