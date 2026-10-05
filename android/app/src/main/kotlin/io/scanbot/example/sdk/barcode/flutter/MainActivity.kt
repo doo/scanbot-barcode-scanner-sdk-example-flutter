@@ -1,4 +1,4 @@
-package com.example.scanbot_barcode_sdk_example
+package io.scanbot.example.sdk.barcode.flutter
 
 import io.flutter.embedding.android.FlutterActivity
 
