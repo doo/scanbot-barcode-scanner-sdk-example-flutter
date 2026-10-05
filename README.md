@@ -32,7 +32,7 @@ The SDK can be implemented into your Flutter project with just a few lines of co
 ### Mobile platforms
 
 * Android 6.0 (API Level 23) and higher
-* iOS 13 and higher
+* iOS 15 and higher
 
 ## How to run the sample app
 
@@ -56,24 +56,13 @@ Connect a mobile device via USB and run the app.
 
 ### Step 2: Start your application
 
-**Android:**
-
 ```
 flutter run -d <DEVICE_ID>
 ```
 
 You can get the IDs of all connected devices with `flutter devices`.
 
-**iOS:**
-
-Install Pods dependencies:
-
-```
-cd ios/
-pod install --repo-update
-```
-
-Open the **workspace**(!) `ios/Runner.xcworkspace` in Xcode and adjust the *Signing / Developer Account* settings. Then, build and run the app in Xcode.
+**Note:** For iOS, make sure the *Signing / Developer Account* is set.
 
 ## Features of the Scanbot Barcode Scanner Flutter Plugin
 
