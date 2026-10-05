@@ -8,14 +8,15 @@ Widget buildBarcodeScannerCamera() {
         engineMode: BarcodeScannerEngineMode.NEXT_GEN_FAR_DISTANCE,
       ),
       finder: FinderConfiguration(
-          decoration: BoxDecoration(
-        border: Border.all(width: 2, color: Colors.white),
-      )),
+        decoration: BoxDecoration(
+          border: Border.all(width: 2, color: Colors.white),
+        ),
+      ),
       cameraZoomFactor: 0.3,
     ),
     barcodeListener: (barcodeItems) async {
       // Handle barcode scanning results
-      print(barcodeItems);
+      debugPrint(barcodeItems.toString());
     },
   );
 }

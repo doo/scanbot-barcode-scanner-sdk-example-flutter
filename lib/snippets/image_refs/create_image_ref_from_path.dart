@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 void createImageRefFromPath(String imagePath) {

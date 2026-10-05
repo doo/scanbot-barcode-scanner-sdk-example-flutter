@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:scanbot_barcode_sdk_example/utility/utils.dart';
 
 Future<List<Uint8List>> handleScanningResultWithEncodedImageRef(
-    BuildContext context) async {
+  BuildContext context,
+) async {
   // Configure scanner to return barcode images
   var config = BarcodeScannerScreenConfiguration();
   config.scannerConfiguration.returnBarcodeImage = true;

@@ -8,8 +8,9 @@ BarcodeScannerScreenConfiguration rtuUiMappingItemConfiguration() {
   var scanningMode = MultipleScanningMode();
 
   // Set the item mapper.
-  scanningMode.barcodeInfoMapping.barcodeItemMapper =
-      (item, onResult, onError) async {
+  scanningMode
+      .barcodeInfoMapping
+      .barcodeItemMapper = (item, onResult, onError) async {
     /** TODO: process scan result as needed to get your mapped data,
      * e.g. query your server to get product image, title and subtitle.
      * See example below.
@@ -22,11 +23,13 @@ BarcodeScannerScreenConfiguration rtuUiMappingItemConfiguration() {
     if (item.text == "Error occurred!") {
       onError();
     } else {
-      onResult(BarcodeMappedData(
-        title: title,
-        subtitle: subtitle,
-        barcodeImage: image,
-      ));
+      onResult(
+        BarcodeMappedData(
+          title: title,
+          subtitle: subtitle,
+          barcodeImage: image,
+        ),
+      );
     }
   };
 

@@ -7,8 +7,9 @@ import 'package:flutter/widgets.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 Future readImageData(String imageFileUri) async {
-  final result =
-      await ScanbotBarcodeSdk.imageProcessor.readImageData(imageFileUri);
+  final result = await ScanbotBarcodeSdk.imageProcessor.readImageData(
+    imageFileUri,
+  );
 
   if (result is Ok<String>) {
     Uint8List bytes = base64Decode(result.value);

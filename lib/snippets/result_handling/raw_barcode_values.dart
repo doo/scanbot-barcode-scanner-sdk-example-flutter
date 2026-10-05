@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 Future<void> startScan() async {
   // Start the barcode RTU UI with default configuration
-  final scanningResult = await ScanbotBarcodeSdk.barcode
-      .startScanner(BarcodeScannerScreenConfiguration());
+  final scanningResult = await ScanbotBarcodeSdk.barcode.startScanner(
+    BarcodeScannerScreenConfiguration(),
+  );
 
   switch (scanningResult) {
     case Ok():
@@ -19,11 +21,11 @@ Future<void> startScan() async {
         };
       }).toList();
 
-      print(mappedBarcodeItems);
+      debugPrint(mappedBarcodeItems.toString());
     case Error():
-      print(scanningResult.error.message);
+      debugPrint(scanningResult.error.message);
     case Cancel():
       // Handle the cancellation here if needed
-      print("Operation was canceled");
+      debugPrint("Operation was canceled");
   }
 }

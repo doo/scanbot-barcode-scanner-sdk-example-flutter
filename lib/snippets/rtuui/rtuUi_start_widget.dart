@@ -3,12 +3,14 @@ import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 import 'package:scanbot_barcode_sdk_example/utility/utils.dart';
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  _startBarcodeScanner() async {
+  Future<void> _startBarcodeScanner() async {
     // Create the default configuration object.
     var configuration = BarcodeScannerScreenConfiguration();
 

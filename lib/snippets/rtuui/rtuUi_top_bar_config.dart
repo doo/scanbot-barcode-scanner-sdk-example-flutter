@@ -7,9 +7,9 @@ BarcodeScannerScreenConfiguration rtuUiTopBarConfiguration() {
   // Configure the top bar.
 
   // Set the top bar mode.
-  configuration.topBar.mode = TopBarMode.GRADIENT;
+  configuration.topBar.mode = TopBarMode.SOLID;
 
-  // Set the background color which will be used as a gradient.
+  // Set the background color of the top bar.
   configuration.topBar.backgroundColor = ScanbotColor("#C8193C");
 
   // Configure the status bar look. If visible - select DARK or LIGHT according to your app's theme color.

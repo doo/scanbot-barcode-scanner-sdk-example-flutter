@@ -11,8 +11,8 @@ class BarcodeCard extends StatelessWidget {
     required this.text,
     this.extraWidget,
     this.sourceImage,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class BarcodeCard extends StatelessWidget {
             Center(child: sourceImage),
             Text(format, style: const TextStyle(color: Colors.black)),
             Text(text, style: const TextStyle(color: Colors.black)),
-            if (extraWidget != null) extraWidget!,
+            ?extraWidget,
           ],
         ),
       ),
