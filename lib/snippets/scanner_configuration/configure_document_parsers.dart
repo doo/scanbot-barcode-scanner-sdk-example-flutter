@@ -2,9 +2,7 @@ import 'package:barcode_scanner/scanbot_barcode_sdk.dart';
 
 BarcodeScannerConfiguration configureDocumentParsers() {
   final barcodeScannerConfiguration = BarcodeScannerConfiguration(
-    barcodeFormatConfigurations: [
-      BarcodeFormatCommonConfiguration(),
-    ],
+    barcodeFormatConfigurations: [BarcodeFormatCommonConfiguration()],
     // Example of adding specific formats for parsed documents
     extractedDocumentFormats: const [
       BarcodeDocumentFormat.AAMVA,

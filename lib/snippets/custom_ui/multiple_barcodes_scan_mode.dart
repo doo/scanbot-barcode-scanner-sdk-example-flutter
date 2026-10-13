@@ -8,7 +8,7 @@ Widget buildBarcodeScannerCamera() {
     ),
     barcodeListener: (barcodeItems) async {
       // Handle barcode scanning results
-      print(barcodeItems);
+      debugPrint(barcodeItems.toString());
     },
   );
 }

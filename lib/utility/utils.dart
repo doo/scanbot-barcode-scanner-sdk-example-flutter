@@ -8,20 +8,21 @@ import 'package:image_picker/image_picker.dart' as picker;
 import 'package:url_launcher/url_launcher.dart';
 
 final enableImagesInScannedBarcodesResults = false;
-final selectedFormatsNotifier =
-    ValueNotifier<Set<BarcodeFormat>>(BarcodeFormats.all.toSet());
+final selectedFormatsNotifier = ValueNotifier<Set<BarcodeFormat>>(
+  BarcodeFormats.all.toSet(),
+);
 
-const Color ScanbotRedColor = Color(0xFFc8193c);
+const Color scanbotRedColor = Color(0xFFc8193c);
 
-AppBar ScanbotAppBar(String title,
-    {bool showBackButton = false,
-    BuildContext? context,
-    List<Widget>? actions}) {
+AppBar scanbotAppBar(
+  String title, {
+  bool showBackButton = false,
+  BuildContext? context,
+  List<Widget>? actions,
+}) {
   return AppBar(
-    iconTheme: const IconThemeData(
-      color: Colors.white,
-    ),
-    backgroundColor: ScanbotRedColor,
+    iconTheme: const IconThemeData(color: Colors.white),
+    backgroundColor: scanbotRedColor,
     leading: showBackButton && context != null
         ? GestureDetector(
             onTap: () => Navigator.of(context).pop(),
@@ -30,11 +31,7 @@ AppBar ScanbotAppBar(String title,
         : null,
     title: Text(
       title,
-      style: const TextStyle(
-        inherit: true,
-        color: Colors.white,
-        fontSize: 20,
-      ),
+      style: const TextStyle(inherit: true, color: Colors.white, fontSize: 20),
     ),
     actions: actions,
   );
@@ -55,18 +52,13 @@ Widget buildBottomNavigationBar(BuildContext context) {
           ),
           child: const Text(
             'Learn More About Scanbot SDK',
-            style: TextStyle(
-              color: ScanbotRedColor,
-            ),
+            style: TextStyle(color: scanbotRedColor),
           ),
         ),
         const SizedBox(height: 4),
         const Text(
           'Copyright 2026 Scanbot SDK GmbH. All rights reserved.',
-          style: TextStyle(
-            fontSize: 10,
-            color: Colors.black,
-          ),
+          style: TextStyle(fontSize: 10, color: Colors.black),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 16),
@@ -82,8 +74,11 @@ Future<bool> checkLicenseStatus(BuildContext context) async {
       return true;
     }
 
-    await showAlertDialog(context, result.value.licenseStatusMessage,
-        title: 'Info');
+    await showAlertDialog(
+      context,
+      result.value.licenseStatusMessage,
+      title: 'Info',
+    );
     return false;
   } else {
     await showAlertDialog(context, title: "Info", result.toString());
@@ -95,20 +90,18 @@ Future<bool> checkLicenseStatus(BuildContext context) async {
 Future<void> _launchScanbotSDKURL() async {
   var url = Uri.parse("https://scanbot.io/");
   if (await canLaunchUrl(url)) {
-    await launchUrl(
-      url,
-      mode: LaunchMode.externalApplication,
-    );
+    await launchUrl(url, mode: LaunchMode.externalApplication);
   } else {
     throw 'Could not launch $url';
   }
 }
 
-Future<void> showAlertDialog(BuildContext context, String textToShow,
-    {String? title}) async {
-  Widget text = SimpleDialogOption(
-    child: Text(textToShow),
-  );
+Future<void> showAlertDialog(
+  BuildContext context,
+  String textToShow, {
+  String? title,
+}) async {
+  Widget text = SimpleDialogOption(child: Text(textToShow));
 
   final dialog = AlertDialog(
     title: title != null ? Text(title) : null,
@@ -144,14 +137,10 @@ Future<List<String>> selectImagesFromLibrary() async {
 }
 
 Future<PlatformFile?> selectPdfFile() async {
-  FilePickerResult? result = await FilePicker.pickFiles(
+  var result = await FilePicker.pickFile(
     type: FileType.custom,
     allowedExtensions: ['pdf'],
   );
 
-  if (result != null && result.files.isNotEmpty) {
-    return result.files.first;
-  }
-
-  return null;
+  return result;
 }
