@@ -10,10 +10,10 @@ import '../utility/utils.dart';
 
 /// A widget that demonstrates integrating a classical barcode scanner.
 class BarcodeScannerWidget extends StatefulWidget {
-  const BarcodeScannerWidget({Key? key}) : super(key: key);
+  const BarcodeScannerWidget({super.key});
 
   @override
-  _BarcodeScannerWidgetState createState() => _BarcodeScannerWidgetState();
+  State<BarcodeScannerWidget> createState() => _BarcodeScannerWidgetState();
 }
 
 class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
@@ -26,7 +26,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   bool flashEnabled = false;
   bool showPolygon = true;
   bool flashAvailable = false;
-  SBException? licenseError = null;
+  SBException? licenseError;
   bool detectionEnabled = true;
 
   @override
@@ -39,15 +39,16 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   Future<void> _showResult(List<BarcodeItem> barcodeItems) async {
     await Navigator.of(context)
         .push(
-      MaterialPageRoute(
-          builder: (context) => BarcodesResultPreviewWidget(barcodeItems)),
-    )
+          MaterialPageRoute(
+            builder: (context) => BarcodesResultPreviewWidget(barcodeItems),
+          ),
+        )
         .then((_) {
-      setState(() {
-        detectionEnabled = true;
-        showPolygon = true;
-      });
-    });
+          setState(() {
+            detectionEnabled = true;
+            showPolygon = true;
+          });
+        });
   }
 
   /// Requests camera permission from the user.
@@ -62,10 +63,12 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScanbotAppBar("Scan barcodes",
-          showBackButton: true,
-          context: context,
-          actions: [_buildFlashToggleButton()]),
+      appBar: scanbotAppBar(
+        "Scan barcodes",
+        showBackButton: true,
+        context: context,
+        actions: [_buildFlashToggleButton()],
+      ),
       body: Container(
         color: Colors.black,
         child: Stack(
@@ -101,8 +104,10 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         padding: const EdgeInsets.all(8),
         child: Container(
           decoration: BoxDecoration(
-            border:
-                Border.all(width: 5, color: Colors.lightBlue.withAlpha(155)),
+            border: Border.all(
+              width: 5,
+              color: Colors.lightBlue.withAlpha(155),
+            ),
             borderRadius: const BorderRadius.all(Radius.circular(20)),
           ),
         ),
@@ -116,22 +121,20 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   /// Builds the configuration for the classical barcode scanner.
   BarcodeClassicScannerConfiguration
-      _buildBarcodeClassicScannerConfiguration() {
-    var barcodeFormatCommonConfiguration =
-        new BarcodeFormatCommonConfiguration();
+  _buildBarcodeClassicScannerConfiguration() {
+    var barcodeFormatCommonConfiguration = BarcodeFormatCommonConfiguration();
     barcodeFormatCommonConfiguration.stripCheckDigits = false;
     barcodeFormatCommonConfiguration.minimumTextLength = 3;
 
     // Configure different parameters for specific barcode format.
-    var barcodeFormatCode128Configuration =
-        new BarcodeFormatCode128Configuration();
+    var barcodeFormatCode128Configuration = BarcodeFormatCode128Configuration();
     barcodeFormatCode128Configuration.minimumTextLength = 5;
 
     return BarcodeClassicScannerConfiguration(
       returnBarcodeImage: enableImagesInScannedBarcodesResults,
       barcodeFormatConfigurations: [
         barcodeFormatCommonConfiguration,
-        barcodeFormatCode128Configuration
+        barcodeFormatCode128Configuration,
       ],
       engineMode: BarcodeScannerEngineMode
           .NEXT_GEN, // Uses the latest engine for scanning.
@@ -140,7 +143,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   /// Builds the configuration for the selection overlay scanner.
   SelectionOverlayScannerConfiguration
-      _buildSelectionOverlayScannerConfiguration() {
+  _buildSelectionOverlayScannerConfiguration() {
     return SelectionOverlayScannerConfiguration(
       overlayEnabled: showPolygon,
       textFormat: BarcodeOverlayTextFormat.CODE,
@@ -158,11 +161,14 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   /// Builds the camera view widget, handling licensing and permissions.
   Widget _buildCameraView() {
-    if (licenseError != null)
+    if (licenseError != null) {
       return _buildLicenseInactiveView(
-          licenseError!.message); // Handle license error
-    if (!permissionGranted)
+        licenseError!.message,
+      ); // Handle license error
+    }
+    if (!permissionGranted) {
       return _buildPermissionNotGrantedView(); // Handle no permission state.
+    }
 
     return BarcodeScannerCamera(
       configuration: BarcodeCameraConfiguration(
@@ -178,10 +184,11 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         // resultStream.add(barcodeItems);
 
         /// if you want to use image later call encodeImages() to save in buffer
-        if (enableImagesInScannedBarcodesResults)
-          barcodeItems.forEach((item) {
+        if (enableImagesInScannedBarcodesResults) {
+          for (var item in barcodeItems) {
             item.encodeImages();
-          });
+          }
+        }
 
         // this to return result to preview screen
         await _showResult(barcodeItems);
@@ -189,10 +196,10 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
       onError: (error) {
         if (error is InvalidLicenseException) {
           setState(() {
-            this.licenseError = error;
+            licenseError = error;
           });
         } else {
-          print(error.toString());
+          debugPrint(error.toString());
         }
       },
       onCameraPreviewStarted: (isFlashAvailable) {
@@ -232,10 +239,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
       width: double.infinity,
       height: double.infinity,
       alignment: Alignment.center,
-      child: Text(
-        message,
-        style: const TextStyle(fontSize: 16),
-      ),
+      child: Text(message, style: const TextStyle(fontSize: 16)),
     );
   }
 
@@ -251,11 +255,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
         builder: (context, snapshot) {
           if (snapshot.data == null) return Container();
 
-          return Stack(
-            children: [
-              _buildBarcodeListView(snapshot.data),
-            ],
-          );
+          return Stack(children: [_buildBarcodeListView(snapshot.data)]);
         },
       ),
     );
@@ -267,10 +267,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
       itemCount: data?.length ?? 0,
       itemBuilder: (context, index) {
         var barcode = data?[index].text ?? '';
-        return Container(
-          color: Colors.white60,
-          child: Text(barcode),
-        );
+        return Container(color: Colors.white60, child: Text(barcode));
       },
     );
   }

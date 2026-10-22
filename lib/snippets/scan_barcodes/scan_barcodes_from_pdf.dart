@@ -9,8 +9,10 @@ Future<Result<BarcodeScannerResult>> scanBarcodeFromPdf() async {
   /**
    * Detect the barcodes on the selected PDF
    */
-  var result = await ScanbotBarcodeSdk.barcode
-      .scanFromPdf(pdfFileUri, BarcodeScannerConfiguration());
+  var result = await ScanbotBarcodeSdk.barcode.scanFromPdf(
+    pdfFileUri,
+    BarcodeScannerConfiguration(),
+  );
 
   return result;
 }

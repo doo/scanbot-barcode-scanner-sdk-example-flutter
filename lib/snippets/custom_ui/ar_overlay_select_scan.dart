@@ -11,13 +11,13 @@ Widget buildBarcodeScannerCamera() {
         textColor: Colors.white,
         onBarcodeTap: (item, highlighted) {
           // Handle selected barcode
-          print(item);
+          debugPrint(item.toString());
         },
       ),
     ),
     barcodeListener: (barcodeItems) async {
       // Handle barcode scanning results
-      print(barcodeItems);
+      debugPrint(barcodeItems.toString());
     },
   );
 }
