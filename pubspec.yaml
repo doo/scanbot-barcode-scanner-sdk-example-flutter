@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  barcode_scanner: ^10.0.0-beta06
+  barcode_scanner: ^10.0.0-beta07
   image_picker: ^1.2.3
   url_launcher: ^6.3.2
   path_provider: ^2.1.6
