@@ -10,8 +10,10 @@ Future<Result<BarcodeScannerResult>> scanBarcodesFromImageFileUri() async {
   /**
    * Scan barcodes from the selected image
    */
-  var result = await ScanbotBarcodeSdk.barcode
-      .scanFromImageFileUri(uriFilePath, BarcodeScannerConfiguration());
+  var result = await ScanbotBarcodeSdk.barcode.scanFromImageFileUri(
+    uriFilePath,
+    BarcodeScannerConfiguration(),
+  );
 
   return result;
 }

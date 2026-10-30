@@ -14,13 +14,13 @@ import '../utility/utils.dart';
 import '../ui/menu_item.dart';
 
 class BarcodeUseCasesWidget extends StatefulWidget {
+  const BarcodeUseCasesWidget({super.key});
+
   @override
-  _BarcodeUseCasesWidget createState() {
-    return _BarcodeUseCasesWidget();
-  }
+  State<BarcodeUseCasesWidget> createState() => _BarcodeUseCasesWidgetState();
 }
 
-class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
+class _BarcodeUseCasesWidgetState extends State<BarcodeUseCasesWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,18 +28,25 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
       children: <Widget>[
         const TitleItemWidget(title: 'Barcode Scanners (RTU)'),
         MenuItemWidget(
-            title: "Single Scan with confirmation dialog",
-            onTap: () => startSingleScan(context)),
+          title: "Single Scan with confirmation dialog",
+          onTap: () => startSingleScan(context),
+        ),
         MenuItemWidget(
-            title: "Multiple Scan", onTap: () => startMultipleScan(context)),
+          title: "Multiple Scan",
+          onTap: () => startMultipleScan(context),
+        ),
         MenuItemWidget(
-            title: "Find and Pick", onTap: () => startFindAndPickScan(context)),
+          title: "Find and Pick",
+          onTap: () => startFindAndPickScan(context),
+        ),
         MenuItemWidget(
-            title: "Multiple Scan with AR Overlay",
-            onTap: () => startAROverlayScan(context)),
+          title: "Multiple Scan with AR Overlay",
+          onTap: () => startAROverlayScan(context),
+        ),
         MenuItemWidget(
-            title: "Multiple Scan with Info Mapping",
-            onTap: () => startItemMappingScan(context)),
+          title: "Multiple Scan with Info Mapping",
+          onTap: () => startItemMappingScan(context),
+        ),
       ],
     );
   }
@@ -62,8 +69,9 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
         // if you want to use image later, call encodeImages() to save in buffer
         // if (enableImagesInScannedBarcodesResults) result.value.encodeImages();
 
-        final barcodeItems =
-            result.value.items.map((item) => item.barcode).toList();
+        final barcodeItems = result.value.items
+            .map((item) => item.barcode)
+            .toList();
 
         await Navigator.of(context).push(
           MaterialPageRoute(
@@ -74,7 +82,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
         await showAlertDialog(context, title: "Error", result.error.message);
       case Cancel():
         // Handle the cancellation here if needed
-        print("Operation was canceled");
+        debugPrint("Operation was canceled");
     }
     // });
   }
@@ -83,7 +91,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
     var configuration = rtuUiSingleScanningUseCase();
     configuration.scannerConfiguration.barcodeFormatConfigurations = [
       BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
-        ..formats = selectedFormatsNotifier.value.toList()
+        ..formats = selectedFormatsNotifier.value.toList(),
     ];
 
     await startScan(
@@ -97,7 +105,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
     var configuration = rtuUiMultipleScanningUseCase();
     configuration.scannerConfiguration.barcodeFormatConfigurations = [
       BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
-        ..formats = selectedFormatsNotifier.value.toList()
+        ..formats = selectedFormatsNotifier.value.toList(),
     ];
 
     await startScan(
@@ -111,7 +119,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
     var configuration = rtuUiFindAndPickModeUseCase();
     configuration.scannerConfiguration.barcodeFormatConfigurations = [
       BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
-        ..formats = selectedFormatsNotifier.value.toList()
+        ..formats = selectedFormatsNotifier.value.toList(),
     ];
 
     await startScan(
@@ -125,7 +133,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
     var configuration = rtuUiArOverlayUseCase();
     configuration.scannerConfiguration.barcodeFormatConfigurations = [
       BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
-        ..formats = selectedFormatsNotifier.value.toList()
+        ..formats = selectedFormatsNotifier.value.toList(),
     ];
 
     await startScan(
@@ -139,7 +147,7 @@ class _BarcodeUseCasesWidget extends State<BarcodeUseCasesWidget> {
     var configuration = rtuUiMappingItemConfiguration();
     configuration.scannerConfiguration.barcodeFormatConfigurations = [
       BarcodeFormatConfigurationBase.barcodeFormatCommonConfiguration()
-        ..formats = selectedFormatsNotifier.value.toList()
+        ..formats = selectedFormatsNotifier.value.toList(),
     ];
 
     await startScan(

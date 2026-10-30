@@ -33,7 +33,7 @@ Widget buildCameraViewWithTakePictureButton() {
             animatedLineStrokeWidth: 2,
           ),
         ),
-      )
+      ),
     ],
   );
 }
